@@ -1,3 +1,360 @@
-<h1>
-  {{title}}
-</h1>
+<div id="header"> 
+  <img src="assets/img/logo.svg" alt="CIN - Centro Internacional de Negócios">
+</div>
+
+<md-card id="content">
+  <form (ngSubmit)="onSubmit()" #myForm="ngForm">
+    <md-tab-group>
+      <md-tab label="Empresa">
+        <md-grid-list cols="8">
+          <md-grid-tile [colspan]="4">
+            <md-input-container>
+              <input mdInput type="text" placeholder="Razão Social" 
+              ngModel
+              name="business_name">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="4">
+            <md-input-container>
+              <input mdInput type="text" placeholder="Nome Fantasia"
+              ngModel
+              name="tranding_name">
+            </md-input-container>
+          </md-grid-tile>
+        </md-grid-list>
+
+        <md-grid-list cols="8">
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput type="text" placeholder="Nome para Agenda"
+              ngModel
+              name="schedule_name">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="1">
+            <md-input-container>
+              <input mdInput type="text" placeholder="CNPJ"
+              ngModel
+              name="cnpj_number">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput type="text" placeholder="Ano Fundação"
+              ngModel
+              name="foundation_year">
+            </md-input-container>
+          </md-grid-tile>    
+
+          <md-grid-tile [colspan]="3">
+            <md-input-container>
+              <input mdInput type="text" placeholder="Responsável Legal"
+              ngModel
+              name="legal_person">
+            </md-input-container>
+          </md-grid-tile>
+        </md-grid-list>
+      </md-tab>
+
+      <md-tab label="Contato">
+        <md-grid-list cols="8">
+          <md-grid-tile [colspan]="1">
+            <md-input-container>
+              <input mdInput type="text" placeholder="CEP"
+              ngModel
+              name="postal_code">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="5">
+            <md-input-container>
+              <input mdInput type="text" placeholder="Logradouro"
+              ngModel
+              name="address">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput type="text" placeholder="Número"
+              ngModel
+              name="number">
+            </md-input-container>
+          </md-grid-tile>
+        </md-grid-list>
+
+        <md-grid-list cols="8">
+          <md-grid-tile [colspan]="3">
+            <md-input-container>
+              <input mdInput type="text" placeholder="Cidade"
+              ngModel
+              name="city">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="1">
+            <md-select placeholder="UF"
+            ngModel
+            name="state">
+              <md-option *ngFor="let state of states" [value]="state.description">{{state.description}}</md-option>
+            </md-select>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="4">
+            <md-input-container>
+              <input mdInput type="text" placeholder="Bairro"
+              ngModel
+              name="district">
+            </md-input-container>
+          </md-grid-tile>
+        </md-grid-list>
+
+        <md-grid-list cols="8">
+          <md-grid-tile [colspan]="8">
+            <md-input-container>
+              <input mdInput type="text" placeholder="Complemento"
+              ngModel
+              name="complement">
+            </md-input-container>
+          </md-grid-tile>
+        </md-grid-list>
+
+        <md-grid-list cols="8">
+          <md-grid-tile [colspan]="2">
+            <md-select placeholder="Tipo de telefone" (change)="onChangeCompanyPhoneType($event)">
+              <md-option *ngFor="let phone of phoneType" [value]="phone.value">{{phone.description}}</md-option>
+            </md-select>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput type="text" placeholder="Número" (change)="onChangeCompanyPhoneNumber($event)">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput type="text" placeholder="Email" name="email" ngModel email required #email="ngModel">
+              <md-error *ngIf="!email.valid && email.touched">Escreva um e-mail válido.</md-error>
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput type="text" placeholder="Site">
+            </md-input-container>
+          </md-grid-tile>
+        </md-grid-list>
+      </md-tab>
+
+      <md-tab label="Atividade">
+        <md-grid-list cols="8">
+          <md-grid-tile [colspan]="2">
+            <md-select placeholder="Ramos de Atividade" multiple>
+              <md-option *ngFor="let comercial of comercialArea" [value]="comercial.value">{{comercial.description}}</md-option>
+            </md-select>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-select placeholder="Setor">
+              <md-option></md-option>
+            </md-select>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-select placeholder="Produtos">
+              <md-option></md-option>
+            </md-select>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-select placeholder="Nível de Maturidade">
+              <md-option></md-option>
+            </md-select>
+          </md-grid-tile>
+        </md-grid-list>
+
+        <md-grid-list cols="8">
+          <md-grid-tile [colspan]="4">
+            <md-input-container>
+              <textarea mdInput placeholder="Eventos nacionais/internacionais que sua empresa participou"></textarea>
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="4">
+            <md-input-container>
+              <textarea mdInput placeholder="Interesses da Empresa / Observações"></textarea>
+            </md-input-container>
+          </md-grid-tile>
+        </md-grid-list>
+      </md-tab>
+
+      <md-tab label="Mercado">
+        <md-grid-list cols="8">
+          <md-grid-tile [colspan]="4">
+            <md-slide-toggle (change)="onChangeMarket($event)" color="primary">
+                Exportação (outros estados/países)
+            </md-slide-toggle>
+          </md-grid-tile>
+        </md-grid-list>
+
+        <md-grid-list cols="8" *ngIf="market">
+          <md-grid-tile [colspan]="2">
+            <md-select placeholder="Outros Estados" multiple>
+              <md-option *ngFor="let state of states" [value]="state.value">{{state.description}}</md-option>
+            </md-select>
+          </md-grid-tile>
+          
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput type="text" placeholder="% Faturamento">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-select placeholder="América do Sul" multiple>
+              <md-option *ngFor="let amsul of americaSul" [value]="amsul.description">{{amsul.description}}</md-option>
+            </md-select>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput type="text" placeholder="% Faturamento">
+            </md-input-container>
+          </md-grid-tile>
+        </md-grid-list>
+
+        <md-grid-list cols="8" *ngIf="market">
+          <md-grid-tile [colspan]="2">
+            <md-select placeholder="Américas do Norte e Central" multiple>
+              <md-option *ngFor="let amno of americaNorte" [value]="amno.value">{{amno.description}}</md-option>
+            </md-select>
+          </md-grid-tile>
+          
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput type="text" placeholder="% Faturamento">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-select placeholder="África" multiple>
+              <md-option *ngFor="let af of africa" [value]="af.description">{{af.description}}</md-option>
+            </md-select>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput type="text" placeholder="% Faturamento">
+            </md-input-container>
+          </md-grid-tile>
+        </md-grid-list>
+
+        <md-grid-list cols="8" *ngIf="market">
+          <md-grid-tile [colspan]="2">
+            <md-select placeholder="Ásia" multiple>
+              <md-option *ngFor="let asi of asia" [value]="asi.value">{{asi.description}}</md-option>
+            </md-select>
+          </md-grid-tile>
+          
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput type="text" placeholder="% Faturamento">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-select placeholder="Europa" multiple>
+              <md-option *ngFor="let eu of europa" [value]="eu.description">{{eu.description}}</md-option>
+            </md-select>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput type="text" placeholder="% Faturamento">
+            </md-input-container>
+          </md-grid-tile>
+        </md-grid-list>
+
+        <md-grid-list cols="8" *ngIf="market">
+          <md-grid-tile [colspan]="2">
+            <md-select placeholder="Oceania" multiple>
+              <md-option *ngFor="let oc of oceania" [value]="oc.value">{{oc.description}}</md-option>
+            </md-select>
+          </md-grid-tile>
+          
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput type="text" placeholder="% Faturamento">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-select placeholder="Antártida" multiple>
+              <md-option *ngFor="let an of antartida" [value]="an.description">{{an.description}}</md-option>
+            </md-select>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput type="text" placeholder="% Faturamento">
+            </md-input-container>
+          </md-grid-tile>
+        </md-grid-list>
+      </md-tab>
+
+      <md-tab label="Representantes">
+        <md-grid-list cols="8">
+          <md-grid-tile [colspan]="4">
+            <md-input-container>
+              <input mdInput type="text" placeholder="Nome">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput type="text" placeholder="Cargo">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput type="text" placeholder="E-mail">
+            </md-input-container>
+          </md-grid-tile>
+        </md-grid-list>
+
+        <md-grid-list cols="8">
+          <md-grid-tile [colspan]="2">
+            <md-select placeholder="Tipo de telefone">
+              <md-option *ngFor="let phone of phoneType" [value]="phone.value">{{phone.description}}</md-option>
+            </md-select>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput type="text" placeholder="Número">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="1">
+            <md-select placeholder="Mídia Social">
+              <md-option *ngFor="let socialMedia of socialMedias" [value]="socialMedia.value">{{socialMedia.description}}</md-option>
+            </md-select>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="3">
+            <md-input-container>
+              <input mdInput type="text" placeholder="URL da mídia social">
+            </md-input-container>
+          </md-grid-tile>
+        </md-grid-list>
+      </md-tab>
+    </md-tab-group>
+
+    <button md-raised-button type="submit" color="primary" [disabled]="!myForm.valid">Cadastrar</button>
+  </form>
+</md-card>

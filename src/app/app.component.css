@@ -1,0 +1,24 @@
+/deep/ md-tab-group .mat-tab-labels {
+    
+}
+/deep/ md-grid-tile.mat-grid-tile .mat-figure {
+    justify-content: left;
+}
+
+/deep/ md-grid-tile .mat-select-trigger {
+    display: flex;
+    align-items: baseline;
+    height: 25px;
+}
+
+/deep/ md-input-container.mat-input-container {
+    width: 95%;
+}
+
+#content {
+    width: 95%;
+}
+
+#header {
+    width: 200px;
+}
