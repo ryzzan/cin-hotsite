@@ -5,7 +5,7 @@
 <md-card id="content">
   <form (ngSubmit)="onSubmit()" #myForm="ngForm">
     <md-tab-group>
-      <md-tab label="Empresa">
+      <md-tab label="Empresa" ngModelGroup="company" #company="ngModelGroup" [class.teste]="!company.valid">
         <md-grid-list cols="8">
           <md-grid-tile [colspan]="4">
             <md-input-container>
@@ -59,7 +59,7 @@
         </md-grid-list>
       </md-tab>
 
-      <md-tab label="Contato">
+      <md-tab label="Contato" ngModelGroup="contact" #contact="ngModelGroup" [class.teste]="!contact.valid">
         <md-grid-list cols="8">
           <md-grid-tile [colspan]="1">
             <md-input-container>
@@ -150,7 +150,7 @@
         </md-grid-list>
       </md-tab>
 
-      <md-tab label="Atividade">
+      <md-tab label="Atividade" ngModelGroup="activity" #activity="ngModelGroup" [class.teste]="!activity.valid">
         <md-grid-list cols="8">
           <md-grid-tile [colspan]="2">
             <md-select placeholder="Ramos de Atividade" multiple>
@@ -192,7 +192,7 @@
         </md-grid-list>
       </md-tab>
 
-      <md-tab label="Mercado">
+      <md-tab label="Mercado" ngModelGroup="market" #market="ngModelGroup" [class.teste]="!market.valid">
         <md-grid-list cols="8">
           <md-grid-tile [colspan]="4">
             <md-slide-toggle (change)="onChangeMarket($event)" color="primary">
@@ -306,7 +306,7 @@
         </md-grid-list>
       </md-tab>
 
-      <md-tab label="Representantes">
+      <md-tab label="Representantes" ngModelGroup="representative" #representative="ngModelGroup" [class.teste]="!representative.valid">
         <md-grid-list cols="8">
           <md-grid-tile [colspan]="4">
             <md-input-container>
@@ -354,7 +354,8 @@
         </md-grid-list>
       </md-tab>
     </md-tab-group>
-
-    <button md-raised-button type="submit" color="primary" [disabled]="!myForm.valid">Cadastrar</button>
+    <md-card-actions>
+      <button md-raised-button type="submit" color="primary" [disabled]="!myForm.valid">Cadastrar</button>
+    </md-card-actions>
   </form>
 </md-card>
