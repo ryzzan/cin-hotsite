@@ -13,13 +13,17 @@ import { countries } from './data/countries';
 export class AppComponent {
   @ViewChild('myForm') form: NgForm;
 
-  companyPhoneTypeSet: boolean = false;
-  companyPhoneNumberSet: boolean = false;
-  companyPhoneObject: any;
+  marketChanged: boolean = false;
+  objectToAPI: any;
+  /*company phone trouble: start*/
+  companyPhoneTypeChanged: number;
+  companyPhoneNumberChanged: string;
+  companyPhoneDDDChanged: string;
+  companyPhoneObject: any = [];
+  createContactPhoneObjectButton: boolean = false;
+  /*company phone trouble: end*/
 
-  market: boolean = false;
-
-  /*md-select countries*/
+  /*md-select countries: start*/
   africa: any;
   americaNorte: any;
   americaSul: any;
@@ -27,6 +31,7 @@ export class AppComponent {
   asia: any;
   europa: any;
   oceania: any;
+  /*md-select countries: end*/
   
   //SELECTS values
   comercialArea: any = [{
@@ -155,6 +160,7 @@ export class AppComponent {
   }];
 
   constructor() {
+    /*md-select countries: start*/
     this.americaNorte = this.onCheckContinent('América do Norte');
     this.americaSul = this.onCheckContinent('América do Sul');
     this.africa = this.onCheckContinent('África');
@@ -162,23 +168,78 @@ export class AppComponent {
     this.asia = this.onCheckContinent('Ásia');
     this.europa = this.onCheckContinent('Europa');
     this.oceania = this.onCheckContinent('Oceania');
+    /*md-select countries: end*/
+  }
+
+  /*Contact phones: start*/
+  createContactPhoneObject = () => {
+    this.companyPhoneObject.push({
+      phone_type_id: this.companyPhoneTypeChanged,
+      country_code: "+55",
+      ddd: this.companyPhoneDDDChanged,
+      number: this.companyPhoneNumberChanged
+    })
+    console.log(this.companyPhoneObject)
+    this.companyPhoneTypeChanged = undefined;
+    //this.form.value.contact.;
+  }
+
+  onChangeCompanyPhoneDDD = (event) => {
+    if(event) {
+      this.companyPhoneDDDChanged = event.srcElement.value;
+
+      if(this.companyPhoneNumberChanged) {
+        if(this.companyPhoneNumberChanged.length > 7) {
+          this.createContactPhoneObjectButton = true;
+        } else {
+          this.createContactPhoneObjectButton = false;
+        }
+      }
+    }
   }
 
   onChangeCompanyPhoneNumber = (event) => {
     if(event) {
-      console.log(event.srcElement.value);
-      this.companyPhoneNumberSet = true;
+      this.companyPhoneNumberChanged = event.srcElement.value;
+
+      if(this.companyPhoneDDDChanged) {
+        if(this.companyPhoneNumberChanged.length > 7 && this.companyPhoneDDDChanged.length > 1) {
+          this.createContactPhoneObjectButton = true;
+        } else {
+          this.createContactPhoneObjectButton = false;
+        }
+      }
     }
   }
 
   onChangeCompanyPhoneType = (event) => {
-    if(event.value) {
-      this.companyPhoneTypeSet = true;
+    if(event.value) {      
+      this.companyPhoneTypeChanged = event.value;
+      console.log(this.companyPhoneTypeChanged);
     }
   }
-  
+  /*Contact phones: end*/
+
+  /*Share it?: start*/
+  createNewObjectFromArrayOfObjects = (objectsArray: any) => {
+    let newObject = {};
+    for(let lim = objectsArray.length, i= 0; i < lim; i++) {
+      for(let key in objectsArray[i]) {
+        if(objectsArray[i][key] != undefined && objectsArray[i][key] != null) {
+          newObject[key] = objectsArray[i][key];
+        } else {
+          newObject[key] = null;
+        }
+      }
+    }
+
+    console.log(newObject);
+  }
+  /*Share it?: end*/
+    
   onChangeMarket = (event) => {
-    this.market = event.checked;
+    this.marketChanged = event.checked;
+    console.log(this.marketChanged);
   }
 
   onCheckContinent = (continent) => {
@@ -195,6 +256,23 @@ export class AppComponent {
   }
 
   onSubmit = () => {
-    console.log(this.form);
+    if(this.companyPhoneObject.length > 0) {
+      this.createNewObjectFromArrayOfObjects([
+        this.form.value.contact, 
+        this.form.value.company, 
+        this.form.value.activity, 
+        this.form.value.market, 
+        this.form.value.representative,
+        this.companyPhoneObject
+      ]);
+    } else {
+      this.createNewObjectFromArrayOfObjects([
+        this.form.value.contact, 
+        this.form.value.company, 
+        this.form.value.activity, 
+        this.form.value.market, 
+        this.form.value.representative
+      ]);
+    }
   }
 }
