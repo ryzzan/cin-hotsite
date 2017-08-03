@@ -1,16 +1,17 @@
-/deep/ md-tab-group .mat-tab-labels {
-    
+/deep/ md-chip .mat-chip:not(.mat-basic-chip) {
+    padding: 1px 1px 0 1px;
 }
+
 /deep/ md-grid-tile.mat-grid-tile .mat-figure {
     justify-content: left;
-    margin-bottom: 10px; 
+    margin-bottom: 20px; 
     margin-top: 10px; 
 }
 
 /deep/ md-grid-tile .mat-select-trigger {
     display: flex;
     align-items: baseline;
-    height: 25px;
+    height: 24px;
 }
 
 /deep/ md-input-container.mat-input-container {
@@ -18,12 +19,7 @@
 }
 
 .contact-phone-list {
-    line-height: 40px;
     vertical-align: middle;
-}
-
-.teste {
-    background: pink;
 }
 
 #content {
