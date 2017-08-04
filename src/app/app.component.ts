@@ -1,9 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm, NgModel } from '@angular/forms';
-//import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { MdSnackBar } from '@angular/material';
 
 import { countries } from './data/countries';
+
+import createAutoCorrectedDatePipe from 'text-mask-addons/dist/createAutoCorrectedDatePipe.js'
+
+/*Services*/
+import { OutsidersService } from './shared/services/outsiders.service';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +19,15 @@ export class AppComponent {
 
   marketChanged: boolean = false;
   objectToAPI: any;
+
+  /*activity products by subgroup trouble: start*/
+  productObject: any;
+  /*activity products by subgroup trouble: end*/
+  
+  /*company address trouble: start*/
+  addressObject: any;
+  /*company address trouble: start*/
+  
   /*company phone trouble: start*/
   companyPhoneTypeChanged: number;
   companyPhoneNumberChanged: string;
@@ -42,6 +55,7 @@ export class AppComponent {
   represenativeName: string;
   represenativePosition: string;
   represenativeEmail: string;
+  representativeObject: any = [];
   createRepresentativeObjectButton: any;
   /*representative: end*/
 
@@ -54,8 +68,27 @@ export class AppComponent {
   europa: any;
   oceania: any;
   /*md-select countries: end*/
-  
+
+  mask: any = {
+    cnpj: [/\d/, /\d/, '.', /\d/, /\d/, /\d/,'.', /\d/, /\d/, /\d/,'/', /\d/, /\d/, /\d/, /\d/,'-', /\d/,/\d/],
+    date: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
+    zip: [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/],
+    phone: ['(', /\d/, /\d/, ')',' ' , /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/,],
+    cell_phone: ['(', /\d/, /\d/, ')',' ' , /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, /\d/,]
+  };
+
   //SELECTS values
+  maturityArea: any = [{
+   value: 1,
+   description: 'Internacional' 
+  }, {
+    value: 2,
+    description: 'Nacional'
+  }, {
+    value: 3,
+    description: 'Local'
+  }]
+
   comercialArea: any = [{
     value: 'comercio',
     description: 'Comércio' 
@@ -79,6 +112,24 @@ export class AppComponent {
   }, {
     value: 4,
     description: 'Contato'
+  }]
+
+  productArea = [{
+    value: 1,
+    description: 'Produto 1',
+    subgroups: [1,3]
+  }, {
+    value: 2,
+    description: 'Produto 2',
+    subgroups: [1,2]
+  }, {
+    value: 3,
+    description: 'Produto 3',
+    subgroups: [2]
+  }, {
+    value: 4,
+    description: 'Produto 4',
+    subgroups: [4]
   }]
 
   socialMedias: any = [{
@@ -181,7 +232,21 @@ export class AppComponent {
     description: 'TOCANTINS' 
   }];
 
-  constructor() {
+  subgroupArea = [{
+    value: 1,
+    description: 'Setor 1'
+  }, {
+    value: 2,
+    description: 'Setor 2'
+  }, {
+    value: 3,
+    description: 'Setor 3'
+  }, {
+    value: 4,
+    description: 'Setor 4'
+  }]
+
+  constructor(public outsidersService: OutsidersService) {
     /*md-select countries: start*/
     this.americaNorte = this.onCheckContinent('América do Norte');
     this.americaSul = this.onCheckContinent('América do Sul');
@@ -193,6 +258,45 @@ export class AppComponent {
     /*md-select countries: end*/
   }
   
+  /*Activity: start*/
+  filterProduct = (event) => {
+    if(event.value.length > 0) {
+      this.productObject = [{}];
+      
+      let productsArray = [];
+      let finalArray = [];
+      for(let lim = event.value.length, i = 0; i < lim; i++) {
+        for(let lim2 = this.productArea.length, j =0; j < lim2; j++) {
+          for(let lim3 = this.productArea[j].subgroups.length, k = 0; k < lim3; k++) {
+            if(event.value[i] == this.productArea[j].subgroups[k]) {
+              productsArray.push(this.productArea[j].value);
+            }
+          }
+        }
+      }
+
+      finalArray = productsArray.filter(function(item, pos) {
+        return productsArray.indexOf(item) == pos;
+      })
+      
+      for(let lim = this.productArea.length, i =0; i < lim; i++) {
+        for(let lim2 = finalArray.length, j =0; j < lim2; j++) {
+          if(this.productArea[i].value == finalArray[j]) {          
+            this.productObject.push({
+              description: this.productArea[i].description,
+              value: this.productArea[i].value
+            });
+          }
+        }
+      }
+
+      this.productObject.shift();
+    } else {
+      this.productObject = undefined;
+    }
+  }
+  /*Activity: end*/
+
   /*Contact phones: start*/
   clearContactPhone = (index) => {
     console.log(index);
@@ -283,6 +387,7 @@ export class AppComponent {
 
       if(this.represenativeName && this.represenativePosition) {
         if(this.represenativeName.length > 2 && this.represenativePosition.length > 1) {
+          console.log(286);
           this.createRepresentativeObjectButton = true;
         } else {
           this.createRepresentativeObjectButton = false;
@@ -290,12 +395,22 @@ export class AppComponent {
       }
     }
   }
+
+  createRepresentativeObject = () => {
+    this.representativeObject.push({
+      name: this.represenativeName,
+      position: this.represenativePosition,
+      email: this.represenativeEmail,
+      phones: this.representativePhoneObject,
+      socialMedias: this.representativeSocialMediaObject
+    })
+
+    console.log(this.representativeObject);
+  }
   /*Representative: end*/
 
   /*Representative phones: start*/
   clearRepresentativePhone = (index) => {
-    console.log(index);
-    console.log(this.representativePhoneObject);
     this.representativePhoneObject.splice(index, 1);
   }
 
@@ -306,7 +421,6 @@ export class AppComponent {
       ddd: this.representativePhoneDDDChanged,
       number: this.representativePhoneNumberChanged
     })
-    console.log(this.representativePhoneObject)
     this.representativePhoneTypeChanged = undefined;
     //this.form.value.contact.;
   }
@@ -392,6 +506,36 @@ export class AppComponent {
 
     console.log(newObject);
   }
+
+  republicaVirtualCep = (event) => {
+    let cep = event.srcElement.value;
+    this.outsidersService
+    .republicaVirtualCepSearch(cep)
+    .then(res => {
+      let string = JSON.stringify(res),
+      object = JSON.parse(string);
+      
+      this.addressObject = JSON.parse(object._body);
+
+      console.log(this.addressObject)
+    });
+  }
+
+  receitaWsCnpj = (event) => {
+    let cnpj = event.srcElement.value.replace(/[-./]/gi, '');
+    
+    this.outsidersService
+    .receitaWsCnpjSearch(cnpj)
+    .then(res => {
+      console.log(res)
+      let string = JSON.stringify(res),
+      object = JSON.parse(string);
+      
+      this.addressObject = JSON.parse(object._body);
+
+      console.log(this.addressObject)
+    });
+  }
   /*Share it?: end*/
   
   onChangeMarket = (event) => {
@@ -413,26 +557,22 @@ export class AppComponent {
   }
 
   onSubmit = () => {
-    if(this.companyPhoneObject.length > 0) {
-      let phonesObject = {
-        phones: this.companyPhoneObject
-      }
-      this.createNewObjectFromArrayOfObjects([
-        this.form.value.contact, 
-        this.form.value.company, 
-        this.form.value.activity, 
-        this.form.value.market, 
-        this.form.value.representative,
-        phonesObject
-      ]);
-    } else {
-      this.createNewObjectFromArrayOfObjects([
-        this.form.value.contact, 
-        this.form.value.company, 
-        this.form.value.activity, 
-        this.form.value.market, 
-        this.form.value.representative
-      ]);
+    let representativesObject = {
+      representatives: this.representativeObject
     }
+
+    let phonesObject = {
+      phones: this.companyPhoneObject
+    }
+
+    this.createNewObjectFromArrayOfObjects([
+      this.form.value.contact, 
+      this.form.value.company, 
+      this.form.value.activity, 
+      this.form.value.market, 
+      this.form.value.representative,
+      phonesObject,
+      representativesObject
+    ]);
   }
 }

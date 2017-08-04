@@ -5,7 +5,14 @@ import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
+/*Components*/
 import { AppComponent } from './app.component';
+
+/*Modules*/
+import { TextMaskModule } from 'angular2-text-mask';
+
+/*Services*/
+import { OutsidersService } from './shared/services/outsiders.service';
 
 @NgModule({
   declarations: [
@@ -17,9 +24,10 @@ import { AppComponent } from './app.component';
     HttpModule,
     MaterialModule,
     NoopAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TextMaskModule
   ],
-  providers: [],
+  providers: [OutsidersService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

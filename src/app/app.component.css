@@ -24,8 +24,17 @@
 
 #content {
     width: 95%;
+    background: #fbe8a6;
 }
 
 #header {
+    padding-top: 20px;
+    margin: 0 auto;
+    height: 150px;
+    width: 100%;
+    text-align: center;
+}
+
+#header img {
     width: 200px;
 }
