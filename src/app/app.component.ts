@@ -1,8 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
-import { NgForm, NgModel } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, NgForm, NgModel } from '@angular/forms';
 import { MdSnackBar } from '@angular/material';
 
+import { brazilianStates } from './data/brazilian-states';
 import { countries } from './data/countries';
+import { selects } from './data/selects';
 
 import createAutoCorrectedDatePipe from 'text-mask-addons/dist/createAutoCorrectedDatePipe.js'
 
@@ -14,8 +16,12 @@ import { OutsidersService } from './shared/services/outsiders.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   @ViewChild('myForm') form: NgForm;
+
+  signupForm: FormGroup;
+  
+  states: any = brazilianStates;
 
   marketChanged: boolean = false;
   objectToAPI: any;
@@ -24,6 +30,10 @@ export class AppComponent {
   productObject: any;
   /*activity products by subgroup trouble: end*/
   
+  /*company: start*/
+  companyBusiness: number;
+  /*company: end*/
+
   /*company address trouble: start*/
   addressObject: any;
   /*company address trouble: start*/
@@ -37,10 +47,13 @@ export class AppComponent {
   /*company phone trouble: end*/
 
   /*representative phone trouble: start*/
+  representativeCPF: string;
   representativePhoneTypeChanged: number;
   representativePhoneNumberChanged: string;
   representativePhoneDDDChanged: string;
   representativePhoneObject: any = [];
+  representativeBirthday: any;
+  representativeSchooling: any;
   createRepresentativePhoneObjectButton: boolean = false;
   /*company phone trouble: end*/
 
@@ -52,6 +65,7 @@ export class AppComponent {
   /*company social media trouble: end*/
 
   /*representative: start*/
+  representativeTreatment: string;
   represenativeName: string;
   represenativePosition: string;
   represenativeEmail: string;
@@ -71,6 +85,7 @@ export class AppComponent {
 
   mask: any = {
     cnpj: [/\d/, /\d/, '.', /\d/, /\d/, /\d/,'.', /\d/, /\d/, /\d/,'/', /\d/, /\d/, /\d/, /\d/,'-', /\d/,/\d/],
+    cpf: [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/,'.', /\d/, /\d/, /\d/,'-', /\d/, /\d/],
     date: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
     zip: [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/],
     phone: ['(', /\d/, /\d/, ')',' ' , /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/,],
@@ -78,173 +93,14 @@ export class AppComponent {
   };
 
   //SELECTS values
-  maturityArea: any = [{
-   value: 1,
-   description: 'Internacional' 
-  }, {
-    value: 2,
-    description: 'Nacional'
-  }, {
-    value: 3,
-    description: 'Local'
-  }]
-
-  comercialArea: any = [{
-    value: 'comercio',
-    description: 'Comércio' 
-  }, {
-    value: 'industria',
-    description: 'Indústria' 
-  }, {
-    value: 'servicos',
-    description: 'Serviços' 
-  }];
-
-  phoneType: any = [{
-    value: 1,
-    description: 'Telefone fixo'
-  }, {
-    value: 2,
-    description: 'Celular'
-  }, {
-    value: 3,
-    description: 'Fax'
-  }, {
-    value: 4,
-    description: 'Contato'
-  }]
-
-  productArea = [{
-    value: 1,
-    description: 'Produto 1',
-    subgroups: [1,3]
-  }, {
-    value: 2,
-    description: 'Produto 2',
-    subgroups: [1,2]
-  }, {
-    value: 3,
-    description: 'Produto 3',
-    subgroups: [2]
-  }, {
-    value: 4,
-    description: 'Produto 4',
-    subgroups: [4]
-  }]
-
-  socialMedias: any = [{
-    value: 'facebook',
-    description: 'Facebook'
-  }, {
-    value: 'instagram',
-    description: 'Instagram'
-  }, {
-    value: 'twitter',
-    description: 'Twitter'
-  }, {
-    value: 'linkedin',
-    description: 'Linkedin'
-  }, {
-    value: 'googleplus',
-    description: 'Google+'
-  }];
-
-  states: any = [{
-    value: 'ac',
-    description: 'ACRE' 
-  }, {
-    value: 'al',
-    description: 'ALAGOAS' 
-  }, {
-    value: 'ap',
-    description: 'AMAPÁ' 
-  }, {
-    value: 'a,',
-    description: 'AMAZONAS' 
-  }, {
-    value: 'ba',
-    description: 'BAHIA' 
-  }, {
-    value: 'ce',
-    description: 'CEARÁ' 
-  }, {
-    value: 'df',
-    description: 'DISTRITO FEDERAL' 
-  }, {
-    value: 'es',
-    description: 'ESPÍRITO SANTO' 
-  }, {
-    value: 'go',
-    description: 'GOIÁS' 
-  }, {
-    value: 'ma',
-    description: 'MARANHÃO' 
-  }, {
-    value: 'mt',
-    description: 'MATO GROSSO' 
-  }, {
-    value: 'ms',
-    description: 'MATO GROSSO DO SUL' 
-  }, {
-    value: 'mg',
-    description: 'MINAS GERAIS' 
-  }, {
-    value: 'pa',
-    description: 'PARÁ' 
-  }, {
-    value: 'pb',
-    description: 'PARAÍBA' 
-  }, {
-    value: 'pr',
-    description: 'PARANÁ' 
-  }, {
-    value: 'pe',
-    description: 'PERNAMBUCO' 
-  }, {
-    value: 'pi',
-    description: 'PIAUÍ' 
-  }, {
-    value: 'rj',
-    description: 'RIO DE JANEIRO' 
-  }, {
-    value: 'rn',
-    description: 'RIO GRANDE DO NORTE' 
-  }, {
-    value: 'rs',
-    description: 'RIO GRANDE DO SUL' 
-  }, {
-    value: 'ro',
-    description: 'RONDÔNIA' 
-  }, {
-    value: 'rr',
-    description: 'RORAIMA' 
-  }, {
-    value: 'sc',
-    description: 'SANTA CATARINA' 
-  }, {
-    value: 'sp',
-    description: 'SÃO PAULO' 
-  }, {
-    value: 'se',
-    description: 'SERGIPE' 
-  }, {
-    value: 'to',
-    description: 'TOCANTINS' 
-  }];
-
-  subgroupArea = [{
-    value: 1,
-    description: 'Setor 1'
-  }, {
-    value: 2,
-    description: 'Setor 2'
-  }, {
-    value: 3,
-    description: 'Setor 3'
-  }, {
-    value: 4,
-    description: 'Setor 4'
-  }]
+  maturityArea: any = selects[0].maturityArea;
+  comercialArea: any = selects[0].comercialArea;
+  phoneType: any = selects[0].phoneType;
+  productArea: any = selects[0].productArea;
+  socialMedias: any = selects[0].socialMedias;
+  subgroupArea: any = selects[0].subgroupArea;
+  treatments: any = selects[0].treatment;
+  schooling: any = selects[0].schooling;
 
   constructor(public outsidersService: OutsidersService) {
     /*md-select countries: start*/
@@ -257,7 +113,34 @@ export class AppComponent {
     this.oceania = this.onCheckContinent('Oceania');
     /*md-select countries: end*/
   }
-  
+
+  ngOnInit() {
+    console.log(this.treatments)
+    this.signupForm = new FormGroup({
+      'cnpj_number': new FormControl(null),
+      'business_name': new FormControl(null),
+      'tranding_name': new FormControl(null),
+      'foundation_year': new FormControl(null),
+      'employees_quantity': new FormControl(null),
+      'legal_person': new FormControl(null),
+      'company_size': new FormControl(null),
+      'postal_code': new FormControl(null),
+      'address': new FormControl(null),
+      'number': new FormControl(null),
+      'city': new FormControl(null),
+      'state': new FormControl(null),
+      'district': new FormControl(null),
+      'complement': new FormControl(null),
+      'company_email': new FormControl(null),
+      'company_site': new FormControl(null),
+      'group_id': new FormControl(null),
+      'subgroup_id': new FormControl(null),
+      'product_id': new FormControl(null),
+      'participation_events': new FormControl(null),
+      'company_interests': new FormControl(null)
+    })
+  }
+
   /*Activity: start*/
   filterProduct = (event) => {
     if(event.value.length > 0) {
@@ -316,6 +199,14 @@ export class AppComponent {
     //this.form.value.contact.;
   }
 
+  onChangeCompanyBusiness = (event) => {
+    if(event) {
+      this.companyBusiness = event.value;
+    } else {
+      this.companyBusiness = undefined;
+    }
+  }
+
   onChangeCompanyPhoneDDD = (event) => {
     if(event) {
       this.companyPhoneDDDChanged = event.srcElement.value;
@@ -353,6 +244,10 @@ export class AppComponent {
   /*Contact phones: end*/
 
   /*Representative: start*/
+  onChangeRepresentativeCPF = (event) => {
+    this.representativeCPF = event.srcElement.value;
+  }
+
   onChangeRepresentativeName = (event) => {
     if(event) {
       this.represenativeName = event.srcElement.value;
@@ -365,6 +260,10 @@ export class AppComponent {
         }
       }
     }
+  }
+
+  onChangeRepresenativeTreatment = (event) => {
+    this.representativeTreatment = event.value;
   }
 
   onChangeRepresentativePosition = (event) => {
@@ -387,7 +286,6 @@ export class AppComponent {
 
       if(this.represenativeName && this.represenativePosition) {
         if(this.represenativeName.length > 2 && this.represenativePosition.length > 1) {
-          console.log(286);
           this.createRepresentativeObjectButton = true;
         } else {
           this.createRepresentativeObjectButton = false;
@@ -396,16 +294,26 @@ export class AppComponent {
     }
   }
 
+  onChangeRepresentativeBirthday = (event) => {
+    this.representativeBirthday = event.srcElement.value;
+  }
+
+  onChangeRepresentativeSchooling = (event) => {
+    this.representativeSchooling = event.value;
+  }
+
   createRepresentativeObject = () => {
     this.representativeObject.push({
+      cpf: this.representativeCPF,
+      treatment: this.representativeTreatment,
       name: this.represenativeName,
       position: this.represenativePosition,
       email: this.represenativeEmail,
       phones: this.representativePhoneObject,
-      socialMedias: this.representativeSocialMediaObject
+      socialMedias: this.representativeSocialMediaObject,
+      birthday: this.representativeBirthday,
+      schooling: this.representativeSchooling
     })
-
-    console.log(this.representativeObject);
   }
   /*Representative: end*/
 
