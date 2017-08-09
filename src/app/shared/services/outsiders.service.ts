@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 
+import { environment } from './../../../environments/environment';
+
 @Injectable()
 export class OutsidersService {
 
@@ -14,9 +16,15 @@ export class OutsidersService {
     });
   })
 
-  receitaWsCnpjSearch = (cnpj) => new Promise((resolve, reject) => {    
+  receitaWsCnpjSearch = (cnpj) => new Promise((resolve, reject) => {
+    let header = new Headers({
+      'Access-Control-Allow-Origin': '*'
+    });
+
+    let options = new RequestOptions({ headers: header});
+
     this.http.get(
-      'https://www.receitaws.com.br/v1/cnpj/'+cnpj
+      environment.urlToApi+"receitaws?cnpj="+cnpj
     ).subscribe(res => {
       resolve(res);
     });

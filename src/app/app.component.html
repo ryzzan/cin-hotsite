@@ -21,21 +21,23 @@
           <md-grid-tile [colspan]="2">
             <md-input-container>
               <input mdInput formControlName="cnpj_number" type="text" required
-              placeholder="CNPJ">
+              placeholder="1.1 - CNPJ"
+              [textMask]="{mask: mask.cnpj}"
+              (change)="receitaWsCnpj($event)">
             </md-input-container>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="3">
             <md-input-container>
               <input mdInput formControlName="business_name" type="text" required
-              placeholder="Razão Social">
+              placeholder="1.2 - Razão Social">
             </md-input-container>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="3">
             <md-input-container>
               <input mdInput formControlName="tranding_name" type="text" required
-              placeholder="Nome Fantasia">
+              placeholder="1.3 - Nome Fantasia">
             </md-input-container>
           </md-grid-tile>
         </md-grid-list>
@@ -44,163 +46,169 @@
           <md-grid-tile [colspan]="2">
             <md-input-container>
               <input mdInput formControlName="foundation_year" type="text" required
-              placeholder="Ano de Abertura">
+              placeholder="1.4 - Data de Abertura">
             </md-input-container>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="2">
             <md-input-container>
               <input mdInput formControlName="employees_quantity" type="text" required
-              placeholder="Nº de Funcionários">
+              placeholder="1.5 - Nº de Funcionários">
             </md-input-container>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="4">
             <md-input-container>
               <input mdInput formControlName="legal_person" type="text" required
-              placeholder="Responsável Legal">
+              placeholder="1.6 - Responsável Legal">
             </md-input-container>
           </md-grid-tile>
         </md-grid-list>
 
         <md-grid-list cols="8" rowHeight="100px">
-          <div>Porte da Empresa*</div>
+          <div>1.7 - Porte da Empresa*</div>
 
           <md-grid-tile [colspan]="8">
+            {{companySize}}
             <md-radio-group formControlName="company_size">
               <md-radio-button value="mei">MEI - Até R$ 60.000,00</md-radio-button>
               <md-radio-button value="micro">Microempresa - Até R$ 360.000,00</md-radio-button>
-              <md-radio-button value="pequena">Pequena Empresa - R$ 360.000,00 a R$ 3.600.000.000,00</md-radio-button>
+              <md-radio-button value="pequena">Pequena Empresa - R$ 360.000,00 a R$ 3.600.000,00</md-radio-button>
             </md-radio-group>
           </md-grid-tile>
         </md-grid-list>
       </md-tab>
 
       <md-tab label="Contatos da Empresa">
-        <md-grid-list cols="8">
+        <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="2">
             <md-input-container>
               <input mdInput formControlName="postal_code" type="text" required
               (change)="republicaVirtualCep($event)"
-              placeholder="CEP">
+              placeholder="2.1 - CEP">
             </md-input-container>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="4">
             <md-input-container>
               <input mdInput formControlName="address" type="text" required
-              placeholder="Logradouro">
+              placeholder="2.2 - Logradouro">
             </md-input-container>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="2">
             <md-input-container>
               <input mdInput formControlName="number" type="text" required
-              placeholder="Número">
+              placeholder="2.3 - Número">
             </md-input-container>
           </md-grid-tile>
         </md-grid-list>
 
-        <md-grid-list cols="8">
+        <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="3">
             <md-input-container>
               <input mdInput formControlName="district" type="text" required
-              placeholder="Bairro">
+              placeholder="2.4 - Bairro">
             </md-input-container>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="3">
             <md-input-container>
               <input mdInput formControlName="city" type="text" required
-              placeholder="Município">
+              placeholder="2.5 - Município">
             </md-input-container>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="2">
             <md-input-container>
               <input mdInput formControlName="state" type="text" required
-              placeholder="UF">
+              placeholder="2.6 - UF">
             </md-input-container>
           </md-grid-tile>
         </md-grid-list>
 
-        <md-grid-list cols="8">
+        <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="2">
-            <md-select placeholder="2.8 - Tipo de telefone" (change)="onChangeCompanyPhoneType($event)" id="testando">
+            <md-select placeholder="2.7 - Tipo de telefone" (change)="onChangeCompanyPhoneType($event)" id="testando">
               <md-option *ngFor="let phone of phoneType" [value]="phone.value">{{phone.description}}</md-option>
             </md-select>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="2" *ngIf="companyPhoneTypeChanged">
             <md-input-container style="width: 90px; margin-right: 5px;">
-              <input mdInput type="text" placeholder="2.8.1 - DDD" (keyup)="onChangeCompanyPhoneDDD($event)">
+              <input mdInput type="text" placeholder="2.7.1 - DDD" (keyup)="onChangeCompanyPhoneDDD($event)">
             </md-input-container>
             <md-input-container style="width: 110px;">
-              <input mdInput type="text" placeholder="2.8.2 - Número" (keyup)="onChangeCompanyPhoneNumber($event)">
+              <input mdInput type="text" placeholder="2.7.2 - Número" (keyup)="onChangeCompanyPhoneNumber($event)">
             </md-input-container>            
             <a md-mini-fab *ngIf="createContactPhoneObjectButton" (click)="createContactPhoneObject()"><md-icon color="primary">add</md-icon></a>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="2">
-            <md-select placeholder="5.5 - Mídia Social" (change)="onChangeRepresentativeSocialMediaType($event)">
+            <md-select placeholder="2.8 - Mídia Social" (change)="onChangeRepresentativeSocialMediaType($event)">
               <md-option *ngFor="let socialMedia of socialMedias" [value]="socialMedia.value">{{socialMedia.description}}</md-option>
             </md-select>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="2" *ngIf="representativeSocialMediaTypeChanged">
             <md-input-container style="width: 300px;">
-              <input mdInput type="text" placeholder="5.5.1 - URL da mídia social" (keyup)="onChangeRepresentativeSocialMediaURL($event)">
+              <input mdInput type="text" placeholder="2.8.1 - URL da mídia social" (keyup)="onChangeRepresentativeSocialMediaURL($event)">
             </md-input-container>            
-            <a md-mini-fab *ngIf="createRepresentativeSocialMediaObjectButton" (click)="createRepresentativeSocialMediaObject()"><md-icon color="primary">add</md-icon></a>
+            <a md-mini-fab *ngIf="createRepresentativeSocialMediaObjectButton" (click)="createRepresentativeSocialMediaObject()">
+              <md-icon color="primary">add</md-icon>
+            </a>
           </md-grid-tile>
         </md-grid-list>
 
-        <md-grid-list cols="8">
+        <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="3">
             <md-input-container>
               <input mdInput formControlName="company_email" type="text" required
-              placeholder="E-mail">
+              placeholder="2.9 - E-mail">
             </md-input-container>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="4">
             <md-input-container>
               <input mdInput formControlName="company_site" type="text" required
-              placeholder="Site">
+              placeholder="2.10 - Site">
             </md-input-container>
           </md-grid-tile>
         </md-grid-list>
       </md-tab>
 
       <md-tab label="Representantes">
-        <md-grid-list cols="8">
+        <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="1">
-            <md-select placeholder="5.1 - Título" (change)="onChangeRepresenativeTreatment($event)">
+            <md-select placeholder="3.1 - Título" (change)="onChangeRepresentativeTreatment($event)">
               <md-option *ngFor="let treatment of treatments" [value]="treatment.value">{{treatment.description}}</md-option>
             </md-select>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="2">
             <md-input-container>
-              <input mdInput type="text" placeholder="5.2 - CPF" (keydown)="onChangeRepresentativeCPF($event)">
+              <input mdInput type="text" 
+              placeholder="3.2 - CPF" 
+              (keydown)="onChangeRepresentativeCPF($event)"
+              [textMask]="{mask: mask.cpf}">
             </md-input-container>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="2">
             <md-input-container>
-              <input mdInput type="text" placeholder="5.3 - Nome" (keydown)="onChangeRepresentativeName($event)">
+              <input mdInput type="text" placeholder="3.3 - Nome" (keydown)="onChangeRepresentativeName($event)">
             </md-input-container>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="2">
             <md-input-container>
-              <input mdInput type="text" placeholder="5.4 - Cargo" (keydown)="onChangeRepresentativePosition($event)">
+              <input mdInput type="text" placeholder="3.4 - Cargo" (keydown)="onChangeRepresentativePosition($event)">
             </md-input-container>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="1">
             <md-input-container>
-              <input mdInput [mdDatepicker]="picker" placeholder="Nascimento" 
+              <input mdInput [mdDatepicker]="picker" placeholder="3.5 - Nascimento" 
               (keydown)="onChangeRepresentativeBirthday($event)">
               <button mdSuffix [mdDatepickerToggle]="picker"></button>
             </md-input-container>
@@ -208,26 +216,26 @@
           </md-grid-tile>
         </md-grid-list>
 
-        <md-grid-list cols="8">
+        <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="2">
-            <md-select placeholder="5.4 - Escolaridade" (change)="onChangeRepresentativeSchooling($event)">
+            <md-select placeholder="3.6 - Escolaridade" (change)="onChangeRepresentativeSchooling($event)">
               <md-option *ngFor="let schoolingChoice of schooling" [value]="schoolingChoice.value">{{schoolingChoice.description}}</md-option>
             </md-select>
           </md-grid-tile>
           
           <!--Representative phone: start -->
           <md-grid-tile [colspan]="2">
-            <md-select placeholder="5.5 - Tipo de telefone" (change)="onChangeRepresentativePhoneType($event)" id="testando">
+            <md-select placeholder="3.7 - Tipo de telefone" (change)="onChangeRepresentativePhoneType($event)" id="testando">
               <md-option *ngFor="let phone of phoneType" [value]="phone.value">{{phone.description}}</md-option>
             </md-select>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="2" *ngIf="representativePhoneTypeChanged">
             <md-input-container style="width: 90px; margin-right: 5px;">
-              <input mdInput type="text" placeholder="5.5.1 - DDD" (keyup)="onChangeRepresentativePhoneDDD($event)">
+              <input mdInput type="text" placeholder="3.7.1 - DDD" (keyup)="onChangeRepresentativePhoneDDD($event)">
             </md-input-container>
             <md-input-container style="width: 110px;">
-              <input mdInput type="text" placeholder="5.5.2 - Número" (keyup)="onChangeRepresentativePhoneNumber($event)">
+              <input mdInput type="text" placeholder="3.7.2 - Número" (keyup)="onChangeRepresentativePhoneNumber($event)">
             </md-input-container>            
             <a md-mini-fab *ngIf="createRepresentativePhoneObjectButton" (click)="createRepresentativePhoneObject()"><md-icon color="primary">add</md-icon></a>
           </md-grid-tile>
@@ -235,7 +243,46 @@
           
           <md-grid-tile [colspan]="2">
             <md-input-container>
-              <input mdInput type="text" placeholder="5.6 - E-mail" (keydown)="onChangeRepresentativeEmail($event)">
+              <input mdInput type="text" placeholder="3.8 - E-mail" (keydown)="onChangeRepresentativeEmail($event)">
+            </md-input-container>
+          </md-grid-tile>
+        </md-grid-list>
+
+        <md-grid-list cols="8" rowHeight="100px">
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput type="text"
+              (keydown)="onChangeRepresentativePostalCode($event)"
+              (change)="republicaVirtualCepToRepresentative($event)"
+              placeholder="3.9 - CEP"
+              [textMask]="{mask: mask.zip}">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="3">
+            <md-input-container>
+              <input mdInput type="text"
+              (keydown)="onChangeRepresentativeAddress($event)"
+              placeholder="3.10 - Logradouro"
+              [value]="representativeAddressObject?.logradouro">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput type="text"
+              (keydown)="onChangeRepresentativeCity($event)"
+              placeholder="3.11 - Cidade"
+              [value]="representativeAddressObject?.cidade">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="1">
+            <md-input-container>
+              <input mdInput type="text"
+              (keydown)="onChangeRepresentativeState($event)"
+              placeholder="3.12 - UF"
+              [value]="representativeAddressObject?.uf">
             </md-input-container>
           </md-grid-tile>
         </md-grid-list>
@@ -265,6 +312,136 @@
         <div *ngIf="createRepresentativeObjectButton">
           <a md-raised-button color="primary" (click)="createRepresentativeObject()">Adicionar Representantes</a>
         </div>
+      </md-tab>
+
+      <md-tab label="Atividade">
+        <md-grid-list cols="8" rowHeight="100px">
+          <md-grid-tile [colspan]="2">
+            <md-select placeholder="4.1 - Ramos de Atividade" formControlName="group_id"
+            multiple>
+              <md-option *ngFor="let comercial of comercialArea" [value]="comercial.value">{{comercial.description}}</md-option>
+            </md-select>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-select placeholder="4.2 - Setor" formControlName="subgroup_id"
+            (change)="filterProduct($event)"
+            multiple>
+              <md-option *ngFor="let subgroup of subgroupArea" [value]="subgroup.value">{{subgroup.description}}</md-option>
+            </md-select>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2" *ngIf="productObject">
+            <md-select placeholder="4.3 - Produtos" formControlName="product_id"
+            multiple>
+              <md-option *ngFor="let product of productObject" [value]="product.value">{{product.description}}</md-option>
+            </md-select>
+          </md-grid-tile>
+        </md-grid-list>
+
+        <md-grid-list cols="8" rowHeight="100px">
+          <md-grid-tile [colspan]="6">
+            <md-input-container>
+              <textarea mdInput placeholder="4.4 - Capacidade de Venda (Exportação) / Mês (Unidades)"
+              formControlName="sales_capacity">
+              </textarea>
+            </md-input-container>
+          </md-grid-tile>
+         </md-grid-list>
+      </md-tab>
+
+      <md-tab label="Interesses">
+         <md-grid-list cols="8" rowHeight="100px">
+          <md-grid-tile [colspan]="4">
+            <md-input-container>
+              <textarea mdInput placeholder="5.1 - Eventos nacionais/internacionais que sua empresa participou" 
+              formControlName="participation_events">
+              </textarea>
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="4">
+            <md-input-container>
+              <textarea mdInput placeholder="5.2 - Interesses da empresa / Observações"
+              formControlName="company_interests">
+              </textarea>
+            </md-input-container>
+          </md-grid-tile>
+         </md-grid-list>
+
+         <md-grid-list cols="8" rowHeight="100px">
+          <md-grid-tile [colspan]="3">
+            <md-input-container>
+              <input mdInput type="text"
+              placeholder="5.3 - % de faturamento de vendas locais"
+              (keyup)="onChangeRepresentativeLocalRevenues($event)">
+            </md-input-container>
+
+            <a md-mini-fab *ngIf="createRepresentativeLocalRevenuesObjectButton" (click)="createLocalRevenuesObject()">
+              <md-icon color="primary">add</md-icon>
+            </a>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-select placeholder="5.4 - Outros estados"
+            (change)="onChangeStatesBusiness($event)">
+              <md-option *ngFor="let state of states" [value]="state.value">{{state.description}}</md-option>
+            </md-select>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="3">
+            <md-input-container>
+              <input mdInput type="text" [disabled]="statesBusinessChanged == undefined"
+              placeholder="5.4.1 - % de faturamento"
+              (keyup)="onChangeRepresentativeOtherStateRevenues($event)">
+            </md-input-container>
+
+            <a md-mini-fab *ngIf="createRepresentativeOtherStateRevenuesObjectButton" (click)="createOtherStateRevenuesObject()">
+              <md-icon color="primary">add</md-icon>
+            </a>
+          </md-grid-tile>
+         </md-grid-list>
+
+         <md-grid-list cols="8" rowHeight="100px">
+          <md-grid-tile [colspan]="2">
+            <md-select placeholder="5.5 - Outros países"
+            (change)="onChangeCountriesBusiness($event)">
+              <md-option *ngFor="let country of countries" [value]="country.initials">{{country.country_name_pt}}</md-option>
+            </md-select>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="3">
+            <md-input-container>
+              <input mdInput type="text" [disabled]="countriesBusinessChanged == undefined"
+              placeholder="5.5.1 - % de faturamento"
+              (keyup)="onChangeRepresentativeOtherCountryRevenues($event)">
+            </md-input-container>
+
+            <a md-mini-fab *ngIf="createRepresentativeOtherCountryRevenuesObjectButton" (click)="createOtherCountryRevenuesObject()">
+              <md-icon color="primary">add</md-icon>
+            </a>
+          </md-grid-tile>
+         </md-grid-list>
+
+         <md-grid-list cols="8" *ngIf="representativeRevenuesObject.length > 0">
+           {{representativeRevenuesObject.place}}
+           <!--<md-table #table [dataSource]="representativeRevenuesObject">
+            <ng-container cdkColumnDef="place_type">
+              <md-header-cell *cdkHeaderCellDef> Tipo de lugar </md-header-cell>
+              <md-cell *cdkCellDef="let row"> {{row.place_type}} </md-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="place">
+              <md-header-cell *cdkHeaderCellDef> Nome </md-header-cell>
+              <md-cell *cdkCellDef="let row"> {{row.place}} </md-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="revenues">
+              <md-header-cell *cdkHeaderCellDef> Faturamento </md-header-cell>
+              <md-cell *cdkCellDef="let row"> {{row.revenues}} </md-cell>
+            </ng-container>
+           </md-table>-->
+         </md-grid-list>
       </md-tab>
       <!--Vendedor: end-->
     </md-tab-group>

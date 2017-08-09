@@ -1,1539 +1,1539 @@
-let countries: any = [{ 
-    "gentilico" : "afegãne",
-    "nome_pais" : "Afeganistão",
-    "nome_pais_int" : "Afghanistan",
-    "sigla" : "AF",
-    "continente": "Ásia"
-},
-{ "gentilico" : "sul-africana",
-    "nome_pais" : "África do Sul",
-    "nome_pais_int" : "South Africa",
-    "sigla" : "ZA",
-    "continente": "África"
-},
-{ "gentilico" : "albanesa",
-    "nome_pais" : "Albânia",
-    "nome_pais_int" : "Albania",
-    "sigla" : "AL",
-    "continente": "Europa"
-},
-{ "gentilico" : "alemã",
-    "nome_pais" : "Alemanha",
-    "nome_pais_int" : "Germany",
-    "sigla" : "DE",
-    "continente": "Europa"
-},
-{ "gentilico" : "andorrana",
-    "nome_pais" : "Andorra",
-    "nome_pais_int" : "Andorra",
-    "sigla" : "AD",
-    "continente": "Europa"
-},
-{ "gentilico" : "angolana",
-    "nome_pais" : "Angola",
-    "nome_pais_int" : "Angola",
-    "sigla" : "AO",
-    "continente": "África"
-},
-{ "gentilico" : "anguillana",
-    "nome_pais" : "Anguilla",
-    "nome_pais_int" : "Anguilla",
-    "sigla" : "AI",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "de antártida",
-    "nome_pais" : "Antártida",
-    "nome_pais_int" : "Antarctica",
-    "sigla" : "AQ",
-    "continente": "Antártida"
-},
-{ "gentilico" : "antiguana",
-    "nome_pais" : "Antígua e Barbuda",
-    "nome_pais_int" : "Antigua & Barbuda",
-    "sigla" : "AG",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "saudita",
-    "nome_pais" : "Arábia Saudita",
-    "nome_pais_int" : "Saudi Arabia",
-    "sigla" : "SA",
-    "continente": "Ásia"
-},
-{ "gentilico" : "argelina",
-    "nome_pais" : "Argélia",
-    "nome_pais_int" : "Algeria",
-    "sigla" : "DZ",
-    "continente": "África"
-},
-{ "gentilico" : "argentina",
-    "nome_pais" : "Argentina",
-    "nome_pais_int" : "Argentina",
-    "sigla" : "AR",
-    "continente": "América do Sul"
-},
-{ "gentilico" : "armênia",
-    "nome_pais" : "Armênia",
-    "nome_pais_int" : "Armenia",
-    "sigla" : "AM",
-    "continente": "Ásia"
-},
-{ "gentilico" : "arubana",
-    "nome_pais" : "Aruba",
-    "nome_pais_int" : "Aruba",
-    "sigla" : "AW",
-    "continente": "América do Sul"
-},
-{ "gentilico" : "australiana",
-    "nome_pais" : "Austrália",
-    "nome_pais_int" : "Australia",
-    "sigla" : "AU",
-    "continente": "Oceania"
-},
-{ "gentilico" : "austríaca",
-    "nome_pais" : "Áustria",
-    "nome_pais_int" : "Austria",
-    "sigla" : "AT",
-    "continente": "Europa"
-},
-{ "gentilico" : "azerbaijano",
-    "nome_pais" : "Azerbaijão",
-    "nome_pais_int" : "Azerbaijan",
-    "sigla" : "AZ",
-    "continente": "Europa"
-},
-{ "gentilico" : "bahamense",
-    "nome_pais" : "Bahamas",
-    "nome_pais_int" : "Bahamas",
-    "sigla" : "BS",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "barenita",
-    "nome_pais" : "Bahrein",
-    "nome_pais_int" : "Bahrain",
-    "sigla" : "BH",
-    "continente": "Ásia"
-},
-{ "gentilico" : "bengali",
-    "nome_pais" : "Bangladesh",
-    "nome_pais_int" : "Bangladesh",
-    "sigla" : "BD",
-    "continente": "Ásia"
-},
-{ "gentilico" : "barbadiana",
-    "nome_pais" : "Barbados",
-    "nome_pais_int" : "Barbados",
-    "sigla" : "BB",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "bielo-russa",
-    "nome_pais" : "Belarus",
-    "nome_pais_int" : "Belarus",
-    "sigla" : "BY",
-    "continente": "Europa"
-},
-{ "gentilico" : "belga",
-    "nome_pais" : "Bélgica",
-    "nome_pais_int" : "Belgium",
-    "sigla" : "BE",
-    "continente": "Europa"
-},
-{ "gentilico" : "belizenha",
-    "nome_pais" : "Belize",
-    "nome_pais_int" : "Belize",
-    "sigla" : "BZ",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "beninense",
-    "nome_pais" : "Benin",
-    "nome_pais_int" : "Benin",
-    "sigla" : "BJ",
-    "continente": "África"
-},
-{ "gentilico" : "bermudiana",
-    "nome_pais" : "Bermudas",
-    "nome_pais_int" : "Bermuda",
-    "sigla" : "BM",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "boliviana",
-    "nome_pais" : "Bolívia",
-    "nome_pais_int" : "Bolivia",
-    "sigla" : "BO",
-    "continente": "América do Sul"
-},
-{ "gentilico" : "bósnia",
-    "nome_pais" : "Bósnia-Herzegóvina",
-    "nome_pais_int" : "Bosnia & Herzegovina",
-    "sigla" : "BA",
-    "continente": "Europa"
-},
-{ "gentilico" : "betchuana",
-    "nome_pais" : "Botsuana",
-    "nome_pais_int" : "Botswana",
-    "sigla" : "BW",
-    "continente": "África"
-},
-{ "gentilico" : "brasileira",
-    "nome_pais" : "Brasil",
-    "nome_pais_int" : "Brazil",
-    "sigla" : "BR",
-    "continente": "América do Sul"
-},
-{ "gentilico" : "bruneiana",
-    "nome_pais" : "Brunei",
-    "nome_pais_int" : "Brunei",
-    "sigla" : "BN",
-    "continente": "Ásia"
-},
-{ "gentilico" : "búlgara",
-    "nome_pais" : "Bulgária",
-    "nome_pais_int" : "Bulgaria",
-    "sigla" : "BG",
-    "continente": "Europa"
-},
-{ "gentilico" : "burquinês",
-    "nome_pais" : "Burkina Fasso",
-    "nome_pais_int" : "Burkina Faso",
-    "sigla" : "BF",
-    "continente": "África"
-},
-{ "gentilico" : "burundinesa",
-    "nome_pais" : "Burundi",
-    "nome_pais_int" : "Burundi",
-    "sigla" : "BI",
-    "continente": "África"
-},
-{ "gentilico" : "butanesa",
-    "nome_pais" : "Butão",
-    "nome_pais_int" : "Bhutan",
-    "sigla" : "BT",
-    "continente": "Ásia"
-},
-{ "gentilico" : "cabo-verdiana",
-    "nome_pais" : "Cabo Verde",
-    "nome_pais_int" : "Cape Verde",
-    "sigla" : "CV",
-    "continente": "África"
-},
-{ "gentilico" : "camaronesa",
-    "nome_pais" : "Camarões",
-    "nome_pais_int" : "Cameroon",
-    "sigla" : "CM",
-    "continente": "África"
-},
-{ "gentilico" : "cambojana",
-    "nome_pais" : "Camboja",
-    "nome_pais_int" : "Cambodia",
-    "sigla" : "KH",
-    "continente": "Ásia"
-},
-{ "gentilico" : "canadense",
-    "nome_pais" : "Canadá",
-    "nome_pais_int" : "Canada",
-    "sigla" : "CA",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "canário",
-    "nome_pais" : "Canárias",
-    "nome_pais_int" : "Canary Islands",
-    "sigla" : "IC",
-    "continente": "Europa"
-},
-{ "gentilico" : "cazaque",
-    "nome_pais" : "Cazaquistão",
-    "nome_pais_int" : "Kazakhstan",
-    "sigla" : "KZ",
-    "continente": "Ásia"
-},
-{ "gentilico" : "de ceuta e melilla",
-    "nome_pais" : "Ceuta e Melilla",
-    "nome_pais_int" : "Ceuta & Melilla",
-    "sigla" : "EA",
-    "continente": "África"
-},
-{ "gentilico" : "chadiana",
-    "nome_pais" : "Chade",
-    "nome_pais_int" : "Chad",
-    "sigla" : "TD",
-    "continente": "África"
-},
-{ "gentilico" : "chilena",
-    "nome_pais" : "Chile",
-    "nome_pais_int" : "Chile",
-    "sigla" : "CL",
-    "continente": "América do Sul"
-},
-{ "gentilico" : "chinesa",
-    "nome_pais" : "China",
-    "nome_pais_int" : "China",
-    "sigla" : "CN",
-    "continente": "Ásia"
-},
-{ "gentilico" : "cipriota",
-    "nome_pais" : "Chipre",
-    "nome_pais_int" : "Cyprus",
-    "sigla" : "CY",
-    "continente": "Europa"
-},
-{ "gentilico" : "cingapuriana",
-    "nome_pais" : "Cingapura",
-    "nome_pais_int" : "Singapore",
-    "sigla" : "SG",
-    "continente": "Ásia"
-},
-{ "gentilico" : "colombiana",
-    "nome_pais" : "Colômbia",
-    "nome_pais_int" : "Colombia",
-    "sigla" : "CO",
-    "continente": "América do Sul"
-},
-{ "gentilico" : "comorense",
-    "nome_pais" : "Comores",
-    "nome_pais_int" : "Comoros",
-    "sigla" : "KM",
-    "continente": "África"
-},
-{ "gentilico" : "congolesa",
-    "nome_pais" : "Congo",
-    "nome_pais_int" : "Congo (Republic)",
-    "sigla" : "CG",
-    "continente": "África"
-},
-{ "gentilico" : "norte-coreano",
-    "nome_pais" : "Coréia do Norte",
-    "nome_pais_int" : "North Korea",
-    "sigla" : "KP",
-    "continente": "Ásia"
-},
-{ "gentilico" : "norte-coreana",
-    "nome_pais" : "Coréia do Sul",
-    "nome_pais_int" : "South Korea",
-    "sigla" : "KR",
-    "continente": "Ásia"
-},
-{ "gentilico" : "marfinense",
-    "nome_pais" : "Costa do Marfim",
-    "nome_pais_int" : "Côte d¿Ivoire",
-    "sigla" : "CI",
-    "continente": "África"
-},
-{ "gentilico" : "costarriquenha",
-    "nome_pais" : "Costa Rica",
-    "nome_pais_int" : "Costa Rica",
-    "sigla" : "CR",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "croata",
-    "nome_pais" : "Croácia",
-    "nome_pais_int" : "Croatia",
-    "sigla" : "HR",
-    "continente": "Europa"
-},
-{ "gentilico" : "cubana",
-    "nome_pais" : "Cuba",
-    "nome_pais_int" : "Cuba",
-    "sigla" : "CU",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "curaçauense",
-    "nome_pais" : "Curaçao",
-    "nome_pais_int" : "Curaçao",
-    "sigla" : "CW",
-    "continente": "América do Sul"
-},
-{ "gentilico" : "chagositano",
-    "nome_pais" : "Diego Garcia",
-    "nome_pais_int" : "Diego Garcia",
-    "sigla" : "DG",
-    "continente": "Incerto"
-},
-{ "gentilico" : "dinamarquesa",
-    "nome_pais" : "Dinamarca",
-    "nome_pais_int" : "Denmark",
-    "sigla" : "DK",
-    "continente": "Europa"
-},
-{ "gentilico" : "djibutiana",
-    "nome_pais" : "Djibuti",
-    "nome_pais_int" : "Djibouti",
-    "sigla" : "DJ",
-    "continente": "África"
-},
-{ "gentilico" : "dominiquense",
-    "nome_pais" : "Dominica",
-    "nome_pais_int" : "Dominica",
-    "sigla" : "DM",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "egípcia",
-    "nome_pais" : "Egito",
-    "nome_pais_int" : "Egypt",
-    "sigla" : "EG",
-    "continente": "África"
-},
-{ "gentilico" : "salvadorenha",
-    "nome_pais" : "El Salvador",
-    "nome_pais_int" : "El Salvador",
-    "sigla" : "SV",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "árabe",
-    "nome_pais" : "Emirados Árabes Unidos",
-    "nome_pais_int" : "United Arab Emirates",
-    "sigla" : "AE",
-    "continente": "Ásia"
-},
-{ "gentilico" : "equatoriana",
-    "nome_pais" : "Equador",
-    "nome_pais_int" : "Ecuador",
-    "sigla" : "EC",
-    "continente": "América do Sul"
-},
-{ "gentilico" : "eritreia",
-    "nome_pais" : "Eritréia",
-    "nome_pais_int" : "Eritrea",
-    "sigla" : "ER",
-    "continente": "África"
-},
-{ "gentilico" : "eslovaco",
-    "nome_pais" : "Eslováquia",
-    "nome_pais_int" : "Slovakia",
-    "sigla" : "SK",
-    "continente": "Europa"
-},
-{ "gentilico" : "esloveno",
-    "nome_pais" : "Eslovênia",
-    "nome_pais_int" : "Slovenia",
-    "sigla" : "SI",
-    "continente": "Europa"
-},
-{ "gentilico" : "espanhola",
-    "nome_pais" : "Espanha",
-    "nome_pais_int" : "Spain",
-    "sigla" : "ES",
-    "continente": "Europa"
-},
-{ "gentilico" : "norte-americana",
-    "nome_pais" : "Estados Unidos",
-    "nome_pais_int" : "United States",
-    "sigla" : "US",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "estoniana",
-    "nome_pais" : "Estônia",
-    "nome_pais_int" : "Estonia",
-    "sigla" : "EE",
-    "continente": "Europa"
-},
-{ "gentilico" : "etíope",
-    "nome_pais" : "Etiópia",
-    "nome_pais_int" : "Ethiopia",
-    "sigla" : "ET",
-    "continente": "África"
-},
-{ "gentilico" : "fijiana",
-    "nome_pais" : "Fiji",
-    "nome_pais_int" : "Fiji",
-    "sigla" : "FJ",
-    "continente": "Oceania"
-},
-{ "gentilico" : "filipina",
-    "nome_pais" : "Filipinas",
-    "nome_pais_int" : "Philippines",
-    "sigla" : "PH",
-    "continente": "Ásia"
-},
-{ "gentilico" : "finlandesa",
-    "nome_pais" : "Finlândia",
-    "nome_pais_int" : "Finland",
-    "sigla" : "FI",
-    "continente": "Europa"
-},
-{ "gentilico" : "francesa",
-    "nome_pais" : "França",
-    "nome_pais_int" : "France",
-    "sigla" : "FR",
-    "continente": "Europa"
-},
-{ "gentilico" : "gabonesa",
-    "nome_pais" : "Gabão",
-    "nome_pais_int" : "Gabon",
-    "sigla" : "GA",
-    "continente": "África"
-},
-{ "gentilico" : "gambiana",
-    "nome_pais" : "Gâmbia",
-    "nome_pais_int" : "Gambia",
-    "sigla" : "GM",
-    "continente": "África"
-},
-{ "gentilico" : "ganense",
-    "nome_pais" : "Gana",
-    "nome_pais_int" : "Ghana",
-    "sigla" : "GH",
-    "continente": "África"
-},
-{ "gentilico" : "georgiana",
-    "nome_pais" : "Geórgia",
-    "nome_pais_int" : "Georgia",
-    "sigla" : "GE",
-    "continente": "Europa"
-},
-{ "gentilico" : "gibraltariana",
-    "nome_pais" : "Gibraltar",
-    "nome_pais_int" : "Gibraltar",
-    "sigla" : "GI",
-    "continente": "Europa"
-},
-{ "gentilico" : "inglesa",
-    "nome_pais" : "Grã-Bretanha (Reino Unido, UK)",
-    "nome_pais_int" : "United Kingdom",
-    "sigla" : "GB",
-    "continente": "Europa"
-},
-{ "gentilico" : "granadina",
-    "nome_pais" : "Granada",
-    "nome_pais_int" : "Grenada",
-    "sigla" : "GD",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "grega",
-    "nome_pais" : "Grécia",
-    "nome_pais_int" : "Greece",
-    "sigla" : "GR",
-    "continente": "Europa"
-},
-{ "gentilico" : "groenlandesa",
-    "nome_pais" : "Groelândia",
-    "nome_pais_int" : "Greenland",
-    "sigla" : "GL",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "guadalupense",
-    "nome_pais" : "Guadalupe",
-    "nome_pais_int" : "Guadeloupe",
-    "sigla" : "GP",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "guamês",
-    "nome_pais" : "Guam (Território dos Estados Unidos)",
-    "nome_pais_int" : "Guam",
-    "sigla" : "GU",
-    "continente": "Oceania"
-},
-{ "gentilico" : "guatemalteca",
-    "nome_pais" : "Guatemala",
-    "nome_pais_int" : "Guatemala",
-    "sigla" : "GT",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "guernesiano",
-    "nome_pais" : "Guernsey",
-    "nome_pais_int" : "Guernsey",
-    "sigla" : "GG",
-    "continente": "Europa"
-},
-{ "gentilico" : "guianense",
-    "nome_pais" : "Guiana",
-    "nome_pais_int" : "Guyana",
-    "sigla" : "GY",
-    "continente": "América do Sul"
-},
-{ "gentilico" : "franco-guianense",
-    "nome_pais" : "Guiana Francesa",
-    "nome_pais_int" : "French Guiana",
-    "sigla" : "GF",
-    "continente": "América do Sul"
-},
-{ "gentilico" : "guinéu-equatoriano ou equatoguineana",
-    "nome_pais" : "Guiné",
-    "nome_pais_int" : "Guinea",
-    "sigla" : "GN",
-    "continente": "África"
-},
-{ "gentilico" : "guinéu-equatoriano",
-    "nome_pais" : "Guiné Equatorial",
-    "nome_pais_int" : "Equatorial Guinea",
-    "sigla" : "GQ",
-    "continente": "África"
-},
-{ "gentilico" : "guineense",
-    "nome_pais" : "Guiné-Bissau",
-    "nome_pais_int" : "Guinea-Bissau",
-    "sigla" : "GW",
-    "continente": "África"
-},
-{ "gentilico" : "haitiana",
-    "nome_pais" : "Haiti",
-    "nome_pais_int" : "Haiti",
-    "sigla" : "HT",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "holandês",
-    "nome_pais" : "Holanda",
-    "nome_pais_int" : "Netherlands",
-    "sigla" : "NL",
-    "continente": "Europa"
-},
-{ "gentilico" : "hondurenha",
-    "nome_pais" : "Honduras",
-    "nome_pais_int" : "Honduras",
-    "sigla" : "HN",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "hong-konguiana ou chinesa",
-    "nome_pais" : "Hong Kong",
-    "nome_pais_int" : "Hong Kong",
-    "sigla" : "HK",
-    "continente": "Ásia"
-},
-{ "gentilico" : "húngara",
-    "nome_pais" : "Hungria",
-    "nome_pais_int" : "Hungary",
-    "sigla" : "HU",
-    "continente": "Europa"
-},
-{ "gentilico" : "iemenita",
-    "nome_pais" : "Iêmen",
-    "nome_pais_int" : "Yemen",
-    "sigla" : "YE",
-    "continente": "Ásia"
-},
-{ "gentilico" : "da ilha bouvet",
-    "nome_pais" : "Ilha Bouvet",
-    "nome_pais_int" : "Bouvet Island",
-    "sigla" : "BV",
-    "continente": "Antártida"
-},
-{ "gentilico" : "da ilha de ascensão",
-    "nome_pais" : "Ilha de Ascensão",
-    "nome_pais_int" : "Ascension Island",
-    "sigla" : "AC",
-    "continente": "América do Sul"
-},
-{ "gentilico" : "da ilha de clipperton",
-    "nome_pais" : "Ilha de Clipperton",
-    "nome_pais_int" : "Clipperton Island",
-    "sigla" : "CP",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "manês",
-    "nome_pais" : "Ilha de Man",
-    "nome_pais_int" : "Isle of Man",
-    "sigla" : "IM",
-    "continente": "Europa"
-},
-{ "gentilico" : "natalense",
-    "nome_pais" : "Ilha Natal",
-    "nome_pais_int" : "Christmas Island",
-    "sigla" : "CX",
-    "continente": "Ásia"
-},
-{ "gentilico" : "pitcairnense",
-    "nome_pais" : "Ilha Pitcairn",
-    "nome_pais_int" : "Pitcairn Islands",
-    "sigla" : "PN",
-    "continente": "Oceania"
-},
-{ "gentilico" : "reunionense",
-    "nome_pais" : "Ilha Reunião",
-    "nome_pais_int" : "Réunion",
-    "sigla" : "RE",
-    "continente": "África"
-},
-{ "gentilico" : "alandês",
-    "nome_pais" : "Ilhas Aland",
-    "nome_pais_int" : "Åland Islands",
-    "sigla" : "AX",
-    "continente": "Europa"
-},
-{ "gentilico" : "caimanês",
-    "nome_pais" : "Ilhas Cayman",
-    "nome_pais_int" : "Cayman Islands",
-    "sigla" : "KY",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "coquense",
-    "nome_pais" : "Ilhas Cocos",
-    "nome_pais_int" : "Cocos (Keeling) Islands",
-    "sigla" : "CC",
-    "continente": "Ásia"
-},
-{ "gentilico" : "cookense",
-    "nome_pais" : "Ilhas Cook",
-    "nome_pais_int" : "Cook Islands",
-    "sigla" : "CK",
-    "continente": "Oceania"
-},
-{ "gentilico" : "faroense",
-    "nome_pais" : "Ilhas Faroes",
-    "nome_pais_int" : "Faroe Islands",
-    "sigla" : "FO",
-    "continente": "Europa"
-},
-{ "gentilico" : "das ilhas geórgia do sul e sandwich do sul",
-    "nome_pais" : "Ilhas Geórgia do Sul e Sandwich do Sul",
-    "nome_pais_int" : "South Georgia & South Sandwich Islands",
-    "sigla" : "GS",
-    "continente": "Incerto"
-},
-{ "gentilico" : "das ilhas heard e mcdonald",
-    "nome_pais" : "Ilhas Heard e McDonald (Território da Austrália)",
-    "nome_pais_int" : "Heard & McDonald Islands",
-    "sigla" : "HM",
-    "continente": "Oceania"
-},
-{ "gentilico" : "malvinense",
-    "nome_pais" : "Ilhas Malvinas",
-    "nome_pais_int" : "Falkland Islands (Islas Malvinas)",
-    "sigla" : "FK",
-    "continente": "América do Sul"
-},
-{ "gentilico" : "norte-marianense",
-    "nome_pais" : "Ilhas Marianas do Norte",
-    "nome_pais_int" : "Northern Mariana Islands",
-    "sigla" : "MP",
-    "continente": "Ásia"
-},
-{ "gentilico" : "marshallino",
-    "nome_pais" : "Ilhas Marshall",
-    "nome_pais_int" : "Marshall Islands",
-    "sigla" : "MH",
-    "continente": "Oceania"
-},
-{ "gentilico" : "das ilhas menores afastadas",
-    "nome_pais" : "Ilhas Menores dos Estados Unidos",
-    "nome_pais_int" : "U.S. Outlying Islands",
-    "sigla" : "UM",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "norfolquino",
-    "nome_pais" : "Ilhas Norfolk",
-    "nome_pais_int" : "Norfolk Island",
-    "sigla" : "NF",
-    "continente": "Oceania"
-},
-{ "gentilico" : "salomônico",
-    "nome_pais" : "Ilhas Salomão",
-    "nome_pais_int" : "Solomon Islands",
-    "sigla" : "SB",
-    "continente": "Oceania"
-},
-{ "gentilico" : "seichelense",
-    "nome_pais" : "Ilhas Seychelles",
-    "nome_pais_int" : "Seychelles",
-    "sigla" : "SC",
-    "continente": "África"
-},
-{ "gentilico" : "toquelauano",
-    "nome_pais" : "Ilhas Tokelau",
-    "nome_pais_int" : "Tokelau",
-    "sigla" : "TK",
-    "continente": "Oceania"
-},
-{ "gentilico" : "turquês",
-    "nome_pais" : "Ilhas Turks e Caicos",
-    "nome_pais_int" : "Turks & Caicos Islands",
-    "sigla" : "TC",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "virginense",
-    "nome_pais" : "Ilhas Virgens (Estados Unidos)",
-    "nome_pais_int" : "U.S. Virgin Islands",
-    "sigla" : "VI",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "virginense",
-    "nome_pais" : "Ilhas Virgens (Inglaterra)",
-    "nome_pais_int" : "British Virgin Islands",
-    "sigla" : "VG",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "indiano",
-    "nome_pais" : "Índia",
-    "nome_pais_int" : "India",
-    "sigla" : "IN",
-    "continente": "Ásia"
-},
-{ "gentilico" : "indonésia",
-    "nome_pais" : "Indonésia",
-    "nome_pais_int" : "Indonesia",
-    "sigla" : "ID",
-    "continente": "Ásia"
-},
-{ "gentilico" : "iraniano",
-    "nome_pais" : "Irã",
-    "nome_pais_int" : "Iran",
-    "sigla" : "IR",
-    "continente": "Ásia"
-},
-{ "gentilico" : "iraquiana",
-    "nome_pais" : "Iraque",
-    "nome_pais_int" : "Iraq",
-    "sigla" : "IQ",
-    "continente": "Ásia"
-},
-{ "gentilico" : "irlandesa",
-    "nome_pais" : "Irlanda",
-    "nome_pais_int" : "Ireland",
-    "sigla" : "IE",
-    "continente": "Europa"
-},
-{ "gentilico" : "islandesa",
-    "nome_pais" : "Islândia",
-    "nome_pais_int" : "Iceland",
-    "sigla" : "IS",
-    "continente": "Europa"
-},
-{ "gentilico" : "israelense",
-    "nome_pais" : "Israel",
-    "nome_pais_int" : "Israel",
-    "sigla" : "IL",
-    "continente": "Ásia"
-},
-{ "gentilico" : "italiana",
-    "nome_pais" : "Itália",
-    "nome_pais_int" : "Italy",
-    "sigla" : "IT",
-    "continente": "Europa"
-},
-{ "gentilico" : "jamaicana",
-    "nome_pais" : "Jamaica",
-    "nome_pais_int" : "Jamaica",
-    "sigla" : "JM",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "japonesa",
-    "nome_pais" : "Japão",
-    "nome_pais_int" : "Japan",
-    "sigla" : "JP",
-    "continente": "Ásia"
-},
-{ "gentilico" : "canalina",
-    "nome_pais" : "Jersey",
-    "nome_pais_int" : "Jersey",
-    "sigla" : "JE",
-    "continente": "Europa"
-},
-{ "gentilico" : "jordaniana",
-    "nome_pais" : "Jordânia",
-    "nome_pais_int" : "Jordan",
-    "sigla" : "JO",
-    "continente": "Ásia"
-},
-{ "gentilico" : "kiribatiana",
-    "nome_pais" : "Kiribati",
-    "nome_pais_int" : "Kiribati",
-    "sigla" : "KI",
-    "continente": "Oceania"
-},
-{ "gentilico" : "kosovar",
-    "nome_pais" : "Kosovo",
-    "nome_pais_int" : "Kosovo",
-    "sigla" : "XK",
-    "continente": "Europa"
-},
-{ "gentilico" : "kuwaitiano",
-    "nome_pais" : "Kuait",
-    "nome_pais_int" : "Kuwait",
-    "sigla" : "KW",
-    "continente": "Ásia"
-},
-{ "gentilico" : "laosiana",
-    "nome_pais" : "Laos",
-    "nome_pais_int" : "Laos",
-    "sigla" : "LA",
-    "continente": "Ásia"
-},
-{ "gentilico" : "lesota",
-    "nome_pais" : "Lesoto",
-    "nome_pais_int" : "Lesotho",
-    "sigla" : "LS",
-    "continente": "África"
-},
-{ "gentilico" : "letão",
-    "nome_pais" : "Letônia",
-    "nome_pais_int" : "Latvia",
-    "sigla" : "LV",
-    "continente": "Europa"
-},
-{ "gentilico" : "libanesa",
-    "nome_pais" : "Líbano",
-    "nome_pais_int" : "Lebanon",
-    "sigla" : "LB",
-    "continente": "Ásia"
-},
-{ "gentilico" : "liberiana",
-    "nome_pais" : "Libéria",
-    "nome_pais_int" : "Liberia",
-    "sigla" : "LR",
-    "continente": "África"
-},
-{ "gentilico" : "líbia",
-    "nome_pais" : "Líbia",
-    "nome_pais_int" : "Libya",
-    "sigla" : "LY",
-    "continente": "África"
-},
-{ "gentilico" : "liechtensteiniense",
-    "nome_pais" : "Liechtenstein",
-    "nome_pais_int" : "Liechtenstein",
-    "sigla" : "LI",
-    "continente": "Europa"
-},
-{ "gentilico" : "lituana",
-    "nome_pais" : "Lituânia",
-    "nome_pais_int" : "Lithuania",
-    "sigla" : "LT",
-    "continente": "Europa"
-},
-{ "gentilico" : "luxemburguesa",
-    "nome_pais" : "Luxemburgo",
-    "nome_pais_int" : "Luxembourg",
-    "sigla" : "LU",
-    "continente": "Europa"
-},
-{ "gentilico" : "macauense",
-    "nome_pais" : "Macau",
-    "nome_pais_int" : "Macau",
-    "sigla" : "MO",
-    "continente": "Ásia"
-},
-{ "gentilico" : "macedônio",
-    "nome_pais" : "Macedônia (República Yugoslava)",
-    "nome_pais_int" : "Macedonia (FYROM)",
-    "sigla" : "MK",
-    "continente": "Europa"
-},
-{ "gentilico" : "malgaxe",
-    "nome_pais" : "Madagascar",
-    "nome_pais_int" : "Madagascar",
-    "sigla" : "MG",
-    "continente": "África"
-},
-{ "gentilico" : "malaia",
-    "nome_pais" : "Malásia",
-    "nome_pais_int" : "Malaysia",
-    "sigla" : "MY",
-    "continente": "Ásia"
-},
-{ "gentilico" : "malauiano",
-    "nome_pais" : "Malaui",
-    "nome_pais_int" : "Malawi",
-    "sigla" : "MW",
-    "continente": "África"
-},
-{ "gentilico" : "maldívia",
-    "nome_pais" : "Maldivas",
-    "nome_pais_int" : "Maldives",
-    "sigla" : "MV",
-    "continente": "Ásia"
-},
-{ "gentilico" : "malinesa",
-    "nome_pais" : "Mali",
-    "nome_pais_int" : "Mali",
-    "sigla" : "ML",
-    "continente": "África"
-},
-{ "gentilico" : "maltesa",
-    "nome_pais" : "Malta",
-    "nome_pais_int" : "Malta",
-    "sigla" : "MT",
-    "continente": "Europa"
-},
-{ "gentilico" : "marroquina",
-    "nome_pais" : "Marrocos",
-    "nome_pais_int" : "Morocco",
-    "sigla" : "MA",
-    "continente": "África"
-},
-{ "gentilico" : "martiniquense",
-    "nome_pais" : "Martinica",
-    "nome_pais_int" : "Martinique",
-    "sigla" : "MQ",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "mauriciana",
-    "nome_pais" : "Maurício",
-    "nome_pais_int" : "Mauritius",
-    "sigla" : "MU",
-    "continente": "África"
-},
-{ "gentilico" : "mauritana",
-    "nome_pais" : "Mauritânia",
-    "nome_pais_int" : "Mauritania",
-    "sigla" : "MR",
-    "continente": "África"
-},
-{ "gentilico" : "maiotense",
-    "nome_pais" : "Mayotte",
-    "nome_pais_int" : "Mayotte",
-    "sigla" : "YT",
-    "continente": "África"
-},
-{ "gentilico" : "mexicana",
-    "nome_pais" : "México",
-    "nome_pais_int" : "Mexico",
-    "sigla" : "MX",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "micronésia",
-    "nome_pais" : "Micronésia",
-    "nome_pais_int" : "Micronesia",
-    "sigla" : "FM",
-    "continente": "Oceania"
-},
-{ "gentilico" : "moçambicana",
-    "nome_pais" : "Moçambique",
-    "nome_pais_int" : "Mozambique",
-    "sigla" : "MZ",
-    "continente": "África"
-},
-{ "gentilico" : "moldavo",
-    "nome_pais" : "Moldova",
-    "nome_pais_int" : "Moldova",
-    "sigla" : "MD",
-    "continente": "Europa"
-},
-{ "gentilico" : "monegasca",
-    "nome_pais" : "Mônaco",
-    "nome_pais_int" : "Monaco",
-    "sigla" : "MC",
-    "continente": "Europa"
-},
-{ "gentilico" : "mongol",
-    "nome_pais" : "Mongólia",
-    "nome_pais_int" : "Mongolia",
-    "sigla" : "MN",
-    "continente": "Ásia"
-},
-{ "gentilico" : "montenegra",
-    "nome_pais" : "Montenegro",
-    "nome_pais_int" : "Montenegro",
-    "sigla" : "ME",
-    "continente": "Europa"
-},
-{ "gentilico" : "montserratiano",
-    "nome_pais" : "Montserrat",
-    "nome_pais_int" : "Montserrat",
-    "sigla" : "MS",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "birmanês",
-    "nome_pais" : "Myanma",
-    "nome_pais_int" : "Myanmar (Burma)",
-    "sigla" : "MM",
-    "continente": "Ásia"
-},
-{ "gentilico" : "namíbia",
-    "nome_pais" : "Namíbia",
-    "nome_pais_int" : "Namibia",
-    "sigla" : "NA",
-    "continente": "África"
-},
-{ "gentilico" : "nauruana",
-    "nome_pais" : "Nauru",
-    "nome_pais_int" : "Nauru",
-    "sigla" : "NR",
-    "continente": "Oceania"
-},
-{ "gentilico" : "nepalesa",
-    "nome_pais" : "Nepal",
-    "nome_pais_int" : "Nepal",
-    "sigla" : "NP",
-    "continente": "Ásia"
-},
-{ "gentilico" : "nicaraguense",
-    "nome_pais" : "Nicarágua",
-    "nome_pais_int" : "Nicaragua",
-    "sigla" : "NI",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "nigerina",
-    "nome_pais" : "Níger",
-    "nome_pais_int" : "Niger",
-    "sigla" : "NE",
-    "continente": "África"
-},
-{ "gentilico" : "nigeriana",
-    "nome_pais" : "Nigéria",
-    "nome_pais_int" : "Nigeria",
-    "sigla" : "NG",
-    "continente": "África"
-},
-{ "gentilico" : "niueana",
-    "nome_pais" : "Niue",
-    "nome_pais_int" : "Niue",
-    "sigla" : "NU",
-    "continente": "Oceania"
-},
-{ "gentilico" : "norueguesa",
-    "nome_pais" : "Noruega",
-    "nome_pais_int" : "Norway",
-    "sigla" : "NO",
-    "continente": "Europa"
-},
-{ "gentilico" : "caledônia",
-    "nome_pais" : "Nova Caledônia",
-    "nome_pais_int" : "New Caledonia",
-    "sigla" : "NC",
-    "continente": "Oceania"
-},
-{ "gentilico" : "neozelandesa",
-    "nome_pais" : "Nova Zelândia",
-    "nome_pais_int" : "New Zealand",
-    "sigla" : "NZ",
-    "continente": "Oceania"
-},
-{ "gentilico" : "omani",
-    "nome_pais" : "Omã",
-    "nome_pais_int" : "Oman",
-    "sigla" : "OM",
-    "continente": "Ásia"
-},
-{ "gentilico" : "dos países baixos caribenhos",
-    "nome_pais" : "Países Baixos Caribenhos",
-    "nome_pais_int" : "Caribbean Netherlands",
-    "sigla" : "BQ",
-    "continente": "América do Sul"
-},
-{ "gentilico" : "palauense",
-    "nome_pais" : "Palau",
-    "nome_pais_int" : "Palau",
-    "sigla" : "PW",
-    "continente": "Oceania"
-},
-{ "gentilico" : "palestino",
-    "nome_pais" : "Palestina",
-    "nome_pais_int" : "Palestine",
-    "sigla" : "PS",
-    "continente": "Ásia"
-},
-{ "gentilico" : "zona do canal do panamá",
-    "nome_pais" : "Panamá",
-    "nome_pais_int" : "Panama",
-    "sigla" : "PA",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "pauásia",
-    "nome_pais" : "Papua-Nova Guiné",
-    "nome_pais_int" : "Papua New Guinea",
-    "sigla" : "PG",
-    "continente": "Oceania"
-},
-{ "gentilico" : "paquistanesa",
-    "nome_pais" : "Paquistão",
-    "nome_pais_int" : "Pakistan",
-    "sigla" : "PK",
-    "continente": "Ásia"
-},
-{ "gentilico" : "paraguaia",
-    "nome_pais" : "Paraguai",
-    "nome_pais_int" : "Paraguay",
-    "sigla" : "PY",
-    "continente": "América do Sul"
-},
-{ "gentilico" : "peruana",
-    "nome_pais" : "Peru",
-    "nome_pais_int" : "Peru",
-    "sigla" : "PE",
-    "continente": "América do Sul"
-},
-{ "gentilico" : "franco-polinésia",
-    "nome_pais" : "Polinésia Francesa",
-    "nome_pais_int" : "French Polynesia",
-    "sigla" : "PF",
-    "continente": "Oceania"
-},
-{ "gentilico" : "polonesa",
-    "nome_pais" : "Polônia",
-    "nome_pais_int" : "Poland",
-    "sigla" : "PL",
-    "continente": "Europa"
-},
-{ "gentilico" : "portorriquenha",
-    "nome_pais" : "Porto Rico",
-    "nome_pais_int" : "Puerto Rico",
-    "sigla" : "PR",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "portuguesa",
-    "nome_pais" : "Portugal",
-    "nome_pais_int" : "Portugal",
-    "sigla" : "PT",
-    "continente": "Europa"
-},
-{ "gentilico" : "catarense",
-    "nome_pais" : "Qatar",
-    "nome_pais_int" : "Qatar",
-    "sigla" : "QA",
-    "continente": "Ásia"
-},
-{ "gentilico" : "queniano",
-    "nome_pais" : "Quênia",
-    "nome_pais_int" : "Kenya",
-    "sigla" : "KE",
-    "continente": "África"
-},
-{ "gentilico" : "quirguiz",
-    "nome_pais" : "Quirguistão",
-    "nome_pais_int" : "Kyrgyzstan",
-    "sigla" : "KG",
-    "continente": "Ásia"
-},
-{ "gentilico" : "centro-africana",
-    "nome_pais" : "República Centro-Africana",
-    "nome_pais_int" : "Central African Republic",
-    "sigla" : "CF",
-    "continente": "África"
-},
-{ "gentilico" : "congolesa",
-    "nome_pais" : "República Democrática do Congo",
-    "nome_pais_int" : "Congo (DRC)",
-    "sigla" : "CD",
-    "continente": "África"
-},
-{ "gentilico" : "dominicana",
-    "nome_pais" : "República Dominicana",
-    "nome_pais_int" : "Dominican Republic",
-    "sigla" : "DO",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "tcheco",
-    "nome_pais" : "República Tcheca",
-    "nome_pais_int" : "Czech Republic",
-    "sigla" : "CZ",
-    "continente": "Europa"
-},
-{ "gentilico" : "romena",
-    "nome_pais" : "Romênia",
-    "nome_pais_int" : "Romania",
-    "sigla" : "RO",
-    "continente": "Europa"
-},
-{ "gentilico" : "ruandesa",
-    "nome_pais" : "Ruanda",
-    "nome_pais_int" : "Rwanda",
-    "sigla" : "RW",
-    "continente": "África"
-},
-{ "gentilico" : "russa",
-    "nome_pais" : "Rússia (antiga URSS) - Federação Russa",
-    "nome_pais_int" : "Russia",
-    "sigla" : "RU",
-    "continente": "Eurásia"
-},
-{ "gentilico" : "saariano",
-    "nome_pais" : "Saara Ocidental",
-    "nome_pais_int" : "Western Sahara",
-    "sigla" : "EH",
-    "continente": "África"
-},
-{ "gentilico" : "pedro-miquelonense",
-    "nome_pais" : "Saint-Pierre e Miquelon",
-    "nome_pais_int" : "St. Pierre & Miquelon",
-    "sigla" : "PM",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "samoana",
-    "nome_pais" : "Samoa Americana",
-    "nome_pais_int" : "American Samoa",
-    "sigla" : "AS",
-    "continente": "Oceania"
-},
-{ "gentilico" : "samoano",
-    "nome_pais" : "Samoa Ocidental",
-    "nome_pais_int" : "Samoa",
-    "sigla" : "WS",
-    "continente": "Oceania"
-},
-{ "gentilico" : "samarinês",
-    "nome_pais" : "San Marino",
-    "nome_pais_int" : "San Marino",
-    "sigla" : "SM",
-    "continente": "Europa"
-},
-{ "gentilico" : "helenense",
-    "nome_pais" : "Santa Helena",
-    "nome_pais_int" : "St. Helena",
-    "sigla" : "SH",
-    "continente": "África"
-},
-{ "gentilico" : "santa-lucense",
-    "nome_pais" : "Santa Lúcia",
-    "nome_pais_int" : "St. Lucia",
-    "sigla" : "LC",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "são-bartolomeense",
-    "nome_pais" : "São Bartolomeu",
-    "nome_pais_int" : "St. Barthélemy",
-    "sigla" : "BL",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "são-cristovense",
-    "nome_pais" : "São Cristóvão e Névis",
-    "nome_pais_int" : "St. Kitts & Nevis",
-    "sigla" : "KN",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "são-martinhense",
-    "nome_pais" : "São Martim",
-    "nome_pais_int" : "St. Martin",
-    "sigla" : "MF",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "são-martinhense",
-    "nome_pais" : "São Martinho",
-    "nome_pais_int" : "Sint Maarten",
-    "sigla" : "SX",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "são-tomense",
-    "nome_pais" : "São Tomé e Príncipe",
-    "nome_pais_int" : "São Tomé & Príncipe",
-    "sigla" : "ST",
-    "continente": "África"
-},
-{ "gentilico" : "sao-vicentino",
-    "nome_pais" : "São Vicente e Granadinas",
-    "nome_pais_int" : "St. Vincent & Grenadines",
-    "sigla" : "VC",
-    "continente": "América do Norte"
-},
-{ "gentilico" : "senegalesa",
-    "nome_pais" : "Senegal",
-    "nome_pais_int" : "Senegal",
-    "sigla" : "SN",
-    "continente": "África"
-},
-{ "gentilico" : "leonesa",
-    "nome_pais" : "Serra Leoa",
-    "nome_pais_int" : "Sierra Leone",
-    "sigla" : "SL",
-    "continente": "África"
-},
-{ "gentilico" : "sérvia",
-    "nome_pais" : "Sérvia",
-    "nome_pais_int" : "Serbia",
-    "sigla" : "RS",
-    "continente": "Europa"
-},
-{ "gentilico" : "síria",
-    "nome_pais" : "Síria",
-    "nome_pais_int" : "Syria",
-    "sigla" : "SY",
-    "continente": "Ásia"
-},
-{ "gentilico" : "somali",
-    "nome_pais" : "Somália",
-    "nome_pais_int" : "Somalia",
-    "sigla" : "SO",
-    "continente": "África"
-},
-{ "gentilico" : "cingalesa",
-    "nome_pais" : "Sri Lanka",
-    "nome_pais_int" : "Sri Lanka",
-    "sigla" : "LK",
-    "continente": "Ásia"
-},
-{ "gentilico" : "suazi",
-    "nome_pais" : "Suazilândia",
-    "nome_pais_int" : "Swaziland",
-    "sigla" : "SZ",
-    "continente": "África"
-},
-{ "gentilico" : "sudanesa",
-    "nome_pais" : "Sudão",
-    "nome_pais_int" : "Sudan",
-    "sigla" : "SD",
-    "continente": "África"
-},
-{ "gentilico" : "sul-sudanês",
-    "nome_pais" : "Sudão do Sul",
-    "nome_pais_int" : "South Sudan",
-    "sigla" : "SS",
-    "continente": "África"
-},
-{ "gentilico" : "sueca",
-    "nome_pais" : "Suécia",
-    "nome_pais_int" : "Sweden",
-    "sigla" : "SE",
-    "continente": "Europa"
-},
-{ "gentilico" : "suíça",
-    "nome_pais" : "Suíça",
-    "nome_pais_int" : "Switzerland",
-    "sigla" : "CH",
-    "continente": "Europa"
-},
-{ "gentilico" : "surinamesa",
-    "nome_pais" : "Suriname",
-    "nome_pais_int" : "Suriname",
-    "sigla" : "SR",
-    "continente": "América do Sul"
-},
-{ "gentilico" : "svalbardense",
-    "nome_pais" : "Svalbard",
-    "nome_pais_int" : "Svalbard & Jan Mayen",
-    "sigla" : "SJ",
-    "continente": "Europa"
-},
-{ "gentilico" : "tadjique",
-    "nome_pais" : "Tadjiquistão",
-    "nome_pais_int" : "Tajikistan",
-    "sigla" : "TJ",
-    "continente": "Ásia"
-},
-{ "gentilico" : "tailandesa",
-    "nome_pais" : "Tailândia",
-    "nome_pais_int" : "Thailand",
-    "sigla" : "TH",
-    "continente": "Ásia"
-},
-{ "gentilico" : "taiwanês",
-    "nome_pais" : "Taiwan",
-    "nome_pais_int" : "Taiwan",
-    "sigla" : "TW",
-    "continente": "Ásia"
-},
-{ "gentilico" : "tanzaniana",
-    "nome_pais" : "Tanzânia",
-    "nome_pais_int" : "Tanzania",
-    "sigla" : "TZ",
-    "continente": "África"
-},
-{ "gentilico" : "do território britânico do oceano índico",
-    "nome_pais" : "Território Britânico do Oceano índico",
-    "nome_pais_int" : "British Indian Ocean Territory",
-    "sigla" : "IO",
-    "continente": "Ásia"
-},
-{ "gentilico" : "do territórios do sul da frança",
-    "nome_pais" : "Territórios do Sul da França",
-    "nome_pais_int" : "French Southern Territories",
-    "sigla" : "TF",
-    "continente": "Europa"
-},
-{ "gentilico" : "timorense",
-    "nome_pais" : "Timor-Leste",
-    "nome_pais_int" : "Timor-Leste",
-    "sigla" : "TL",
-    "continente": "Ásia"
-},
-{ "gentilico" : "togolesa",
-    "nome_pais" : "Togo",
-    "nome_pais_int" : "Togo",
-    "sigla" : "TG",
-    "continente": "África"
-},
-{ "gentilico" : "tonganesa",
-    "nome_pais" : "Tonga",
-    "nome_pais_int" : "Tonga",
-    "sigla" : "TO",
-    "continente": "Oceania"
-},
-{ "gentilico" : "trinitário-tobagense",
-    "nome_pais" : "Trinidad e Tobago",
-    "nome_pais_int" : "Trinidad & Tobago",
-    "sigla" : "TT",
-    "continente": "América do Sul"
-},
-{ "gentilico" : "tristanita",
-    "nome_pais" : "Tristão da Cunha",
-    "nome_pais_int" : "Tristan da Cunha",
-    "sigla" : "TA",
-    "continente": "África"
-},
-{ "gentilico" : "tunisiana",
-    "nome_pais" : "Tunísia",
-    "nome_pais_int" : "Tunisia",
-    "sigla" : "TN",
-    "continente": "África"
-},
-{ "gentilico" : "turcomana",
-    "nome_pais" : "Turcomenistão",
-    "nome_pais_int" : "Turkmenistan",
-    "sigla" : "TM",
-    "continente": "Ásia"
-},
-{ "gentilico" : "turca",
-    "nome_pais" : "Turquia",
-    "nome_pais_int" : "Turkey",
-    "sigla" : "TR",
-    "continente": "Europa"
-},
-{ "gentilico" : "tuvaluana",
-    "nome_pais" : "Tuvalu",
-    "nome_pais_int" : "Tuvalu",
-    "sigla" : "TV",
-    "continente": "Oceania"
-},
-{ "gentilico" : "ucraniana",
-    "nome_pais" : "Ucrânia",
-    "nome_pais_int" : "Ukraine",
-    "sigla" : "UA",
-    "continente": "Europa"
-},
-{ "gentilico" : "ugandense",
-    "nome_pais" : "Uganda",
-    "nome_pais_int" : "Uganda",
-    "sigla" : "UG",
-    "continente": "África"
-},
-{ "gentilico" : "uruguaia",
-    "nome_pais" : "Uruguai",
-    "nome_pais_int" : "Uruguay",
-    "sigla" : "UY",
-    "continente": "América do Sul"
-},
-{ "gentilico" : "uzbeque",
-    "nome_pais" : "Uzbequistão",
-    "nome_pais_int" : "Uzbekistan",
-    "sigla" : "UZ",
-    "continente": "Ásia"
-},
-{ "gentilico" : "vanuatuense",
-    "nome_pais" : "Vanuatu",
-    "nome_pais_int" : "Vanuatu",
-    "sigla" : "VU",
-    "continente": "Oceania"
-},
-{ "gentilico" : "vaticano",
-    "nome_pais" : "Vaticano",
-    "nome_pais_int" : "Vatican City",
-    "sigla" : "VA",
-    "continente": "Europa"
-},
-{ "gentilico" : "venezuelana",
-    "nome_pais" : "Venezuela",
-    "nome_pais_int" : "Venezuela",
-    "sigla" : "VE",
-    "continente": "América do Sul"
-},
-{ "gentilico" : "vietnamita",
-    "nome_pais" : "Vietnã",
-    "nome_pais_int" : "Vietnam",
-    "sigla" : "VN",
-    "continente": "Ásia"
-},
-{ "gentilico" : "wallis-futunense",
-    "nome_pais" : "Wallis e Futuna",
-    "nome_pais_int" : "Wallis & Futuna",
-    "sigla" : "WF",
-    "continente": "Oceania"
-},
-{ "gentilico" : "zambiana",
-    "nome_pais" : "Zâmbia",
-    "nome_pais_int" : "Zambia",
-    "sigla" : "ZM",
-    "continente": "África"
-},
-{ "gentilico" : "zimbabuana",
-    "nome_pais" : "Zimbábue",
-    "nome_pais_int" : "Zimbabwe",
-    "sigla" : "ZW",
-    "continente": "África"
-}]
+let countries: any = [ {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Afghanistan",
+  "country_name_pt" : "Afeganistão",
+  "gentile_pt" : "afegãne",
+  "initials" : "AF"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "South Africa",
+  "country_name_pt" : "África do Sul",
+  "gentile_pt" : "sul-africana",
+  "initials" : "ZA"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Albania",
+  "country_name_pt" : "Albânia",
+  "gentile_pt" : "albanesa",
+  "initials" : "AL"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Germany",
+  "country_name_pt" : "Alemanha",
+  "gentile_pt" : "alemã",
+  "initials" : "DE"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Andorra",
+  "country_name_pt" : "Andorra",
+  "gentile_pt" : "andorrana",
+  "initials" : "AD"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Angola",
+  "country_name_pt" : "Angola",
+  "gentile_pt" : "angolana",
+  "initials" : "AO"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "Anguilla",
+  "country_name_pt" : "Anguilla",
+  "gentile_pt" : "anguillana",
+  "initials" : "AI"
+}, {
+  "continent_pt" : "Antártida",
+  "country_name_en" : "Antarctica",
+  "country_name_pt" : "Antártida",
+  "gentile_pt" : "de antártida",
+  "initials" : "AQ"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "Antigua & Barbuda",
+  "country_name_pt" : "Antígua e Barbuda",
+  "gentile_pt" : "antiguana",
+  "initials" : "AG"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Saudi Arabia",
+  "country_name_pt" : "Arábia Saudita",
+  "gentile_pt" : "saudita",
+  "initials" : "SA"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Algeria",
+  "country_name_pt" : "Argélia",
+  "gentile_pt" : "argelina",
+  "initials" : "DZ"
+}, {
+  "continent_pt" : "América do Sul",
+  "country_name_en" : "Argentina",
+  "country_name_pt" : "Argentina",
+  "gentile_pt" : "argentina",
+  "initials" : "AR"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Armenia",
+  "country_name_pt" : "Armênia",
+  "gentile_pt" : "armênia",
+  "initials" : "AM"
+}, {
+  "continent_pt" : "América do Sul",
+  "country_name_en" : "Aruba",
+  "country_name_pt" : "Aruba",
+  "gentile_pt" : "arubana",
+  "initials" : "AW"
+}, {
+  "continent_pt" : "Oceania",
+  "country_name_en" : "Australia",
+  "country_name_pt" : "Austrália",
+  "gentile_pt" : "australiana",
+  "initials" : "AU"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Austria",
+  "country_name_pt" : "Áustria",
+  "gentile_pt" : "austríaca",
+  "initials" : "AT"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Azerbaijan",
+  "country_name_pt" : "Azerbaijão",
+  "gentile_pt" : "azerbaijano",
+  "initials" : "AZ"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "Bahamas",
+  "country_name_pt" : "Bahamas",
+  "gentile_pt" : "bahamense",
+  "initials" : "BS"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Bahrain",
+  "country_name_pt" : "Bahrein",
+  "gentile_pt" : "barenita",
+  "initials" : "BH"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Bangladesh",
+  "country_name_pt" : "Bangladesh",
+  "gentile_pt" : "bengali",
+  "initials" : "BD"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "Barbados",
+  "country_name_pt" : "Barbados",
+  "gentile_pt" : "barbadiana",
+  "initials" : "BB"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Belarus",
+  "country_name_pt" : "Belarus",
+  "gentile_pt" : "bielo-russa",
+  "initials" : "BY"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Belgium",
+  "country_name_pt" : "Bélgica",
+  "gentile_pt" : "belga",
+  "initials" : "BE"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "Belize",
+  "country_name_pt" : "Belize",
+  "gentile_pt" : "belizenha",
+  "initials" : "BZ"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Benin",
+  "country_name_pt" : "Benin",
+  "gentile_pt" : "beninense",
+  "initials" : "BJ"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "Bermuda",
+  "country_name_pt" : "Bermudas",
+  "gentile_pt" : "bermudiana",
+  "initials" : "BM"
+}, {
+  "continent_pt" : "América do Sul",
+  "country_name_en" : "Bolivia",
+  "country_name_pt" : "Bolívia",
+  "gentile_pt" : "boliviana",
+  "initials" : "BO"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Bosnia & Herzegovina",
+  "country_name_pt" : "Bósnia-Herzegóvina",
+  "gentile_pt" : "bósnia",
+  "initials" : "BA"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Botswana",
+  "country_name_pt" : "Botsuana",
+  "gentile_pt" : "betchuana",
+  "initials" : "BW"
+}, {
+  "continent_pt" : "América do Sul",
+  "country_name_en" : "Brazil",
+  "country_name_pt" : "Brasil",
+  "gentile_pt" : "brasileira",
+  "initials" : "BR"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Brunei",
+  "country_name_pt" : "Brunei",
+  "gentile_pt" : "bruneiana",
+  "initials" : "BN"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Bulgaria",
+  "country_name_pt" : "Bulgária",
+  "gentile_pt" : "búlgara",
+  "initials" : "BG"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Burkina Faso",
+  "country_name_pt" : "Burkina Fasso",
+  "gentile_pt" : "burquinês",
+  "initials" : "BF"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Burundi",
+  "country_name_pt" : "Burundi",
+  "gentile_pt" : "burundinesa",
+  "initials" : "BI"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Bhutan",
+  "country_name_pt" : "Butão",
+  "gentile_pt" : "butanesa",
+  "initials" : "BT"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Cape Verde",
+  "country_name_pt" : "Cabo Verde",
+  "gentile_pt" : "cabo-verdiana",
+  "initials" : "CV"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Cameroon",
+  "country_name_pt" : "Camarões",
+  "gentile_pt" : "camaronesa",
+  "initials" : "CM"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Cambodia",
+  "country_name_pt" : "Camboja",
+  "gentile_pt" : "cambojana",
+  "initials" : "KH"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "Canada",
+  "country_name_pt" : "Canadá",
+  "gentile_pt" : "canadense",
+  "initials" : "CA"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Canary Islands",
+  "country_name_pt" : "Canárias",
+  "gentile_pt" : "canário",
+  "initials" : "IC"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Kazakhstan",
+  "country_name_pt" : "Cazaquistão",
+  "gentile_pt" : "cazaque",
+  "initials" : "KZ"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Ceuta & Melilla",
+  "country_name_pt" : "Ceuta e Melilla",
+  "gentile_pt" : "de ceuta e melilla",
+  "initials" : "EA"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Chad",
+  "country_name_pt" : "Chade",
+  "gentile_pt" : "chadiana",
+  "initials" : "TD"
+}, {
+  "continent_pt" : "América do Sul",
+  "country_name_en" : "Chile",
+  "country_name_pt" : "Chile",
+  "gentile_pt" : "chilena",
+  "initials" : "CL"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "China",
+  "country_name_pt" : "China",
+  "gentile_pt" : "chinesa",
+  "initials" : "CN"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Cyprus",
+  "country_name_pt" : "Chipre",
+  "gentile_pt" : "cipriota",
+  "initials" : "CY"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Singapore",
+  "country_name_pt" : "Cingapura",
+  "gentile_pt" : "cingapuriana",
+  "initials" : "SG"
+}, {
+  "continent_pt" : "América do Sul",
+  "country_name_en" : "Colombia",
+  "country_name_pt" : "Colômbia",
+  "gentile_pt" : "colombiana",
+  "initials" : "CO"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Comoros",
+  "country_name_pt" : "Comores",
+  "gentile_pt" : "comorense",
+  "initials" : "KM"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Congo (Republic)",
+  "country_name_pt" : "Congo",
+  "gentile_pt" : "congolesa",
+  "initials" : "CG"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "North Korea",
+  "country_name_pt" : "Coréia do Norte",
+  "gentile_pt" : "norte-coreano",
+  "initials" : "KP"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "South Korea",
+  "country_name_pt" : "Coréia do Sul",
+  "gentile_pt" : "norte-coreana",
+  "initials" : "KR"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Côte d¿Ivoire",
+  "country_name_pt" : "Costa do Marfim",
+  "gentile_pt" : "marfinense",
+  "initials" : "CI"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "Costa Rica",
+  "country_name_pt" : "Costa Rica",
+  "gentile_pt" : "costarriquenha",
+  "initials" : "CR"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Croatia",
+  "country_name_pt" : "Croácia",
+  "gentile_pt" : "croata",
+  "initials" : "HR"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "Cuba",
+  "country_name_pt" : "Cuba",
+  "gentile_pt" : "cubana",
+  "initials" : "CU"
+}, {
+  "continent_pt" : "América do Sul",
+  "country_name_en" : "Curaçao",
+  "country_name_pt" : "Curaçao",
+  "gentile_pt" : "curaçauense",
+  "initials" : "CW"
+}, {
+  "continent_pt" : "Incerto",
+  "country_name_en" : "Diego Garcia",
+  "country_name_pt" : "Diego Garcia",
+  "gentile_pt" : "chagositano",
+  "initials" : "DG"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Denmark",
+  "country_name_pt" : "Dinamarca",
+  "gentile_pt" : "dinamarquesa",
+  "initials" : "DK"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Djibouti",
+  "country_name_pt" : "Djibuti",
+  "gentile_pt" : "djibutiana",
+  "initials" : "DJ"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "Dominica",
+  "country_name_pt" : "Dominica",
+  "gentile_pt" : "dominiquense",
+  "initials" : "DM"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Egypt",
+  "country_name_pt" : "Egito",
+  "gentile_pt" : "egípcia",
+  "initials" : "EG"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "El Salvador",
+  "country_name_pt" : "El Salvador",
+  "gentile_pt" : "salvadorenha",
+  "initials" : "SV"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "United Arab Emirates",
+  "country_name_pt" : "Emirados Árabes Unidos",
+  "gentile_pt" : "árabe",
+  "initials" : "AE"
+}, {
+  "continent_pt" : "América do Sul",
+  "country_name_en" : "Ecuador",
+  "country_name_pt" : "Equador",
+  "gentile_pt" : "equatoriana",
+  "initials" : "EC"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Eritrea",
+  "country_name_pt" : "Eritréia",
+  "gentile_pt" : "eritreia",
+  "initials" : "ER"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Slovakia",
+  "country_name_pt" : "Eslováquia",
+  "gentile_pt" : "eslovaco",
+  "initials" : "SK"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Slovenia",
+  "country_name_pt" : "Eslovênia",
+  "gentile_pt" : "esloveno",
+  "initials" : "SI"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Spain",
+  "country_name_pt" : "Espanha",
+  "gentile_pt" : "espanhola",
+  "initials" : "ES"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "United States",
+  "country_name_pt" : "Estados Unidos",
+  "gentile_pt" : "norte-americana",
+  "initials" : "US"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Estonia",
+  "country_name_pt" : "Estônia",
+  "gentile_pt" : "estoniana",
+  "initials" : "EE"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Ethiopia",
+  "country_name_pt" : "Etiópia",
+  "gentile_pt" : "etíope",
+  "initials" : "ET"
+}, {
+  "continent_pt" : "Oceania",
+  "country_name_en" : "Fiji",
+  "country_name_pt" : "Fiji",
+  "gentile_pt" : "fijiana",
+  "initials" : "FJ"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Philippines",
+  "country_name_pt" : "Filipinas",
+  "gentile_pt" : "filipina",
+  "initials" : "PH"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Finland",
+  "country_name_pt" : "Finlândia",
+  "gentile_pt" : "finlandesa",
+  "initials" : "FI"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "France",
+  "country_name_pt" : "França",
+  "gentile_pt" : "francesa",
+  "initials" : "FR"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Gabon",
+  "country_name_pt" : "Gabão",
+  "gentile_pt" : "gabonesa",
+  "initials" : "GA"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Gambia",
+  "country_name_pt" : "Gâmbia",
+  "gentile_pt" : "gambiana",
+  "initials" : "GM"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Ghana",
+  "country_name_pt" : "Gana",
+  "gentile_pt" : "ganense",
+  "initials" : "GH"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Georgia",
+  "country_name_pt" : "Geórgia",
+  "gentile_pt" : "georgiana",
+  "initials" : "GE"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Gibraltar",
+  "country_name_pt" : "Gibraltar",
+  "gentile_pt" : "gibraltariana",
+  "initials" : "GI"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "United Kingdom",
+  "country_name_pt" : "Grã-Bretanha (Reino Unido, UK)",
+  "gentile_pt" : "inglesa",
+  "initials" : "GB"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "Grenada",
+  "country_name_pt" : "Granada",
+  "gentile_pt" : "granadina",
+  "initials" : "GD"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Greece",
+  "country_name_pt" : "Grécia",
+  "gentile_pt" : "grega",
+  "initials" : "GR"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "Greenland",
+  "country_name_pt" : "Groelândia",
+  "gentile_pt" : "groenlandesa",
+  "initials" : "GL"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "Guadeloupe",
+  "country_name_pt" : "Guadalupe",
+  "gentile_pt" : "guadalupense",
+  "initials" : "GP"
+}, {
+  "continent_pt" : "Oceania",
+  "country_name_en" : "Guam",
+  "country_name_pt" : "Guam (Território dos Estados Unidos)",
+  "gentile_pt" : "guamês",
+  "initials" : "GU"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "Guatemala",
+  "country_name_pt" : "Guatemala",
+  "gentile_pt" : "guatemalteca",
+  "initials" : "GT"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Guernsey",
+  "country_name_pt" : "Guernsey",
+  "gentile_pt" : "guernesiano",
+  "initials" : "GG"
+}, {
+  "continent_pt" : "América do Sul",
+  "country_name_en" : "Guyana",
+  "country_name_pt" : "Guiana",
+  "gentile_pt" : "guianense",
+  "initials" : "GY"
+}, {
+  "continent_pt" : "América do Sul",
+  "country_name_en" : "French Guiana",
+  "country_name_pt" : "Guiana Francesa",
+  "gentile_pt" : "franco-guianense",
+  "initials" : "GF"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Guinea",
+  "country_name_pt" : "Guiné",
+  "gentile_pt" : "guinéu-equatoriano ou equatoguineana",
+  "initials" : "GN"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Equatorial Guinea",
+  "country_name_pt" : "Guiné Equatorial",
+  "gentile_pt" : "guinéu-equatoriano",
+  "initials" : "GQ"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Guinea-Bissau",
+  "country_name_pt" : "Guiné-Bissau",
+  "gentile_pt" : "guineense",
+  "initials" : "GW"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "Haiti",
+  "country_name_pt" : "Haiti",
+  "gentile_pt" : "haitiana",
+  "initials" : "HT"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Netherlands",
+  "country_name_pt" : "Holanda",
+  "gentile_pt" : "holandês",
+  "initials" : "NL"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "Honduras",
+  "country_name_pt" : "Honduras",
+  "gentile_pt" : "hondurenha",
+  "initials" : "HN"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Hong Kong",
+  "country_name_pt" : "Hong Kong",
+  "gentile_pt" : "hong-konguiana ou chinesa",
+  "initials" : "HK"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Hungary",
+  "country_name_pt" : "Hungria",
+  "gentile_pt" : "húngara",
+  "initials" : "HU"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Yemen",
+  "country_name_pt" : "Iêmen",
+  "gentile_pt" : "iemenita",
+  "initials" : "YE"
+}, {
+  "continent_pt" : "Antártida",
+  "country_name_en" : "Bouvet Island",
+  "country_name_pt" : "Ilha Bouvet",
+  "gentile_pt" : "da ilha bouvet",
+  "initials" : "BV"
+}, {
+  "continent_pt" : "América do Sul",
+  "country_name_en" : "Ascension Island",
+  "country_name_pt" : "Ilha de Ascensão",
+  "gentile_pt" : "da ilha de ascensão",
+  "initials" : "AC"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "Clipperton Island",
+  "country_name_pt" : "Ilha de Clipperton",
+  "gentile_pt" : "da ilha de clipperton",
+  "initials" : "CP"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Isle of Man",
+  "country_name_pt" : "Ilha de Man",
+  "gentile_pt" : "manês",
+  "initials" : "IM"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Christmas Island",
+  "country_name_pt" : "Ilha Natal",
+  "gentile_pt" : "natalense",
+  "initials" : "CX"
+}, {
+  "continent_pt" : "Oceania",
+  "country_name_en" : "Pitcairn Islands",
+  "country_name_pt" : "Ilha Pitcairn",
+  "gentile_pt" : "pitcairnense",
+  "initials" : "PN"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Réunion",
+  "country_name_pt" : "Ilha Reunião",
+  "gentile_pt" : "reunionense",
+  "initials" : "RE"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Åland Islands",
+  "country_name_pt" : "Ilhas Aland",
+  "gentile_pt" : "alandês",
+  "initials" : "AX"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "Cayman Islands",
+  "country_name_pt" : "Ilhas Cayman",
+  "gentile_pt" : "caimanês",
+  "initials" : "KY"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Cocos (Keeling) Islands",
+  "country_name_pt" : "Ilhas Cocos",
+  "gentile_pt" : "coquense",
+  "initials" : "CC"
+}, {
+  "continent_pt" : "Oceania",
+  "country_name_en" : "Cook Islands",
+  "country_name_pt" : "Ilhas Cook",
+  "gentile_pt" : "cookense",
+  "initials" : "CK"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Faroe Islands",
+  "country_name_pt" : "Ilhas Faroes",
+  "gentile_pt" : "faroense",
+  "initials" : "FO"
+}, {
+  "continent_pt" : "Incerto",
+  "country_name_en" : "South Georgia & South Sandwich Islands",
+  "country_name_pt" : "Ilhas Geórgia do Sul e Sandwich do Sul",
+  "gentile_pt" : "das ilhas geórgia do sul e sandwich do sul",
+  "initials" : "GS"
+}, {
+  "continent_pt" : "Oceania",
+  "country_name_en" : "Heard & McDonald Islands",
+  "country_name_pt" : "Ilhas Heard e McDonald (Território da Austrália)",
+  "gentile_pt" : "das ilhas heard e mcdonald",
+  "initials" : "HM"
+}, {
+  "continent_pt" : "América do Sul",
+  "country_name_en" : "Falkland Islands (Islas Malvinas)",
+  "country_name_pt" : "Ilhas Malvinas",
+  "gentile_pt" : "malvinense",
+  "initials" : "FK"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Northern Mariana Islands",
+  "country_name_pt" : "Ilhas Marianas do Norte",
+  "gentile_pt" : "norte-marianense",
+  "initials" : "MP"
+}, {
+  "continent_pt" : "Oceania",
+  "country_name_en" : "Marshall Islands",
+  "country_name_pt" : "Ilhas Marshall",
+  "gentile_pt" : "marshallino",
+  "initials" : "MH"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "U.S. Outlying Islands",
+  "country_name_pt" : "Ilhas Menores dos Estados Unidos",
+  "gentile_pt" : "das ilhas menores afastadas",
+  "initials" : "UM"
+}, {
+  "continent_pt" : "Oceania",
+  "country_name_en" : "Norfolk Island",
+  "country_name_pt" : "Ilhas Norfolk",
+  "gentile_pt" : "norfolquino",
+  "initials" : "NF"
+}, {
+  "continent_pt" : "Oceania",
+  "country_name_en" : "Solomon Islands",
+  "country_name_pt" : "Ilhas Salomão",
+  "gentile_pt" : "salomônico",
+  "initials" : "SB"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Seychelles",
+  "country_name_pt" : "Ilhas Seychelles",
+  "gentile_pt" : "seichelense",
+  "initials" : "SC"
+}, {
+  "continent_pt" : "Oceania",
+  "country_name_en" : "Tokelau",
+  "country_name_pt" : "Ilhas Tokelau",
+  "gentile_pt" : "toquelauano",
+  "initials" : "TK"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "Turks & Caicos Islands",
+  "country_name_pt" : "Ilhas Turks e Caicos",
+  "gentile_pt" : "turquês",
+  "initials" : "TC"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "U.S. Virgin Islands",
+  "country_name_pt" : "Ilhas Virgens (Estados Unidos)",
+  "gentile_pt" : "virginense",
+  "initials" : "VI"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "British Virgin Islands",
+  "country_name_pt" : "Ilhas Virgens (Inglaterra)",
+  "gentile_pt" : "virginense",
+  "initials" : "VG"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "India",
+  "country_name_pt" : "Índia",
+  "gentile_pt" : "indiano",
+  "initials" : "IN"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Indonesia",
+  "country_name_pt" : "Indonésia",
+  "gentile_pt" : "indonésia",
+  "initials" : "ID"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Iran",
+  "country_name_pt" : "Irã",
+  "gentile_pt" : "iraniano",
+  "initials" : "IR"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Iraq",
+  "country_name_pt" : "Iraque",
+  "gentile_pt" : "iraquiana",
+  "initials" : "IQ"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Ireland",
+  "country_name_pt" : "Irlanda",
+  "gentile_pt" : "irlandesa",
+  "initials" : "IE"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Iceland",
+  "country_name_pt" : "Islândia",
+  "gentile_pt" : "islandesa",
+  "initials" : "IS"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Israel",
+  "country_name_pt" : "Israel",
+  "gentile_pt" : "israelense",
+  "initials" : "IL"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Italy",
+  "country_name_pt" : "Itália",
+  "gentile_pt" : "italiana",
+  "initials" : "IT"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "Jamaica",
+  "country_name_pt" : "Jamaica",
+  "gentile_pt" : "jamaicana",
+  "initials" : "JM"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Japan",
+  "country_name_pt" : "Japão",
+  "gentile_pt" : "japonesa",
+  "initials" : "JP"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Jersey",
+  "country_name_pt" : "Jersey",
+  "gentile_pt" : "canalina",
+  "initials" : "JE"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Jordan",
+  "country_name_pt" : "Jordânia",
+  "gentile_pt" : "jordaniana",
+  "initials" : "JO"
+}, {
+  "continent_pt" : "Oceania",
+  "country_name_en" : "Kiribati",
+  "country_name_pt" : "Kiribati",
+  "gentile_pt" : "kiribatiana",
+  "initials" : "KI"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Kosovo",
+  "country_name_pt" : "Kosovo",
+  "gentile_pt" : "kosovar",
+  "initials" : "XK"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Kuwait",
+  "country_name_pt" : "Kuait",
+  "gentile_pt" : "kuwaitiano",
+  "initials" : "KW"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Laos",
+  "country_name_pt" : "Laos",
+  "gentile_pt" : "laosiana",
+  "initials" : "LA"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Lesotho",
+  "country_name_pt" : "Lesoto",
+  "gentile_pt" : "lesota",
+  "initials" : "LS"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Latvia",
+  "country_name_pt" : "Letônia",
+  "gentile_pt" : "letão",
+  "initials" : "LV"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Lebanon",
+  "country_name_pt" : "Líbano",
+  "gentile_pt" : "libanesa",
+  "initials" : "LB"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Liberia",
+  "country_name_pt" : "Libéria",
+  "gentile_pt" : "liberiana",
+  "initials" : "LR"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Libya",
+  "country_name_pt" : "Líbia",
+  "gentile_pt" : "líbia",
+  "initials" : "LY"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Liechtenstein",
+  "country_name_pt" : "Liechtenstein",
+  "gentile_pt" : "liechtensteiniense",
+  "initials" : "LI"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Lithuania",
+  "country_name_pt" : "Lituânia",
+  "gentile_pt" : "lituana",
+  "initials" : "LT"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Luxembourg",
+  "country_name_pt" : "Luxemburgo",
+  "gentile_pt" : "luxemburguesa",
+  "initials" : "LU"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Macau",
+  "country_name_pt" : "Macau",
+  "gentile_pt" : "macauense",
+  "initials" : "MO"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Macedonia (FYROM)",
+  "country_name_pt" : "Macedônia (República Yugoslava)",
+  "gentile_pt" : "macedônio",
+  "initials" : "MK"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Madagascar",
+  "country_name_pt" : "Madagascar",
+  "gentile_pt" : "malgaxe",
+  "initials" : "MG"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Malaysia",
+  "country_name_pt" : "Malásia",
+  "gentile_pt" : "malaia",
+  "initials" : "MY"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Malawi",
+  "country_name_pt" : "Malaui",
+  "gentile_pt" : "malauiano",
+  "initials" : "MW"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Maldives",
+  "country_name_pt" : "Maldivas",
+  "gentile_pt" : "maldívia",
+  "initials" : "MV"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Mali",
+  "country_name_pt" : "Mali",
+  "gentile_pt" : "malinesa",
+  "initials" : "ML"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Malta",
+  "country_name_pt" : "Malta",
+  "gentile_pt" : "maltesa",
+  "initials" : "MT"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Morocco",
+  "country_name_pt" : "Marrocos",
+  "gentile_pt" : "marroquina",
+  "initials" : "MA"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "Martinique",
+  "country_name_pt" : "Martinica",
+  "gentile_pt" : "martiniquense",
+  "initials" : "MQ"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Mauritius",
+  "country_name_pt" : "Maurício",
+  "gentile_pt" : "mauriciana",
+  "initials" : "MU"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Mauritania",
+  "country_name_pt" : "Mauritânia",
+  "gentile_pt" : "mauritana",
+  "initials" : "MR"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Mayotte",
+  "country_name_pt" : "Mayotte",
+  "gentile_pt" : "maiotense",
+  "initials" : "YT"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "Mexico",
+  "country_name_pt" : "México",
+  "gentile_pt" : "mexicana",
+  "initials" : "MX"
+}, {
+  "continent_pt" : "Oceania",
+  "country_name_en" : "Micronesia",
+  "country_name_pt" : "Micronésia",
+  "gentile_pt" : "micronésia",
+  "initials" : "FM"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Mozambique",
+  "country_name_pt" : "Moçambique",
+  "gentile_pt" : "moçambicana",
+  "initials" : "MZ"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Moldova",
+  "country_name_pt" : "Moldova",
+  "gentile_pt" : "moldavo",
+  "initials" : "MD"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Monaco",
+  "country_name_pt" : "Mônaco",
+  "gentile_pt" : "monegasca",
+  "initials" : "MC"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Mongolia",
+  "country_name_pt" : "Mongólia",
+  "gentile_pt" : "mongol",
+  "initials" : "MN"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Montenegro",
+  "country_name_pt" : "Montenegro",
+  "gentile_pt" : "montenegra",
+  "initials" : "ME"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "Montserrat",
+  "country_name_pt" : "Montserrat",
+  "gentile_pt" : "montserratiano",
+  "initials" : "MS"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Myanmar (Burma)",
+  "country_name_pt" : "Myanma",
+  "gentile_pt" : "birmanês",
+  "initials" : "MM"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Namibia",
+  "country_name_pt" : "Namíbia",
+  "gentile_pt" : "namíbia",
+  "initials" : "NA"
+}, {
+  "continent_pt" : "Oceania",
+  "country_name_en" : "Nauru",
+  "country_name_pt" : "Nauru",
+  "gentile_pt" : "nauruana",
+  "initials" : "NR"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Nepal",
+  "country_name_pt" : "Nepal",
+  "gentile_pt" : "nepalesa",
+  "initials" : "NP"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "Nicaragua",
+  "country_name_pt" : "Nicarágua",
+  "gentile_pt" : "nicaraguense",
+  "initials" : "NI"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Niger",
+  "country_name_pt" : "Níger",
+  "gentile_pt" : "nigerina",
+  "initials" : "NE"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Nigeria",
+  "country_name_pt" : "Nigéria",
+  "gentile_pt" : "nigeriana",
+  "initials" : "NG"
+}, {
+  "continent_pt" : "Oceania",
+  "country_name_en" : "Niue",
+  "country_name_pt" : "Niue",
+  "gentile_pt" : "niueana",
+  "initials" : "NU"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Norway",
+  "country_name_pt" : "Noruega",
+  "gentile_pt" : "norueguesa",
+  "initials" : "NO"
+}, {
+  "continent_pt" : "Oceania",
+  "country_name_en" : "New Caledonia",
+  "country_name_pt" : "Nova Caledônia",
+  "gentile_pt" : "caledônia",
+  "initials" : "NC"
+}, {
+  "continent_pt" : "Oceania",
+  "country_name_en" : "New Zealand",
+  "country_name_pt" : "Nova Zelândia",
+  "gentile_pt" : "neozelandesa",
+  "initials" : "NZ"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Oman",
+  "country_name_pt" : "Omã",
+  "gentile_pt" : "omani",
+  "initials" : "OM"
+}, {
+  "continent_pt" : "América do Sul",
+  "country_name_en" : "Caribbean Netherlands",
+  "country_name_pt" : "Países Baixos Caribenhos",
+  "gentile_pt" : "dos países baixos caribenhos",
+  "initials" : "BQ"
+}, {
+  "continent_pt" : "Oceania",
+  "country_name_en" : "Palau",
+  "country_name_pt" : "Palau",
+  "gentile_pt" : "palauense",
+  "initials" : "PW"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Palestine",
+  "country_name_pt" : "Palestina",
+  "gentile_pt" : "palestino",
+  "initials" : "PS"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "Panama",
+  "country_name_pt" : "Panamá",
+  "gentile_pt" : "zona do canal do panamá",
+  "initials" : "PA"
+}, {
+  "continent_pt" : "Oceania",
+  "country_name_en" : "Papua New Guinea",
+  "country_name_pt" : "Papua-Nova Guiné",
+  "gentile_pt" : "pauásia",
+  "initials" : "PG"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Pakistan",
+  "country_name_pt" : "Paquistão",
+  "gentile_pt" : "paquistanesa",
+  "initials" : "PK"
+}, {
+  "continent_pt" : "América do Sul",
+  "country_name_en" : "Paraguay",
+  "country_name_pt" : "Paraguai",
+  "gentile_pt" : "paraguaia",
+  "initials" : "PY"
+}, {
+  "continent_pt" : "América do Sul",
+  "country_name_en" : "Peru",
+  "country_name_pt" : "Peru",
+  "gentile_pt" : "peruana",
+  "initials" : "PE"
+}, {
+  "continent_pt" : "Oceania",
+  "country_name_en" : "French Polynesia",
+  "country_name_pt" : "Polinésia Francesa",
+  "gentile_pt" : "franco-polinésia",
+  "initials" : "PF"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Poland",
+  "country_name_pt" : "Polônia",
+  "gentile_pt" : "polonesa",
+  "initials" : "PL"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "Puerto Rico",
+  "country_name_pt" : "Porto Rico",
+  "gentile_pt" : "portorriquenha",
+  "initials" : "PR"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Portugal",
+  "country_name_pt" : "Portugal",
+  "gentile_pt" : "portuguesa",
+  "initials" : "PT"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Qatar",
+  "country_name_pt" : "Qatar",
+  "gentile_pt" : "catarense",
+  "initials" : "QA"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Kenya",
+  "country_name_pt" : "Quênia",
+  "gentile_pt" : "queniano",
+  "initials" : "KE"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Kyrgyzstan",
+  "country_name_pt" : "Quirguistão",
+  "gentile_pt" : "quirguiz",
+  "initials" : "KG"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Central African Republic",
+  "country_name_pt" : "República Centro-Africana",
+  "gentile_pt" : "centro-africana",
+  "initials" : "CF"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Congo (DRC)",
+  "country_name_pt" : "República Democrática do Congo",
+  "gentile_pt" : "congolesa",
+  "initials" : "CD"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "Dominican Republic",
+  "country_name_pt" : "República Dominicana",
+  "gentile_pt" : "dominicana",
+  "initials" : "DO"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Czech Republic",
+  "country_name_pt" : "República Tcheca",
+  "gentile_pt" : "tcheco",
+  "initials" : "CZ"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Romania",
+  "country_name_pt" : "Romênia",
+  "gentile_pt" : "romena",
+  "initials" : "RO"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Rwanda",
+  "country_name_pt" : "Ruanda",
+  "gentile_pt" : "ruandesa",
+  "initials" : "RW"
+}, {
+  "continent_pt" : "Eurásia",
+  "country_name_en" : "Russia",
+  "country_name_pt" : "Rússia (antiga URSS) - Federação Russa",
+  "gentile_pt" : "russa",
+  "initials" : "RU"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Western Sahara",
+  "country_name_pt" : "Saara Ocidental",
+  "gentile_pt" : "saariano",
+  "initials" : "EH"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "St. Pierre & Miquelon",
+  "country_name_pt" : "Saint-Pierre e Miquelon",
+  "gentile_pt" : "pedro-miquelonense",
+  "initials" : "PM"
+}, {
+  "continent_pt" : "Oceania",
+  "country_name_en" : "American Samoa",
+  "country_name_pt" : "Samoa Americana",
+  "gentile_pt" : "samoana",
+  "initials" : "AS"
+}, {
+  "continent_pt" : "Oceania",
+  "country_name_en" : "Samoa",
+  "country_name_pt" : "Samoa Ocidental",
+  "gentile_pt" : "samoano",
+  "initials" : "WS"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "San Marino",
+  "country_name_pt" : "San Marino",
+  "gentile_pt" : "samarinês",
+  "initials" : "SM"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "St. Helena",
+  "country_name_pt" : "Santa Helena",
+  "gentile_pt" : "helenense",
+  "initials" : "SH"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "St. Lucia",
+  "country_name_pt" : "Santa Lúcia",
+  "gentile_pt" : "santa-lucense",
+  "initials" : "LC"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "St. Barthélemy",
+  "country_name_pt" : "São Bartolomeu",
+  "gentile_pt" : "são-bartolomeense",
+  "initials" : "BL"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "St. Kitts & Nevis",
+  "country_name_pt" : "São Cristóvão e Névis",
+  "gentile_pt" : "são-cristovense",
+  "initials" : "KN"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "St. Martin",
+  "country_name_pt" : "São Martim",
+  "gentile_pt" : "são-martinhense",
+  "initials" : "MF"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "Sint Maarten",
+  "country_name_pt" : "São Martinho",
+  "gentile_pt" : "são-martinhense",
+  "initials" : "SX"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "São Tomé & Príncipe",
+  "country_name_pt" : "São Tomé e Príncipe",
+  "gentile_pt" : "são-tomense",
+  "initials" : "ST"
+}, {
+  "continent_pt" : "América do Norte",
+  "country_name_en" : "St. Vincent & Grenadines",
+  "country_name_pt" : "São Vicente e Granadinas",
+  "gentile_pt" : "sao-vicentino",
+  "initials" : "VC"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Senegal",
+  "country_name_pt" : "Senegal",
+  "gentile_pt" : "senegalesa",
+  "initials" : "SN"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Sierra Leone",
+  "country_name_pt" : "Serra Leoa",
+  "gentile_pt" : "leonesa",
+  "initials" : "SL"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Serbia",
+  "country_name_pt" : "Sérvia",
+  "gentile_pt" : "sérvia",
+  "initials" : "RS"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Syria",
+  "country_name_pt" : "Síria",
+  "gentile_pt" : "síria",
+  "initials" : "SY"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Somalia",
+  "country_name_pt" : "Somália",
+  "gentile_pt" : "somali",
+  "initials" : "SO"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Sri Lanka",
+  "country_name_pt" : "Sri Lanka",
+  "gentile_pt" : "cingalesa",
+  "initials" : "LK"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Swaziland",
+  "country_name_pt" : "Suazilândia",
+  "gentile_pt" : "suazi",
+  "initials" : "SZ"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Sudan",
+  "country_name_pt" : "Sudão",
+  "gentile_pt" : "sudanesa",
+  "initials" : "SD"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "South Sudan",
+  "country_name_pt" : "Sudão do Sul",
+  "gentile_pt" : "sul-sudanês",
+  "initials" : "SS"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Sweden",
+  "country_name_pt" : "Suécia",
+  "gentile_pt" : "sueca",
+  "initials" : "SE"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Switzerland",
+  "country_name_pt" : "Suíça",
+  "gentile_pt" : "suíça",
+  "initials" : "CH"
+}, {
+  "continent_pt" : "América do Sul",
+  "country_name_en" : "Suriname",
+  "country_name_pt" : "Suriname",
+  "gentile_pt" : "surinamesa",
+  "initials" : "SR"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Svalbard & Jan Mayen",
+  "country_name_pt" : "Svalbard",
+  "gentile_pt" : "svalbardense",
+  "initials" : "SJ"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Tajikistan",
+  "country_name_pt" : "Tadjiquistão",
+  "gentile_pt" : "tadjique",
+  "initials" : "TJ"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Thailand",
+  "country_name_pt" : "Tailândia",
+  "gentile_pt" : "tailandesa",
+  "initials" : "TH"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Taiwan",
+  "country_name_pt" : "Taiwan",
+  "gentile_pt" : "taiwanês",
+  "initials" : "TW"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Tanzania",
+  "country_name_pt" : "Tanzânia",
+  "gentile_pt" : "tanzaniana",
+  "initials" : "TZ"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "British Indian Ocean Territory",
+  "country_name_pt" : "Território Britânico do Oceano índico",
+  "gentile_pt" : "do território britânico do oceano índico",
+  "initials" : "IO"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "French Southern Territories",
+  "country_name_pt" : "Territórios do Sul da França",
+  "gentile_pt" : "do territórios do sul da frança",
+  "initials" : "TF"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Timor-Leste",
+  "country_name_pt" : "Timor-Leste",
+  "gentile_pt" : "timorense",
+  "initials" : "TL"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Togo",
+  "country_name_pt" : "Togo",
+  "gentile_pt" : "togolesa",
+  "initials" : "TG"
+}, {
+  "continent_pt" : "Oceania",
+  "country_name_en" : "Tonga",
+  "country_name_pt" : "Tonga",
+  "gentile_pt" : "tonganesa",
+  "initials" : "TO"
+}, {
+  "continent_pt" : "América do Sul",
+  "country_name_en" : "Trinidad & Tobago",
+  "country_name_pt" : "Trinidad e Tobago",
+  "gentile_pt" : "trinitário-tobagense",
+  "initials" : "TT"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Tristan da Cunha",
+  "country_name_pt" : "Tristão da Cunha",
+  "gentile_pt" : "tristanita",
+  "initials" : "TA"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Tunisia",
+  "country_name_pt" : "Tunísia",
+  "gentile_pt" : "tunisiana",
+  "initials" : "TN"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Turkmenistan",
+  "country_name_pt" : "Turcomenistão",
+  "gentile_pt" : "turcomana",
+  "initials" : "TM"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Turkey",
+  "country_name_pt" : "Turquia",
+  "gentile_pt" : "turca",
+  "initials" : "TR"
+}, {
+  "continent_pt" : "Oceania",
+  "country_name_en" : "Tuvalu",
+  "country_name_pt" : "Tuvalu",
+  "gentile_pt" : "tuvaluana",
+  "initials" : "TV"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Ukraine",
+  "country_name_pt" : "Ucrânia",
+  "gentile_pt" : "ucraniana",
+  "initials" : "UA"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Uganda",
+  "country_name_pt" : "Uganda",
+  "gentile_pt" : "ugandense",
+  "initials" : "UG"
+}, {
+  "continent_pt" : "América do Sul",
+  "country_name_en" : "Uruguay",
+  "country_name_pt" : "Uruguai",
+  "gentile_pt" : "uruguaia",
+  "initials" : "UY"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Uzbekistan",
+  "country_name_pt" : "Uzbequistão",
+  "gentile_pt" : "uzbeque",
+  "initials" : "UZ"
+}, {
+  "continent_pt" : "Oceania",
+  "country_name_en" : "Vanuatu",
+  "country_name_pt" : "Vanuatu",
+  "gentile_pt" : "vanuatuense",
+  "initials" : "VU"
+}, {
+  "continent_pt" : "Europa",
+  "country_name_en" : "Vatican City",
+  "country_name_pt" : "Vaticano",
+  "gentile_pt" : "vaticano",
+  "initials" : "VA"
+}, {
+  "continent_pt" : "América do Sul",
+  "country_name_en" : "Venezuela",
+  "country_name_pt" : "Venezuela",
+  "gentile_pt" : "venezuelana",
+  "initials" : "VE"
+}, {
+  "continent_pt" : "Ásia",
+  "country_name_en" : "Vietnam",
+  "country_name_pt" : "Vietnã",
+  "gentile_pt" : "vietnamita",
+  "initials" : "VN"
+}, {
+  "continent_pt" : "Oceania",
+  "country_name_en" : "Wallis & Futuna",
+  "country_name_pt" : "Wallis e Futuna",
+  "gentile_pt" : "wallis-futunense",
+  "initials" : "WF"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Zambia",
+  "country_name_pt" : "Zâmbia",
+  "gentile_pt" : "zambiana",
+  "initials" : "ZM"
+}, {
+  "continent_pt" : "África",
+  "country_name_en" : "Zimbabwe",
+  "country_name_pt" : "Zimbábue",
+  "gentile_pt" : "zimbabuana",
+  "initials" : "ZW"
+} ];
 
 export {countries}

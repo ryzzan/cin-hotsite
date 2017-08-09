@@ -8,7 +8,7 @@ let brazilianStates: any = [{
     value: 'ap',
     description: 'AMAPÁ' 
 }, {
-    value: 'a,',
+    value: 'am',
     description: 'AMAZONAS' 
 }, {
     value: 'ba',

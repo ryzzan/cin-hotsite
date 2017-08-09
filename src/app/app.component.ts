@@ -19,6 +19,8 @@ import { OutsidersService } from './shared/services/outsiders.service';
 export class AppComponent implements OnInit {
   @ViewChild('myForm') form: NgForm;
 
+  countries: any = countries;
+
   signupForm: FormGroup;
   
   states: any = brazilianStates;
@@ -31,7 +33,9 @@ export class AppComponent implements OnInit {
   /*activity products by subgroup trouble: end*/
   
   /*company: start*/
+  companyObject: any;
   companyBusiness: number;
+  companySize: string;
   /*company: end*/
 
   /*company address trouble: start*/
@@ -54,8 +58,28 @@ export class AppComponent implements OnInit {
   representativePhoneObject: any = [];
   representativeBirthday: any;
   representativeSchooling: any;
+  representativePostalCode: any;
+  representativeAddress: any = null;
+  representativeCity: any;
+  representativeState: any;
+  representativeAddressObject: any;
   createRepresentativePhoneObjectButton: boolean = false;
   /*company phone trouble: end*/
+
+  /*representative revenues trouble: start*/
+  representativeRevenuesObject: any = [];
+
+  representativeLocalRevenuesChanged: any;
+  createRepresentativeLocalRevenuesObjectButton: boolean = false;
+
+  statesBusinessChanged: string;
+  representativeOtherStateRevenuesChanged: any;
+  createRepresentativeOtherStateRevenuesObjectButton: boolean = false;
+
+  countriesBusinessChanged: string;
+  representativeOtherCountryRevenuesChanged: any;
+  createRepresentativeOtherCountryRevenuesObjectButton: boolean = false;
+  /*representative revenues trouble: end*/
 
   /*representative social media trouble: start*/
   representativeSocialMediaTypeChanged: number;
@@ -72,16 +96,6 @@ export class AppComponent implements OnInit {
   representativeObject: any = [];
   createRepresentativeObjectButton: any;
   /*representative: end*/
-
-  /*md-select countries: start*/
-  africa: any;
-  americaNorte: any;
-  americaSul: any;
-  antartida: any;
-  asia: any;
-  europa: any;
-  oceania: any;
-  /*md-select countries: end*/
 
   mask: any = {
     cnpj: [/\d/, /\d/, '.', /\d/, /\d/, /\d/,'.', /\d/, /\d/, /\d/,'/', /\d/, /\d/, /\d/, /\d/,'-', /\d/,/\d/],
@@ -103,19 +117,9 @@ export class AppComponent implements OnInit {
   schooling: any = selects[0].schooling;
 
   constructor(public outsidersService: OutsidersService) {
-    /*md-select countries: start*/
-    this.americaNorte = this.onCheckContinent('América do Norte');
-    this.americaSul = this.onCheckContinent('América do Sul');
-    this.africa = this.onCheckContinent('África');
-    this.antartida = this.onCheckContinent('Antártida');
-    this.asia = this.onCheckContinent('Ásia');
-    this.europa = this.onCheckContinent('Europa');
-    this.oceania = this.onCheckContinent('Oceania');
-    /*md-select countries: end*/
   }
 
   ngOnInit() {
-    console.log(this.treatments)
     this.signupForm = new FormGroup({
       'cnpj_number': new FormControl(null),
       'business_name': new FormControl(null),
@@ -137,7 +141,8 @@ export class AppComponent implements OnInit {
       'subgroup_id': new FormControl(null),
       'product_id': new FormControl(null),
       'participation_events': new FormControl(null),
-      'company_interests': new FormControl(null)
+      'company_interests': new FormControl(null),
+      'sales_capacity': new FormControl(null)
     })
   }
 
@@ -262,7 +267,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  onChangeRepresenativeTreatment = (event) => {
+  onChangeRepresentativeTreatment = (event) => {
     this.representativeTreatment = event.value;
   }
 
@@ -300,6 +305,22 @@ export class AppComponent implements OnInit {
 
   onChangeRepresentativeSchooling = (event) => {
     this.representativeSchooling = event.value;
+  }
+
+  onChangeRepresentativePostalCode = (event) => {
+    this.representativePostalCode = event.value;
+  }
+
+  onChangeRepresentativeAddress = (event) => {
+    this.representativeAddress = event.value;
+  }
+
+  onChangeRepresentativeCity = (event) => {
+    this.representativeCity = event.value;
+  }
+
+  onChangeRepresentativeState = (event) => {
+    this.representativeState = event.value;
   }
 
   createRepresentativeObject = () => {
@@ -362,14 +383,92 @@ export class AppComponent implements OnInit {
   }
 
   onChangeRepresentativePhoneType = (event) => {
-    console.log(event);
     if(event.value) {      
       this.representativePhoneTypeChanged = event.value;
-      console.log(this.representativePhoneTypeChanged);
     }
   }
   /*Representative phones: end*/
 
+  /*Representative revenues: start*/
+  onChangeRepresentativeLocalRevenues = (event) => {
+    if(event) {
+      console.log(event.srcElement.value);
+      this.representativeLocalRevenuesChanged = event.srcElement.value;
+      this.createRepresentativeLocalRevenuesObjectButton = true;
+    }
+  }
+
+  createLocalRevenuesObject = () => {
+    this.representativeRevenuesObject.push({
+      place_type: 'local',
+      place: 'local',
+      revenues: this.representativeLocalRevenuesChanged
+    })
+    this.representativeLocalRevenuesChanged = undefined;
+
+    console.log(this.representativeRevenuesObject);
+  }
+
+  clearRepresentativeLocalRevenues = (index) => {
+    this.representativeLocalRevenuesChanged.splice(index, 1);
+  }
+
+  onChangeStatesBusiness = (event) => {
+    this.statesBusinessChanged = event.value;
+  }
+
+  onChangeRepresentativeOtherStateRevenues = (event) => {
+    if(event) {
+      console.log(event.srcElement.value);
+      this.representativeOtherStateRevenuesChanged = event.srcElement.value;
+      this.createRepresentativeOtherStateRevenuesObjectButton = true;
+    }
+  }
+
+  createOtherStateRevenuesObject = () => {
+    this.representativeRevenuesObject.push({
+      place_type: 'brazilian_state',
+      place: this.statesBusinessChanged,
+      revenues: this.representativeOtherStateRevenuesChanged
+    })
+    this.representativeOtherStateRevenuesChanged = undefined;
+
+    console.log(this.representativeRevenuesObject);
+  }
+
+  clearRepresentativeOtherStateRevenues = (index) => {
+    this.representativeOtherStateRevenuesChanged.splice(index, 1);
+  }
+
+  onChangeCountriesBusiness = (event) => {
+    this.countriesBusinessChanged = event.value;
+  }
+
+  onChangeRepresentativeOtherCountryRevenues = (event) => {
+    if(event) {
+      console.log(event.srcElement.value);
+      this.representativeOtherCountryRevenuesChanged = event.srcElement.value;
+      this.createRepresentativeOtherCountryRevenuesObjectButton = true;
+    }
+  }
+
+  createOtherCountryRevenuesObject = () => {
+    this.representativeRevenuesObject.push({
+      place_type: 'country',
+      place: this.countriesBusinessChanged,
+      revenues: this.representativeOtherCountryRevenuesChanged
+    })
+    this.representativeOtherCountryRevenuesChanged = undefined;
+
+    console.log(this.representativeRevenuesObject);
+  }
+
+  clearRepresentativeOtherCountryRevenues = (index) => {
+    this.representativeOtherCountryRevenuesChanged.splice(index, 1);
+  }
+  /*Representative revenues: end*/
+
+  
   /*Representative social medias: start*/
   clearRepresentativeSocialMedia = (index) => {
     this.representativeSocialMediaObject.splice(index, 1);
@@ -380,7 +479,6 @@ export class AppComponent implements OnInit {
       digital_data_type: this.representativeSocialMediaTypeChanged,
       url: this.representativeSocialMediaURLChanged
     })
-    console.log(this.representativeSocialMediaObject)
     this.representativeSocialMediaTypeChanged = undefined;
   }
 
@@ -429,39 +527,60 @@ export class AppComponent implements OnInit {
     });
   }
 
+  republicaVirtualCepToRepresentative = (event) => {
+    let cep = event.srcElement.value;
+    this.outsidersService
+    .republicaVirtualCepSearch(cep)
+    .then(res => {
+      let string = JSON.stringify(res),
+      object = JSON.parse(string);
+      
+      this.representativeAddressObject = JSON.parse(object._body);
+
+      console.log(this.representativeAddressObject);
+    });
+  }
+
   receitaWsCnpj = (event) => {
     let cnpj = event.srcElement.value.replace(/[-./]/gi, '');
     
     this.outsidersService
     .receitaWsCnpjSearch(cnpj)
     .then(res => {
-      console.log(res)
       let string = JSON.stringify(res),
       object = JSON.parse(string);
       
-      this.addressObject = JSON.parse(object._body);
+      this.companyObject = JSON.parse(object._body);
+      console.log(this.companyObject);
 
-      console.log(this.addressObject)
+      this.signupForm.controls.business_name.patchValue(this.companyObject.nome);
+      this.signupForm.controls.tranding_name.patchValue(this.companyObject.fantasia);
+      this.signupForm.controls.foundation_year.patchValue(this.companyObject.abertura);
+      this.signupForm.controls.postal_code.patchValue(this.companyObject.cep);
+      this.signupForm.controls.address.patchValue(this.companyObject.logradouro);
+      this.signupForm.controls.district.patchValue(this.companyObject.bairro);
+      this.signupForm.controls.city.patchValue(this.companyObject.municipio);
+      this.signupForm.controls.state.patchValue(this.companyObject.uf);
+
+      if(this.companyObject.capital_social) {
+        let number = Number(this.companyObject.capital_social);
+        let size;
+        if(number < 60000) {
+          size = "mei";
+        } else if(number < 360000) {
+          size = "micro";
+        } else {
+          size = "pequena";
+        }
+
+        this.signupForm.controls.company_size.patchValue(size);
+      }
     });
   }
   /*Share it?: end*/
   
   onChangeMarket = (event) => {
     this.marketChanged = event.checked;
-    console.log(this.marketChanged);
-  }
-
-  onCheckContinent = (continent) => {
-    let country = [], j = 0;
-
-    for(let lim = countries.length, i =0; i < lim; i++) {
-      if(countries[i].continente === continent) {
-        country[j] = {description: countries[i].nome_pais} 
-        j++;
-      }
-    }
-
-    return country;
   }
 
   onSubmit = () => {
