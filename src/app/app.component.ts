@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, NgForm, NgModel } from '@angular/forms';
-import { MdSnackBar } from '@angular/material';
+import { MdSnackBar, MdSelectModule } from '@angular/material';
 
 import { brazilianStates } from './data/brazilian-states';
 import { countries } from './data/countries';
@@ -9,6 +9,7 @@ import { selects } from './data/selects';
 import createAutoCorrectedDatePipe from 'text-mask-addons/dist/createAutoCorrectedDatePipe.js'
 
 /*Services*/
+import { CrudService } from './shared/services/crud.service';
 import { OutsidersService } from './shared/services/outsiders.service';
 
 @Component({
@@ -25,11 +26,11 @@ export class AppComponent implements OnInit {
   
   states: any = brazilianStates;
 
-  marketChanged: boolean = false;
   objectToAPI: any;
 
   /*activity products by subgroup trouble: start*/
   productObject: any;
+  subgroupObject: any;
   /*activity products by subgroup trouble: end*/
   
   /*company: start*/
@@ -43,25 +44,12 @@ export class AppComponent implements OnInit {
   /*company address trouble: start*/
   
   /*company phone trouble: start*/
-  companyPhoneTypeChanged: number;
-  companyPhoneNumberChanged: string;
-  companyPhoneDDDChanged: string;
   companyPhoneObject: any = [];
   createContactPhoneObjectButton: boolean = false;
   /*company phone trouble: end*/
 
   /*representative phone trouble: start*/
-  representativeCPF: string;
-  representativePhoneTypeChanged: number;
-  representativePhoneNumberChanged: string;
-  representativePhoneDDDChanged: string;
   representativePhoneObject: any = [];
-  representativeBirthday: any;
-  representativeSchooling: any;
-  representativePostalCode: any;
-  representativeAddress: any = null;
-  representativeCity: any;
-  representativeState: any;
   representativeAddressObject: any;
   createRepresentativePhoneObjectButton: boolean = false;
   /*company phone trouble: end*/
@@ -97,6 +85,10 @@ export class AppComponent implements OnInit {
   createRepresentativeObjectButton: any;
   /*representative: end*/
 
+  groups: any = [];
+  subgroups: any = [];
+  products: any = [];
+
   mask: any = {
     cnpj: [/\d/, /\d/, '.', /\d/, /\d/, /\d/,'.', /\d/, /\d/, /\d/,'/', /\d/, /\d/, /\d/, /\d/,'-', /\d/,/\d/],
     cpf: [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/,'.', /\d/, /\d/, /\d/,'-', /\d/, /\d/],
@@ -107,19 +99,45 @@ export class AppComponent implements OnInit {
   };
 
   //SELECTS values
-  maturityArea: any = selects[0].maturityArea;
-  comercialArea: any = selects[0].comercialArea;
   phoneType: any = selects[0].phoneType;
-  productArea: any = selects[0].productArea;
   socialMedias: any = selects[0].socialMedias;
-  subgroupArea: any = selects[0].subgroupArea;
   treatments: any = selects[0].treatment;
   schooling: any = selects[0].schooling;
 
-  constructor(public outsidersService: OutsidersService) {
-  }
+  constructor(
+    public outsidersService: OutsidersService,
+    public crud: CrudService
+  ) { }
 
   ngOnInit() {
+    this.crud.readArray('laravel', {
+      route: 'groups?noPaginate=true'
+    })
+    .then(res => {
+      let temp;
+      temp = res;
+      this.groups = temp.obj;
+    });
+
+    this.crud.readArray('laravel', {
+      route: 'subgroups'
+    })
+    .then(res => {
+      let temp;
+      temp = res;
+      this.subgroups = temp.obj;
+    });
+
+    this.crud.readArray('laravel', {
+      route: 'products'
+    })
+    .then(res => {
+      console.log(res)
+      let temp;
+      temp = res;
+      this.products = temp.obj;
+    });
+
     this.signupForm = new FormGroup({
       'cnpj_number': new FormControl(null),
       'business_name': new FormControl(null),
@@ -142,66 +160,25 @@ export class AppComponent implements OnInit {
       'product_id': new FormControl(null),
       'participation_events': new FormControl(null),
       'company_interests': new FormControl(null),
-      'sales_capacity': new FormControl(null)
+      'sales_capacity': new FormControl(null),
+      'representative_phone_type': new FormControl(null),
+      'representative_phone_ddd': new FormControl(null),
+      'representative_phone_number': new FormControl(null),
+      'company_phone_type': new FormControl(null),
+      'company_phone_ddd': new FormControl(null),
+      'company_phone_number': new FormControl(null),
+      'representative_treatment': new FormControl(null),
+      'representative_cpf': new FormControl(null),
+      'representative_name': new FormControl(null),
+      'representative_position': new FormControl(null),
+      'representative_birthday': new FormControl(null),
+      'representative_schooling': new FormControl(null),
+      'representative_email': new FormControl(null),
+      'representative_postal_code': new FormControl(null),
+      'representative_address': new FormControl(null),
+      'representative_city': new FormControl(null),
+      'representative_state': new FormControl(null)
     })
-  }
-
-  /*Activity: start*/
-  filterProduct = (event) => {
-    if(event.value.length > 0) {
-      this.productObject = [{}];
-      
-      let productsArray = [];
-      let finalArray = [];
-      for(let lim = event.value.length, i = 0; i < lim; i++) {
-        for(let lim2 = this.productArea.length, j =0; j < lim2; j++) {
-          for(let lim3 = this.productArea[j].subgroups.length, k = 0; k < lim3; k++) {
-            if(event.value[i] == this.productArea[j].subgroups[k]) {
-              productsArray.push(this.productArea[j].value);
-            }
-          }
-        }
-      }
-
-      finalArray = productsArray.filter(function(item, pos) {
-        return productsArray.indexOf(item) == pos;
-      })
-      
-      for(let lim = this.productArea.length, i =0; i < lim; i++) {
-        for(let lim2 = finalArray.length, j =0; j < lim2; j++) {
-          if(this.productArea[i].value == finalArray[j]) {          
-            this.productObject.push({
-              description: this.productArea[i].description,
-              value: this.productArea[i].value
-            });
-          }
-        }
-      }
-
-      this.productObject.shift();
-    } else {
-      this.productObject = undefined;
-    }
-  }
-  /*Activity: end*/
-
-  /*Contact phones: start*/
-  clearContactPhone = (index) => {
-    console.log(index);
-    console.log(this.companyPhoneObject);
-    this.companyPhoneObject.splice(index, 1);
-  }
-
-  createContactPhoneObject = () => {
-    this.companyPhoneObject.push({
-      phone_type_id: this.companyPhoneTypeChanged,
-      country_code: "+55",
-      ddd: this.companyPhoneDDDChanged,
-      number: this.companyPhoneNumberChanged
-    })
-    console.log(this.companyPhoneObject)
-    this.companyPhoneTypeChanged = undefined;
-    //this.form.value.contact.;
   }
 
   onChangeCompanyBusiness = (event) => {
@@ -212,129 +189,103 @@ export class AppComponent implements OnInit {
     }
   }
 
-  onChangeCompanyPhoneDDD = (event) => {
-    if(event) {
-      this.companyPhoneDDDChanged = event.srcElement.value;
-
-      if(this.companyPhoneNumberChanged) {
-        if(this.companyPhoneNumberChanged.length > 7) {
-          this.createContactPhoneObjectButton = true;
-        } else {
-          this.createContactPhoneObjectButton = false;
+  /*Activity: start*/
+  filterProduct = (event) => {
+    if(event.value.length > 0) {
+      this.productObject = [{}];
+      
+      let productsArray = [];
+      let finalArray = [];
+      for(let lim = this.products.length, i = 0; i < lim; i++) { //subgroups iteration
+        for(let lim2 = event.value.length, j =0; j < lim2; j++) { //products iteration          
+          if(event.value[j] == this.products[i].subgroup_id) {
+            productsArray.push(this.products[i]);
+          }
         }
       }
+
+      this.productObject = productsArray;
+      
+    } else {
+      this.productObject = undefined;
     }
   }
 
-  onChangeCompanyPhoneNumber = (event) => {
-    if(event) {
-      this.companyPhoneNumberChanged = event.srcElement.value;
-
-      if(this.companyPhoneDDDChanged) {
-        if(this.companyPhoneNumberChanged.length > 7 && this.companyPhoneDDDChanged.length > 1) {
-          this.createContactPhoneObjectButton = true;
-        } else {
-          this.createContactPhoneObjectButton = false;
+  filterSubgroup = (event) => {
+    console.log(this.subgroups)
+    if(event.value.length > 0) {
+      this.subgroupObject = [{}];
+      
+      let subgroupsArray = [];
+      let finalArray = [];
+      for(let lim = this.subgroups.length, i = 0; i < lim; i++) { //groups iteration
+        for(let lim2 = event.value.length, j =0; j < lim2; j++) { //subgroups iteration
+          console.log(this.subgroups[j].group_id);
+          if(event.value[j] == this.subgroups[i].group_id) {
+            subgroupsArray.push(this.subgroups[i]);
+          }
         }
       }
+
+      this.subgroupObject = subgroupsArray;
+      
+    } else {
+      this.subgroupObject = undefined;
     }
+  }
+  /*Activity: end*/
+
+  /*Contact phones: start*/
+  clearContactPhone = (index) => {
+    this.companyPhoneObject.splice(index, 1);
   }
 
-  onChangeCompanyPhoneType = (event) => {
-    if(event.value) {      
-      this.companyPhoneTypeChanged = event.value;
-      console.log(this.companyPhoneTypeChanged);
-    }
-  }
+  createContactPhoneObject = () => {
+    this.companyPhoneObject.push({
+      phone_type_id: this.signupForm.controls['company_phone_type'].value,
+      country_code: "+55",
+      ddd: this.signupForm.controls['company_phone_ddd'].value,
+      number: this.signupForm.controls['company_phone_number'].value
+    })
+
+    this.signupForm.controls['company_phone_type'].patchValue(null);
+    this.signupForm.controls['company_phone_ddd'].patchValue(null);
+    this.signupForm.controls['company_phone_number'].patchValue(null);
+  }  
   /*Contact phones: end*/
 
   /*Representative: start*/
-  onChangeRepresentativeCPF = (event) => {
-    this.representativeCPF = event.srcElement.value;
-  }
-
-  onChangeRepresentativeName = (event) => {
-    if(event) {
-      this.represenativeName = event.srcElement.value;
-
-      if(this.represenativeEmail && this.represenativePosition) {
-        if(this.represenativeEmail.length > 3 && this.represenativePosition.length > 1) {
-          this.createRepresentativeObjectButton = true;
-        } else {
-          this.createRepresentativeObjectButton = false;
-        }
-      }
-    }
-  }
-
-  onChangeRepresentativeTreatment = (event) => {
-    this.representativeTreatment = event.value;
-  }
-
-  onChangeRepresentativePosition = (event) => {
-    if(event) {
-      this.represenativePosition = event.srcElement.value;
-
-      if(this.represenativeEmail && this.represenativeName) {
-        if(this.represenativeEmail.length > 3 && this.represenativeName.length > 2) {
-          this.createRepresentativeObjectButton = true;
-        } else {
-          this.createRepresentativeObjectButton = false;
-        }
-      }
-    }
-  }
-
-  onChangeRepresentativeEmail = (event) => {
-    if(event) {
-      this.represenativeEmail = event.srcElement.value;
-
-      if(this.represenativeName && this.represenativePosition) {
-        if(this.represenativeName.length > 2 && this.represenativePosition.length > 1) {
-          this.createRepresentativeObjectButton = true;
-        } else {
-          this.createRepresentativeObjectButton = false;
-        }
-      }
-    }
-  }
-
-  onChangeRepresentativeBirthday = (event) => {
-    this.representativeBirthday = event.srcElement.value;
-  }
-
-  onChangeRepresentativeSchooling = (event) => {
-    this.representativeSchooling = event.value;
-  }
-
-  onChangeRepresentativePostalCode = (event) => {
-    this.representativePostalCode = event.value;
-  }
-
-  onChangeRepresentativeAddress = (event) => {
-    this.representativeAddress = event.value;
-  }
-
-  onChangeRepresentativeCity = (event) => {
-    this.representativeCity = event.value;
-  }
-
-  onChangeRepresentativeState = (event) => {
-    this.representativeState = event.value;
+  clearRepresentative = (index) => {
+    this.representativeObject.splice(index, 1);
   }
 
   createRepresentativeObject = () => {
     this.representativeObject.push({
-      cpf: this.representativeCPF,
-      treatment: this.representativeTreatment,
-      name: this.represenativeName,
-      position: this.represenativePosition,
-      email: this.represenativeEmail,
+      cpf: this.signupForm.controls['representative_cpf'].value,
+      treatment: this.signupForm.controls['representative_treatment'].value,
+      name: this.signupForm.controls['representative_name'].value,
+      position: this.signupForm.controls['representative_position'].value,
+      email: this.signupForm.controls['representative_email'].value,
       phones: this.representativePhoneObject,
-      socialMedias: this.representativeSocialMediaObject,
-      birthday: this.representativeBirthday,
-      schooling: this.representativeSchooling
+      birthday: this.signupForm.controls['representative_birthday'].value,
+      schooling: this.signupForm.controls['representative_schooling'].value,
+      postal_code: this.signupForm.controls['representative_postal_code'].value,
+      address: this.signupForm.controls['representative_address'].value,
+      city: this.signupForm.controls['representative_city'].value,
+      state: this.signupForm.controls['representative_state'].value
     })
+
+    this.signupForm.controls['representative_cpf'].patchValue(null),
+    this.signupForm.controls['representative_treatment'].patchValue(null),
+    this.signupForm.controls['representative_name'].patchValue(null),
+    this.signupForm.controls['representative_position'].patchValue(null),
+    this.signupForm.controls['representative_email'].patchValue(null),
+    this.signupForm.controls['representative_birthday'].patchValue(null),
+    this.signupForm.controls['representative_schooling'].patchValue(null),
+    this.signupForm.controls['representative_postal_code'].patchValue(null),
+    this.signupForm.controls['representative_address'].patchValue(null),
+    this.signupForm.controls['representative_city'].patchValue(null),
+    this.signupForm.controls['representative_state'].patchValue(null)
   }
   /*Representative: end*/
 
@@ -345,47 +296,14 @@ export class AppComponent implements OnInit {
 
   createRepresentativePhoneObject = () => {
     this.representativePhoneObject.push({
-      phone_type_id: this.representativePhoneTypeChanged,
+      phone_type_id: this.signupForm.controls['representative_phone_type'].value,
       country_code: "+55",
-      ddd: this.representativePhoneDDDChanged,
-      number: this.representativePhoneNumberChanged
-    })
-    this.representativePhoneTypeChanged = undefined;
-    //this.form.value.contact.;
-  }
-
-  onChangeRepresentativePhoneDDD = (event) => {
-    if(event) {
-      this.representativePhoneDDDChanged = event.srcElement.value;
-
-      if(this.representativePhoneNumberChanged) {
-        if(this.representativePhoneNumberChanged.length > 7) {
-          this.createRepresentativePhoneObjectButton = true;
-        } else {
-          this.createRepresentativePhoneObjectButton = false;
-        }
-      }
-    }
-  }
-
-  onChangeRepresentativePhoneNumber = (event) => {
-    if(event) {
-      this.representativePhoneNumberChanged = event.srcElement.value;
-
-      if(this.representativePhoneDDDChanged) {
-        if(this.representativePhoneNumberChanged.length > 7 && this.representativePhoneDDDChanged.length > 1) {
-          this.createRepresentativePhoneObjectButton = true;
-        } else {
-          this.createRepresentativePhoneObjectButton = false;
-        }
-      }
-    }
-  }
-
-  onChangeRepresentativePhoneType = (event) => {
-    if(event.value) {      
-      this.representativePhoneTypeChanged = event.value;
-    }
+      ddd: this.signupForm.controls['representative_phone_ddd'].value,
+      number: this.signupForm.controls['representative_phone_number'].value,
+    });
+    this.signupForm.controls['representative_phone_type'].patchValue(null);
+    this.signupForm.controls['representative_phone_ddd'].patchValue(null);
+    this.signupForm.controls['representative_phone_number'].patchValue(null);
   }
   /*Representative phones: end*/
 
@@ -537,7 +455,9 @@ export class AppComponent implements OnInit {
       
       this.representativeAddressObject = JSON.parse(object._body);
 
-      console.log(this.representativeAddressObject);
+      this.signupForm.controls['representative_address'].patchValue(this.representativeAddressObject.logradouro);
+      this.signupForm.controls['representative_city'].patchValue(this.representativeAddressObject.cidade);
+      this.signupForm.controls['representative_state'].patchValue(this.representativeAddressObject.uf);
     });
   }
 
@@ -553,14 +473,15 @@ export class AppComponent implements OnInit {
       this.companyObject = JSON.parse(object._body);
       console.log(this.companyObject);
 
-      this.signupForm.controls.business_name.patchValue(this.companyObject.nome);
-      this.signupForm.controls.tranding_name.patchValue(this.companyObject.fantasia);
-      this.signupForm.controls.foundation_year.patchValue(this.companyObject.abertura);
-      this.signupForm.controls.postal_code.patchValue(this.companyObject.cep);
-      this.signupForm.controls.address.patchValue(this.companyObject.logradouro);
-      this.signupForm.controls.district.patchValue(this.companyObject.bairro);
-      this.signupForm.controls.city.patchValue(this.companyObject.municipio);
-      this.signupForm.controls.state.patchValue(this.companyObject.uf);
+      this.signupForm.controls['business_name'].patchValue(this.companyObject.nome);
+      this.signupForm.controls['tranding_name'].patchValue(this.companyObject.fantasia);
+      this.signupForm.controls['foundation_year'].patchValue(this.companyObject.abertura);
+      this.signupForm.controls['postal_code'].patchValue(this.companyObject.cep);
+      this.signupForm.controls['address'].patchValue(this.companyObject.logradouro);
+      this.signupForm.controls['number'].patchValue(this.companyObject.numero);
+      this.signupForm.controls['district'].patchValue(this.companyObject.bairro);
+      this.signupForm.controls['city'].patchValue(this.companyObject.municipio);
+      this.signupForm.controls['state'].patchValue(this.companyObject.uf);
 
       if(this.companyObject.capital_social) {
         let number = Number(this.companyObject.capital_social);
@@ -578,11 +499,6 @@ export class AppComponent implements OnInit {
     });
   }
   /*Share it?: end*/
-  
-  onChangeMarket = (event) => {
-    this.marketChanged = event.checked;
-  }
-
   onSubmit = () => {
     let representativesObject = {
       representatives: this.representativeObject

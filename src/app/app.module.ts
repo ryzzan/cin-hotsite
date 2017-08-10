@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import { TextMaskModule } from 'angular2-text-mask';
 
 /*Services*/
+import { CrudService } from './shared/services/crud.service';
 import { OutsidersService } from './shared/services/outsiders.service';
 
 @NgModule({
@@ -28,7 +29,10 @@ import { OutsidersService } from './shared/services/outsiders.service';
     ReactiveFormsModule,
     TextMaskModule
   ],
-  providers: [OutsidersService],
+  providers: [
+    OutsidersService,
+    CrudService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

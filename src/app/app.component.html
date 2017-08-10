@@ -129,19 +129,23 @@
 
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="2">
-            <md-select placeholder="2.7 - Tipo de telefone" (change)="onChangeCompanyPhoneType($event)" id="testando">
+            <md-select placeholder="2.7 - Tipo de telefone" formControlName="company_phone_type">
               <md-option *ngFor="let phone of phoneType" [value]="phone.value">{{phone.description}}</md-option>
             </md-select>
           </md-grid-tile>
 
-          <md-grid-tile [colspan]="2" *ngIf="companyPhoneTypeChanged">
+          <md-grid-tile [colspan]="2" *ngIf="signupForm.controls['company_phone_type'].value">
             <md-input-container style="width: 90px; margin-right: 5px;">
-              <input mdInput type="text" placeholder="2.7.1 - DDD" (keyup)="onChangeCompanyPhoneDDD($event)">
+              <input mdInput type="text" placeholder="2.7.1 - DDD" formControlName="company_phone_ddd">
             </md-input-container>
             <md-input-container style="width: 110px;">
-              <input mdInput type="text" placeholder="2.7.2 - Número" (keyup)="onChangeCompanyPhoneNumber($event)">
+              <input mdInput type="text" placeholder="2.7.2 - Número" formControlName="company_phone_number">
             </md-input-container>            
-            <a md-mini-fab *ngIf="createContactPhoneObjectButton" (click)="createContactPhoneObject()"><md-icon color="primary">add</md-icon></a>
+            <a md-mini-fab 
+            *ngIf="signupForm.controls['company_phone_ddd'].value && signupForm.controls['company_phone_number'].value"
+            (click)="createContactPhoneObject()">
+              <md-icon color="primary">add</md-icon>
+            </a>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="2">
@@ -175,12 +179,23 @@
             </md-input-container>
           </md-grid-tile>
         </md-grid-list>
+
+        <div *ngIf="companyPhoneObject.length > 0"> 
+          <md-chip-list>  
+            <span *ngFor="let companyPhone of companyPhoneObject; let i = index;" class="contact-phone-list">
+              <md-chip>
+                <span class="fs10 mr5">({{companyPhone.ddd}}){{companyPhone.number}}</span>
+                <span (click)="clearRepresentativePhone(i)"><md-icon class="fs10">clear</md-icon></span>
+              </md-chip>              
+            </span>
+          </md-chip-list>
+        </div>
       </md-tab>
 
       <md-tab label="Representantes">
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="1">
-            <md-select placeholder="3.1 - Título" (change)="onChangeRepresentativeTreatment($event)">
+            <md-select placeholder="3.1 - Título" formControlName="representative_treatment">
               <md-option *ngFor="let treatment of treatments" [value]="treatment.value">{{treatment.description}}</md-option>
             </md-select>
           </md-grid-tile>
@@ -189,61 +204,67 @@
             <md-input-container>
               <input mdInput type="text" 
               placeholder="3.2 - CPF" 
-              (keydown)="onChangeRepresentativeCPF($event)"
+              formControlName="representative_cpf"
               [textMask]="{mask: mask.cpf}">
             </md-input-container>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="2">
             <md-input-container>
-              <input mdInput type="text" placeholder="3.3 - Nome" (keydown)="onChangeRepresentativeName($event)">
+              <input mdInput type="text" placeholder="3.3 - Nome" 
+              formControlName="representative_name">
             </md-input-container>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="2">
             <md-input-container>
-              <input mdInput type="text" placeholder="3.4 - Cargo" (keydown)="onChangeRepresentativePosition($event)">
+              <input mdInput type="text" placeholder="3.4 - Cargo" 
+              formControlName="representative_position">
             </md-input-container>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="1">
             <md-input-container>
-              <input mdInput [mdDatepicker]="picker" placeholder="3.5 - Nascimento" 
-              (keydown)="onChangeRepresentativeBirthday($event)">
-              <button mdSuffix [mdDatepickerToggle]="picker"></button>
+              <input mdInput placeholder="3.5 - Nascimento" 
+              [textMask]="{mask: mask.date}"
+              formControlName="representative_birthday">
             </md-input-container>
-            <md-datepicker #picker></md-datepicker>
           </md-grid-tile>
         </md-grid-list>
 
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="2">
-            <md-select placeholder="3.6 - Escolaridade" (change)="onChangeRepresentativeSchooling($event)">
+            <md-select placeholder="3.6 - Escolaridade" 
+            formControlName="representative_schooling">
               <md-option *ngFor="let schoolingChoice of schooling" [value]="schoolingChoice.value">{{schoolingChoice.description}}</md-option>
             </md-select>
           </md-grid-tile>
           
           <!--Representative phone: start -->
           <md-grid-tile [colspan]="2">
-            <md-select placeholder="3.7 - Tipo de telefone" (change)="onChangeRepresentativePhoneType($event)" id="testando">
+            <md-select placeholder="3.7 - Tipo de telefone" formControlName="representative_phone_type">
               <md-option *ngFor="let phone of phoneType" [value]="phone.value">{{phone.description}}</md-option>
             </md-select>
           </md-grid-tile>
 
-          <md-grid-tile [colspan]="2" *ngIf="representativePhoneTypeChanged">
+          <md-grid-tile [colspan]="2" 
+          *ngIf="signupForm.controls['representative_phone_type'].value">
             <md-input-container style="width: 90px; margin-right: 5px;">
-              <input mdInput type="text" placeholder="3.7.1 - DDD" (keyup)="onChangeRepresentativePhoneDDD($event)">
+              <input mdInput type="text" placeholder="3.7.1 - DDD" formControlName="representative_phone_ddd">
             </md-input-container>
             <md-input-container style="width: 110px;">
-              <input mdInput type="text" placeholder="3.7.2 - Número" (keyup)="onChangeRepresentativePhoneNumber($event)">
+              <input mdInput type="text" placeholder="3.7.2 - Número" formControlName="representative_phone_number">
             </md-input-container>            
-            <a md-mini-fab *ngIf="createRepresentativePhoneObjectButton" (click)="createRepresentativePhoneObject()"><md-icon color="primary">add</md-icon></a>
+            <a md-mini-fab *ngIf="signupForm.controls['representative_phone_ddd'].value && signupForm.controls['representative_phone_number'].value" (click)="createRepresentativePhoneObject()">
+              <md-icon color="primary">add</md-icon>
+            </a>
           </md-grid-tile>
           <!--Representative phone: end -->
           
           <md-grid-tile [colspan]="2">
             <md-input-container>
-              <input mdInput type="text" placeholder="3.8 - E-mail" (keydown)="onChangeRepresentativeEmail($event)">
+              <input mdInput type="text" placeholder="3.8 - E-mail"
+              formControlName="representative_email">
             </md-input-container>
           </md-grid-tile>
         </md-grid-list>
@@ -252,7 +273,7 @@
           <md-grid-tile [colspan]="2">
             <md-input-container>
               <input mdInput type="text"
-              (keydown)="onChangeRepresentativePostalCode($event)"
+              formControlName="representative_postal_code"
               (change)="republicaVirtualCepToRepresentative($event)"
               placeholder="3.9 - CEP"
               [textMask]="{mask: mask.zip}">
@@ -262,30 +283,41 @@
           <md-grid-tile [colspan]="3">
             <md-input-container>
               <input mdInput type="text"
-              (keydown)="onChangeRepresentativeAddress($event)"
-              placeholder="3.10 - Logradouro"
-              [value]="representativeAddressObject?.logradouro">
+              formControlName="representative_address"
+              placeholder="3.10 - Logradouro">
             </md-input-container>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="2">
             <md-input-container>
               <input mdInput type="text"
-              (keydown)="onChangeRepresentativeCity($event)"
-              placeholder="3.11 - Cidade"
-              [value]="representativeAddressObject?.cidade">
+              formControlName="representative_city"
+              placeholder="3.11 - Cidade">
             </md-input-container>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="1">
             <md-input-container>
               <input mdInput type="text"
-              (keydown)="onChangeRepresentativeState($event)"
-              placeholder="3.12 - UF"
-              [value]="representativeAddressObject?.uf">
+              formControlName="representative_state"
+              placeholder="3.12 - UF">
             </md-input-container>
           </md-grid-tile>
         </md-grid-list>
+
+        <div *ngIf="signupForm.controls['representative_treatment'].value &&
+        signupForm.controls['representative_cpf'].value && 
+        signupForm.controls['representative_name'].value && 
+        signupForm.controls['representative_position'].value && 
+        signupForm.controls['representative_birthday'].value &&
+        signupForm.controls['representative_schooling'].value && 
+        signupForm.controls['representative_email'].value && 
+        signupForm.controls['representative_postal_code'].value && 
+        signupForm.controls['representative_address'].value &&
+        signupForm.controls['representative_city'].value &&
+        signupForm.controls['representative_state'].value">
+          <a md-raised-button color="primary" (click)="createRepresentativeObject()">Adicionar Representantes</a>
+        </div>
 
         <div *ngIf="representativePhoneObject.length > 0"> 
           <md-chip-list>  
@@ -298,19 +330,15 @@
           </md-chip-list>
         </div>
 
-        <div *ngIf="representativeSocialMediaObject.length > 0"> 
+        <div *ngIf="representativeObject.length > 0"> 
           <md-chip-list>  
-            <span *ngFor="let representativeSocialMedia of representativeSocialMediaObject; let i = index;" class="contact-phone-list">
+            <span *ngFor="let representative of representativeObject; let i = index;">
               <md-chip>
-                <span class="fs10 mr5">{{representativeSocialMedia.url}}</span>
-                <span (click)="clearRepresentativeSocialMedia(i)"><md-icon class="fs10">clear</md-icon></span>
+                <span class="fs10 mr5">{{representative.cpf}}</span>
+                <span (click)="clearRepresentative(i)"><md-icon class="fs10">clear</md-icon></span>
               </md-chip>              
             </span>
           </md-chip-list>
-        </div>
-
-        <div *ngIf="createRepresentativeObjectButton">
-          <a md-raised-button color="primary" (click)="createRepresentativeObject()">Adicionar Representantes</a>
         </div>
       </md-tab>
 
@@ -318,8 +346,9 @@
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="2">
             <md-select placeholder="4.1 - Ramos de Atividade" formControlName="group_id"
+            (change)="filterSubgroup($event)"
             multiple>
-              <md-option *ngFor="let comercial of comercialArea" [value]="comercial.value">{{comercial.description}}</md-option>
+              <md-option *ngFor="let group of groups" [value]="group.id">{{group.name}}</md-option>
             </md-select>
           </md-grid-tile>
 
@@ -327,14 +356,14 @@
             <md-select placeholder="4.2 - Setor" formControlName="subgroup_id"
             (change)="filterProduct($event)"
             multiple>
-              <md-option *ngFor="let subgroup of subgroupArea" [value]="subgroup.value">{{subgroup.description}}</md-option>
+              <md-option *ngFor="let subgroup of subgroups" [value]="subgroup.id">{{subgroup.name}}</md-option>
             </md-select>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="2" *ngIf="productObject">
             <md-select placeholder="4.3 - Produtos" formControlName="product_id"
             multiple>
-              <md-option *ngFor="let product of productObject" [value]="product.value">{{product.description}}</md-option>
+              <md-option *ngFor="let product of productObject" [value]="product.id">{{product.name}}</md-option>
             </md-select>
           </md-grid-tile>
         </md-grid-list>
