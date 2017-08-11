@@ -12,6 +12,10 @@ import createAutoCorrectedDatePipe from 'text-mask-addons/dist/createAutoCorrect
 import { CrudService } from './shared/services/crud.service';
 import { OutsidersService } from './shared/services/outsiders.service';
 
+/**rxjs */
+import 'rxjs/add/operator/startWith';
+import 'rxjs/add/operator/map';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -21,14 +25,13 @@ export class AppComponent implements OnInit {
   @ViewChild('myForm') form: NgForm;
 
   countries: any = countries;
-
   signupForm: FormGroup;
-  
   states: any = brazilianStates;
-
   objectToAPI: any;
+  errors: any = [];
 
   /*activity products by subgroup trouble: start*/
+  subgroupChanged: boolean = false;
   productObject: any;
   subgroupObject: any;
   /*activity products by subgroup trouble: end*/
@@ -103,41 +106,14 @@ export class AppComponent implements OnInit {
   socialMedias: any = selects[0].socialMedias;
   treatments: any = selects[0].treatment;
   schooling: any = selects[0].schooling;
+  languages: any = selects[0].languages;
+
+  filteredCountries: any;
 
   constructor(
     public outsidersService: OutsidersService,
     public crud: CrudService
-  ) { }
-
-  ngOnInit() {
-    this.crud.readArray('laravel', {
-      route: 'groups?noPaginate=true'
-    })
-    .then(res => {
-      let temp;
-      temp = res;
-      this.groups = temp.obj;
-    });
-
-    this.crud.readArray('laravel', {
-      route: 'subgroups'
-    })
-    .then(res => {
-      let temp;
-      temp = res;
-      this.subgroups = temp.obj;
-    });
-
-    this.crud.readArray('laravel', {
-      route: 'products'
-    })
-    .then(res => {
-      console.log(res)
-      let temp;
-      temp = res;
-      this.products = temp.obj;
-    });
-
+  ) { 
     this.signupForm = new FormGroup({
       'cnpj_number': new FormControl(null),
       'business_name': new FormControl(null),
@@ -177,8 +153,52 @@ export class AppComponent implements OnInit {
       'representative_postal_code': new FormControl(null),
       'representative_address': new FormControl(null),
       'representative_city': new FormControl(null),
-      'representative_state': new FormControl(null)
+      'representative_state': new FormControl(null),
+      'revenues_country': new FormControl(null)
     })
+    
+    this.filteredCountries =  this.countries;
+  }
+
+  ngOnInit() {
+    this.crud.readArray('laravel', {
+      route: 'groups?noPaginate=true'
+    })
+    .then(res => {
+      let temp;
+      temp = res;
+      this.groups = temp.obj;
+    });
+
+    this.crud.readArray('laravel', {
+      route: 'subgroups?where[group_id]=1'
+    })
+    .then(res => {
+      let temp;
+      temp = res;
+      this.subgroups = temp.obj;
+    });
+
+    this.crud.readArray('laravel', {
+      route: 'products'
+    })
+    .then(res => {
+      let temp;
+      temp = res;
+      this.products = temp.obj;
+    });
+  }
+
+  filterCountries(val) {
+    let r = val.srcElement.value;
+    
+    if(val != null) {
+      this.filteredCountries = this.countries.filter(s => s.country_name_pt.toLowerCase().indexOf(r.toLowerCase()) === 0)
+    } else {
+      this.filteredCountries = this.countries;
+    }
+    
+    return this.filteredCountries;
   }
 
   onChangeCompanyBusiness = (event) => {
@@ -211,26 +231,23 @@ export class AppComponent implements OnInit {
     }
   }
 
-  filterSubgroup = (event) => {
-    console.log(this.subgroups)
+  onChangeSubgroup = (event) => {
+    this.subgroupChanged = false;
+    this.errors = this.removeObjectFromObjectArrayByPropertyValue(this.errors, 'code', 'err-submes');
+
     if(event.value.length > 0) {
-      this.subgroupObject = [{}];
-      
-      let subgroupsArray = [];
-      let finalArray = [];
-      for(let lim = this.subgroups.length, i = 0; i < lim; i++) { //groups iteration
-        for(let lim2 = event.value.length, j =0; j < lim2; j++) { //subgroups iteration
-          console.log(this.subgroups[j].group_id);
-          if(event.value[j] == this.subgroups[i].group_id) {
-            subgroupsArray.push(this.subgroups[i]);
-          }
+      for(let lim=event.value.length, i = 0; i < lim; i++) {
+        if(event.value[i] == 1) {
+          this.subgroupChanged = true;
         }
       }
 
-      this.subgroupObject = subgroupsArray;
-      
-    } else {
-      this.subgroupObject = undefined;
+      if(!this.subgroupChanged) {
+        this.errors.push({
+          code: "err-submes",
+          message: "Atividade - Ramos de Atividade: apenas membros da indústria podem participar do evento"
+        });
+      }
     }
   }
   /*Activity: end*/
@@ -310,7 +327,6 @@ export class AppComponent implements OnInit {
   /*Representative revenues: start*/
   onChangeRepresentativeLocalRevenues = (event) => {
     if(event) {
-      console.log(event.srcElement.value);
       this.representativeLocalRevenuesChanged = event.srcElement.value;
       this.createRepresentativeLocalRevenuesObjectButton = true;
     }
@@ -322,9 +338,8 @@ export class AppComponent implements OnInit {
       place: 'local',
       revenues: this.representativeLocalRevenuesChanged
     })
-    this.representativeLocalRevenuesChanged = undefined;
 
-    console.log(this.representativeRevenuesObject);
+    this.representativeLocalRevenuesChanged = undefined;
   }
 
   clearRepresentativeLocalRevenues = (index) => {
@@ -337,7 +352,6 @@ export class AppComponent implements OnInit {
 
   onChangeRepresentativeOtherStateRevenues = (event) => {
     if(event) {
-      console.log(event.srcElement.value);
       this.representativeOtherStateRevenuesChanged = event.srcElement.value;
       this.createRepresentativeOtherStateRevenuesObjectButton = true;
     }
@@ -350,8 +364,6 @@ export class AppComponent implements OnInit {
       revenues: this.representativeOtherStateRevenuesChanged
     })
     this.representativeOtherStateRevenuesChanged = undefined;
-
-    console.log(this.representativeRevenuesObject);
   }
 
   clearRepresentativeOtherStateRevenues = (index) => {
@@ -364,7 +376,6 @@ export class AppComponent implements OnInit {
 
   onChangeRepresentativeOtherCountryRevenues = (event) => {
     if(event) {
-      console.log(event.srcElement.value);
       this.representativeOtherCountryRevenuesChanged = event.srcElement.value;
       this.createRepresentativeOtherCountryRevenuesObjectButton = true;
     }
@@ -377,8 +388,6 @@ export class AppComponent implements OnInit {
       revenues: this.representativeOtherCountryRevenuesChanged
     })
     this.representativeOtherCountryRevenuesChanged = undefined;
-
-    console.log(this.representativeRevenuesObject);
   }
 
   clearRepresentativeOtherCountryRevenues = (index) => {
@@ -427,8 +436,14 @@ export class AppComponent implements OnInit {
         }
       }
     }
+  }
 
-    console.log(newObject);
+  removeObjectFromObjectArrayByPropertyValue = (objectsArray: any, property: string, value: string) => {
+    let newObject = objectsArray.filter(function(property) {
+       property !== value;
+    });
+
+    return newObject;
   }
 
   republicaVirtualCep = (event) => {
@@ -440,8 +455,6 @@ export class AppComponent implements OnInit {
       object = JSON.parse(string);
       
       this.addressObject = JSON.parse(object._body);
-
-      console.log(this.addressObject)
     });
   }
 
@@ -471,7 +484,6 @@ export class AppComponent implements OnInit {
       object = JSON.parse(string);
       
       this.companyObject = JSON.parse(object._body);
-      console.log(this.companyObject);
 
       this.signupForm.controls['business_name'].patchValue(this.companyObject.nome);
       this.signupForm.controls['tranding_name'].patchValue(this.companyObject.fantasia);

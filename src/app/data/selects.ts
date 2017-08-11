@@ -97,6 +97,17 @@ let selects: any = [{
     }, {
         value: 'superior',
         description: 'Superior completo'
+    }],
+    languages: [{
+        description: "Inglês"
+    }, {
+        description: "Francês"
+    }, {
+        description: "Epanhol"
+    }, {
+        description: "Português"
+    }, {
+        description: "Outra(s)"
     }]
 }]
 

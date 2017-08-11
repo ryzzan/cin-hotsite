@@ -1,84 +1,84 @@
 let brazilianStates: any = [{
     value: 'ac',
-    description: 'ACRE' 
+    description: 'Acre' 
 }, {
     value: 'al',
-    description: 'ALAGOAS' 
+    description: 'Alagoas' 
 }, {
     value: 'ap',
-    description: 'AMAPÁ' 
+    description: 'Amapá' 
 }, {
     value: 'am',
-    description: 'AMAZONAS' 
+    description: 'Amazonas' 
 }, {
     value: 'ba',
-    description: 'BAHIA' 
+    description: 'Bahia' 
 }, {
     value: 'ce',
-    description: 'CEARÁ' 
+    description: 'Ceará' 
 }, {
     value: 'df',
-    description: 'DISTRITO FEDERAL' 
+    description: 'Distrito Federal' 
 }, {
     value: 'es',
-    description: 'ESPÍRITO SANTO' 
+    description: 'Espírito Santo' 
 }, {
     value: 'go',
-    description: 'GOIÁS' 
+    description: 'Goiás' 
 }, {
     value: 'ma',
-    description: 'MARANHÃO' 
+    description: 'Maranhão' 
 }, {
     value: 'mt',
-    description: 'MATO GROSSO' 
+    description: 'Mato Grosso' 
 }, {
     value: 'ms',
-    description: 'MATO GROSSO DO SUL' 
+    description: 'Mato Grosso do Sul' 
 }, {
     value: 'mg',
-    description: 'MINAS GERAIS' 
+    description: 'Minas Gerais' 
 }, {
     value: 'pa',
-    description: 'PARÁ' 
+    description: 'Pará' 
 }, {
     value: 'pb',
-    description: 'PARAÍBA' 
+    description: 'Paraíba' 
 }, {
     value: 'pr',
-    description: 'PARANÁ' 
+    description: 'Paraná' 
 }, {
     value: 'pe',
-    description: 'PERNAMBUCO' 
+    description: 'Pernambuco' 
 }, {
     value: 'pi',
-    description: 'PIAUÍ' 
+    description: 'Piauí' 
 }, {
     value: 'rj',
-    description: 'RIO DE JANEIRO' 
+    description: 'Rio de Janeiro' 
 }, {
     value: 'rn',
-    description: 'RIO GRANDE DO NORTE' 
+    description: 'Rio Grande do Norte' 
 }, {
     value: 'rs',
-    description: 'RIO GRANDE DO SUL' 
+    description: 'Rio Grande do Sul' 
 }, {
     value: 'ro',
-    description: 'RONDÔNIA' 
+    description: 'Rondônia' 
 }, {
     value: 'rr',
-    description: 'RORAIMA' 
+    description: 'Roraima' 
 }, {
     value: 'sc',
-    description: 'SANTA CATARINA' 
+    description: 'Santa Catarina' 
 }, {
     value: 'sp',
-    description: 'SÃO PAULO' 
+    description: 'São Paulo' 
 }, {
     value: 'se',
-    description: 'SERGIPE' 
+    description: 'Sergipe' 
 }, {
     value: 'to',
-    description: 'TOCANTINS' 
+    description: 'Tocantins' 
 }]
 
 export {brazilianStates}
