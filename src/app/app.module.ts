@@ -15,6 +15,11 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { CrudService } from './shared/services/crud.service';
 import { OutsidersService } from './shared/services/outsiders.service';
 
+/**
+ * Validators
+ */
+import { MyValidators } from './shared/validators/my-validators'
+
 @NgModule({
   declarations: [
     AppComponent
@@ -30,8 +35,9 @@ import { OutsidersService } from './shared/services/outsiders.service';
     TextMaskModule
   ],
   providers: [
-    OutsidersService,
-    CrudService
+    CrudService,
+    MyValidators,
+    OutsidersService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, NgForm, NgModel } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, NgModel, Validators } from '@angular/forms';
 import { MdSnackBar, MdSelectModule } from '@angular/material';
 
 import { brazilianStates } from './data/brazilian-states';
@@ -11,6 +11,11 @@ import createAutoCorrectedDatePipe from 'text-mask-addons/dist/createAutoCorrect
 /*Services*/
 import { CrudService } from './shared/services/crud.service';
 import { OutsidersService } from './shared/services/outsiders.service';
+
+/**
+ * Validators
+ */
+import { MyValidators } from './shared/validators/my-validators';
 
 /**rxjs */
 import 'rxjs/add/operator/startWith';
@@ -112,49 +117,63 @@ export class AppComponent implements OnInit {
 
   constructor(
     public outsidersService: OutsidersService,
-    public crud: CrudService
+    public crud: CrudService,
+    public validator: MyValidators
   ) { 
     this.signupForm = new FormGroup({
-      'cnpj_number': new FormControl(null),
-      'business_name': new FormControl(null),
-      'tranding_name': new FormControl(null),
-      'foundation_year': new FormControl(null),
-      'employees_quantity': new FormControl(null),
-      'legal_person': new FormControl(null),
-      'company_size': new FormControl(null),
-      'postal_code': new FormControl(null),
-      'address': new FormControl(null),
-      'number': new FormControl(null),
-      'city': new FormControl(null),
-      'state': new FormControl(null),
-      'district': new FormControl(null),
-      'complement': new FormControl(null),
-      'company_email': new FormControl(null),
-      'company_site': new FormControl(null),
-      'group_id': new FormControl(null),
-      'subgroup_id': new FormControl(null),
-      'product_id': new FormControl(null),
-      'participation_events': new FormControl(null),
-      'company_interests': new FormControl(null),
-      'sales_capacity': new FormControl(null),
-      'representative_phone_type': new FormControl(null),
-      'representative_phone_ddd': new FormControl(null),
-      'representative_phone_number': new FormControl(null),
-      'company_phone_type': new FormControl(null),
-      'company_phone_ddd': new FormControl(null),
-      'company_phone_number': new FormControl(null),
-      'representative_treatment': new FormControl(null),
-      'representative_cpf': new FormControl(null),
-      'representative_name': new FormControl(null),
-      'representative_position': new FormControl(null),
-      'representative_birthday': new FormControl(null),
-      'representative_schooling': new FormControl(null),
-      'representative_email': new FormControl(null),
-      'representative_postal_code': new FormControl(null),
-      'representative_address': new FormControl(null),
-      'representative_city': new FormControl(null),
-      'representative_state': new FormControl(null),
-      'revenues_country': new FormControl(null)
+      'company': new FormGroup({
+        'cnpj_number': new FormControl(null, Validators.required),
+        'business_name': new FormControl(null),
+        'tranding_name': new FormControl(null),
+        'foundation_year': new FormControl(null),
+        'employees_quantity': new FormControl(null),
+        'legal_person': new FormControl(null),
+        'company_size': new FormControl(null),
+        'language': new FormControl(null),
+      }),
+      'contact': new FormGroup({
+        'country': new FormControl(null),
+        'postal_code': new FormControl(null),
+        'address': new FormControl(null),
+        'number': new FormControl(null),
+        'city': new FormControl(null),
+        'state': new FormControl(null),
+        'district': new FormControl(null),
+        'company_email': new FormControl(null),
+        'company_site': new FormControl(null),
+        'company_social_media': new FormControl(null),
+        'company_phone_type': new FormControl(null),
+        'company_phone_ddd': new FormControl(null),
+        'company_phone_number': new FormControl(null),        
+      }),      
+      'representative': new FormGroup({
+        'representative_treatment': new FormControl(null),
+        'representative_cpf': new FormControl(null),
+        'representative_name': new FormControl(null),
+        'representative_position': new FormControl(null),
+        'representative_birthday': new FormControl(null),
+        'representative_schooling': new FormControl(null),
+        'representative_email': new FormControl(null),
+        'representative_postal_code': new FormControl(null),
+        'representative_address': new FormControl(null),
+        'representative_city': new FormControl(null),
+        'representative_state': new FormControl(null),
+        'representative_phone_type': new FormControl(null),
+        'representative_phone_ddd': new FormControl(null),
+        'representative_phone_number': new FormControl(null),
+      }),
+      'interest': new FormGroup({
+        'company_interests': new FormControl(null),
+        'partner_profile': new FormControl(null),
+        'participation_events': new FormControl(null),
+        'revenues_country': new FormControl(null),
+        'sales_capacity': new FormControl(null),
+      }),
+      'activity': new FormGroup({
+        'group_id': new FormControl(null),
+        'subgroup_id': new FormControl(null),
+        'product_id': new FormControl(null),
+      })
     })
     
     this.filteredCountries =  this.countries;
@@ -259,15 +278,15 @@ export class AppComponent implements OnInit {
 
   createContactPhoneObject = () => {
     this.companyPhoneObject.push({
-      phone_type_id: this.signupForm.controls['company_phone_type'].value,
+      phone_type_id: this.signupForm.get('contact.company_phone_type').value,
       country_code: "+55",
-      ddd: this.signupForm.controls['company_phone_ddd'].value,
-      number: this.signupForm.controls['company_phone_number'].value
+      ddd: this.signupForm.get('contact.company_phone_ddd').value,
+      number: this.signupForm.get('contact.company_phone_number').value
     })
 
-    this.signupForm.controls['company_phone_type'].patchValue(null);
-    this.signupForm.controls['company_phone_ddd'].patchValue(null);
-    this.signupForm.controls['company_phone_number'].patchValue(null);
+    this.signupForm.get('contact.company_phone_type').patchValue(null);
+    this.signupForm.get('contact.company_phone_ddd').patchValue(null);
+    this.signupForm.get('contact.company_phone_number').patchValue(null);
   }  
   /*Contact phones: end*/
 
@@ -278,31 +297,31 @@ export class AppComponent implements OnInit {
 
   createRepresentativeObject = () => {
     this.representativeObject.push({
-      cpf: this.signupForm.controls['representative_cpf'].value,
-      treatment: this.signupForm.controls['representative_treatment'].value,
-      name: this.signupForm.controls['representative_name'].value,
-      position: this.signupForm.controls['representative_position'].value,
-      email: this.signupForm.controls['representative_email'].value,
+      cpf: this.signupForm.get('representative.representative_cpf').value,
+      treatment: this.signupForm.get('representative.representative_treatment').value,
+      name: this.signupForm.get('representative.representative_name').value,
+      position: this.signupForm.get('representative.representative_position').value,
+      email: this.signupForm.get('representative.representative_email').value,
       phones: this.representativePhoneObject,
-      birthday: this.signupForm.controls['representative_birthday'].value,
-      schooling: this.signupForm.controls['representative_schooling'].value,
-      postal_code: this.signupForm.controls['representative_postal_code'].value,
-      address: this.signupForm.controls['representative_address'].value,
-      city: this.signupForm.controls['representative_city'].value,
-      state: this.signupForm.controls['representative_state'].value
+      birthday: this.signupForm.get('representative.representative_birthday').value,
+      schooling: this.signupForm.get('representative.representative_schooling').value,
+      postal_code: this.signupForm.get('representative.representative_postal_code').value,
+      address: this.signupForm.get('representative.representative_address').value,
+      city: this.signupForm.get('representative.representative_city').value,
+      state: this.signupForm.get('representative.representative_state').value
     })
 
-    this.signupForm.controls['representative_cpf'].patchValue(null),
-    this.signupForm.controls['representative_treatment'].patchValue(null),
-    this.signupForm.controls['representative_name'].patchValue(null),
-    this.signupForm.controls['representative_position'].patchValue(null),
-    this.signupForm.controls['representative_email'].patchValue(null),
-    this.signupForm.controls['representative_birthday'].patchValue(null),
-    this.signupForm.controls['representative_schooling'].patchValue(null),
-    this.signupForm.controls['representative_postal_code'].patchValue(null),
-    this.signupForm.controls['representative_address'].patchValue(null),
-    this.signupForm.controls['representative_city'].patchValue(null),
-    this.signupForm.controls['representative_state'].patchValue(null)
+    this.signupForm.get('representative.representative_cpf').patchValue(null),
+    this.signupForm.get('representative.representative_treatment').patchValue(null),
+    this.signupForm.get('representative.representative_name').patchValue(null),
+    this.signupForm.get('representative.representative_position').patchValue(null),
+    this.signupForm.get('representative.representative_email').patchValue(null),
+    this.signupForm.get('representative.representative_birthday').patchValue(null),
+    this.signupForm.get('representative.representative_schooling').patchValue(null),
+    this.signupForm.get('representative.representative_postal_code').patchValue(null),
+    this.signupForm.get('representative.representative_address').patchValue(null),
+    this.signupForm.get('representative.representative_city').patchValue(null),
+    this.signupForm.get('representative.representative_state').patchValue(null)
   }
   /*Representative: end*/
 
@@ -313,14 +332,14 @@ export class AppComponent implements OnInit {
 
   createRepresentativePhoneObject = () => {
     this.representativePhoneObject.push({
-      phone_type_id: this.signupForm.controls['representative_phone_type'].value,
+      phone_type_id: this.signupForm.get('representative.representative_phone_type').value,
       country_code: "+55",
-      ddd: this.signupForm.controls['representative_phone_ddd'].value,
-      number: this.signupForm.controls['representative_phone_number'].value,
+      ddd: this.signupForm.get('representative.representative_phone_ddd').value,
+      number: this.signupForm.get('representative.representative_phone_number').value,
     });
-    this.signupForm.controls['representative_phone_type'].patchValue(null);
-    this.signupForm.controls['representative_phone_ddd'].patchValue(null);
-    this.signupForm.controls['representative_phone_number'].patchValue(null);
+    this.signupForm.get('representative.representative_phone_type').patchValue(null);
+    this.signupForm.get('representative.representative_phone_ddd').patchValue(null);
+    this.signupForm.get('representative.representative_phone_number').patchValue(null);
   }
   /*Representative phones: end*/
 
@@ -436,6 +455,8 @@ export class AppComponent implements OnInit {
         }
       }
     }
+
+    console.log(newObject);
   }
 
   removeObjectFromObjectArrayByPropertyValue = (objectsArray: any, property: string, value: string) => {
@@ -468,9 +489,9 @@ export class AppComponent implements OnInit {
       
       this.representativeAddressObject = JSON.parse(object._body);
 
-      this.signupForm.controls['representative_address'].patchValue(this.representativeAddressObject.logradouro);
-      this.signupForm.controls['representative_city'].patchValue(this.representativeAddressObject.cidade);
-      this.signupForm.controls['representative_state'].patchValue(this.representativeAddressObject.uf);
+      this.signupForm.get('representative.representative_address').patchValue(this.representativeAddressObject.logradouro);
+      this.signupForm.get('representative.representative_city').patchValue(this.representativeAddressObject.cidade);
+      this.signupForm.get('representative.representative_state').patchValue(this.representativeAddressObject.uf);
     });
   }
 
@@ -485,15 +506,15 @@ export class AppComponent implements OnInit {
       
       this.companyObject = JSON.parse(object._body);
 
-      this.signupForm.controls['business_name'].patchValue(this.companyObject.nome);
-      this.signupForm.controls['tranding_name'].patchValue(this.companyObject.fantasia);
-      this.signupForm.controls['foundation_year'].patchValue(this.companyObject.abertura);
-      this.signupForm.controls['postal_code'].patchValue(this.companyObject.cep);
-      this.signupForm.controls['address'].patchValue(this.companyObject.logradouro);
-      this.signupForm.controls['number'].patchValue(this.companyObject.numero);
-      this.signupForm.controls['district'].patchValue(this.companyObject.bairro);
-      this.signupForm.controls['city'].patchValue(this.companyObject.municipio);
-      this.signupForm.controls['state'].patchValue(this.companyObject.uf);
+      this.signupForm.get('company.business_name').patchValue(this.companyObject.nome);
+      this.signupForm.get('company.tranding_name').patchValue(this.companyObject.fantasia);
+      this.signupForm.get('company.foundation_year').patchValue(this.companyObject.abertura);
+      this.signupForm.get('contact.postal_code').patchValue(this.companyObject.cep);
+      this.signupForm.get('contact.address').patchValue(this.companyObject.logradouro);
+      this.signupForm.get('contact.number').patchValue(this.companyObject.numero);
+      this.signupForm.get('contact.district').patchValue(this.companyObject.bairro);
+      this.signupForm.get('contact.city').patchValue(this.companyObject.municipio);
+      this.signupForm.get('contact.state').patchValue(this.companyObject.uf);
 
       if(this.companyObject.capital_social) {
         let number = Number(this.companyObject.capital_social);
@@ -506,7 +527,7 @@ export class AppComponent implements OnInit {
           size = "pequena";
         }
 
-        this.signupForm.controls.company_size.patchValue(size);
+        this.signupForm.get('company.company_size').patchValue(size);
       }
     });
   }
@@ -521,13 +542,18 @@ export class AppComponent implements OnInit {
     }
 
     this.createNewObjectFromArrayOfObjects([
-      this.form.value.contact, 
-      this.form.value.company, 
-      this.form.value.activity, 
-      this.form.value.market, 
-      this.form.value.representative,
+      this.signupForm,
       phonesObject,
       representativesObject
     ]);
   }
+
+  /*objectCheckGenericValidator(control: FormControl): {[s: string]: boolean} {
+    if(this.companyBusiness == 2 && control.value != null) {
+      console.log(this.companyBusiness)
+      return { "validation": true };
+    }
+    console.log(this.companyBusiness)
+    return null;
+  }*/
 }
