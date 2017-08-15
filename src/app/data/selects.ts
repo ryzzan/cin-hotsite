@@ -103,7 +103,7 @@ let selects: any = [{
     }, {
         description: "Francês"
     }, {
-        description: "Epanhol"
+        description: "Espanhol"
     }, {
         description: "Português"
     }, {

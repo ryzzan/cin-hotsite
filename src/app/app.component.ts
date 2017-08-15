@@ -31,6 +31,7 @@ export class AppComponent implements OnInit {
 
   countries: any = countries;
   signupForm: FormGroup;
+  buyerSignupForm: FormGroup;
   states: any = brazilianStates;
   objectToAPI: any;
   errors: any = [];
@@ -123,31 +124,29 @@ export class AppComponent implements OnInit {
     this.signupForm = new FormGroup({
       'company': new FormGroup({
         'cnpj_number': new FormControl(null, Validators.required),
-        'business_name': new FormControl(null),
-        'tranding_name': new FormControl(null),
-        'foundation_year': new FormControl(null),
-        'employees_quantity': new FormControl(null),
-        'legal_person': new FormControl(null),
-        'company_size': new FormControl(null),
-        'language': new FormControl(null),
+        'business_name': new FormControl(null, Validators.required),
+        'tranding_name': new FormControl(null, Validators.required),
+        'foundation_year': new FormControl(null, Validators.required),
+        'employees_quantity': new FormControl(null, Validators.required),
+        'legal_person': new FormControl(null, Validators.required),
+        'company_size': new FormControl(null, Validators.required),
       }),
       'contact': new FormGroup({
-        'country': new FormControl(null),
-        'postal_code': new FormControl(null),
-        'address': new FormControl(null),
-        'number': new FormControl(null),
-        'city': new FormControl(null),
-        'state': new FormControl(null),
-        'district': new FormControl(null),
-        'company_email': new FormControl(null),
+        'postal_code': new FormControl(null, Validators.required),
+        'address': new FormControl(null, Validators.required),
+        'number': new FormControl(null, Validators.required),
+        'city': new FormControl(null, Validators.required),
+        'state': new FormControl(null, Validators.required),
+        'district': new FormControl(null, Validators.required),
+        'company_email': new FormControl(null, Validators.required),
         'company_site': new FormControl(null),
         'company_social_media': new FormControl(null),
-        'company_phone_type': new FormControl(null),
+        'company_phone_type': new FormControl(null), //Validar pelo objeto
         'company_phone_ddd': new FormControl(null),
         'company_phone_number': new FormControl(null),        
       }),      
       'representative': new FormGroup({
-        'representative_treatment': new FormControl(null),
+        'representative_treatment': new FormControl(null),//Validar pelo objeto
         'representative_cpf': new FormControl(null),
         'representative_name': new FormControl(null),
         'representative_position': new FormControl(null),
@@ -164,15 +163,68 @@ export class AppComponent implements OnInit {
       }),
       'interest': new FormGroup({
         'company_interests': new FormControl(null),
+        'participation_events': new FormControl(null),
+        'revenues_country': new FormControl(null),
+        'sales_capacity': new FormControl(null),
+      }),
+      'activity': new FormGroup({
+        'group_id': new FormControl(null, Validators.required),
+        'subgroup_id': new FormControl(null, Validators.required),
+        'product_id': new FormControl(null, Validators.required),
+      })
+    })
+
+    this.buyerSignupForm = new FormGroup({
+      'company': new FormGroup({
+        'cnpj_number': new FormControl(null, Validators.required),
+        'business_name': new FormControl(null, Validators.required),
+        'tranding_name': new FormControl(null, Validators.required),
+        'foundation_year': new FormControl(null, Validators.required),
+        'employees_quantity': new FormControl(null, Validators.required),
+        'legal_person': new FormControl(null, Validators.required),
+        'language': new FormControl(null, Validators.required),
+      }),
+      'contact': new FormGroup({
+        'country': new FormControl(null, Validators.required),
+        'postal_code': new FormControl(null, Validators.required),
+        'address': new FormControl(null, Validators.required),
+        'number': new FormControl(null, Validators.required),
+        'city': new FormControl(null, Validators.required),
+        'state': new FormControl(null, Validators.required),
+        'district': new FormControl(null, Validators.required),
+        'company_email': new FormControl(null, Validators.required),
+        'company_site': new FormControl(null),
+        'company_social_media': new FormControl(null),
+        'company_phone_type': new FormControl(null), //Validar pelos objetos que serão gerados
+        'company_phone_ddd': new FormControl(null),
+        'company_phone_number': new FormControl(null),        
+      }),      
+      'representative': new FormGroup({
+        'representative_treatment': new FormControl(null), //Validar pelos objetos que serão gerados
+        'representative_cpf': new FormControl(null),
+        'representative_name': new FormControl(null),
+        'representative_position': new FormControl(null),
+        'representative_birthday': new FormControl(null),
+        'representative_schooling': new FormControl(null),
+        'representative_email': new FormControl(null),
+        'representative_postal_code': new FormControl(null),
+        'representative_address': new FormControl(null),
+        'representative_city': new FormControl(null),
+        'representative_state': new FormControl(null),
+        'representative_phone_type': new FormControl(null), //Validar pelos objetos que serão gerados
+        'representative_phone_ddd': new FormControl(null),
+        'representative_phone_number': new FormControl(null),
+      }),
+      'interest': new FormGroup({
+        'company_interests': new FormControl(null),
         'partner_profile': new FormControl(null),
         'participation_events': new FormControl(null),
         'revenues_country': new FormControl(null),
         'sales_capacity': new FormControl(null),
       }),
       'activity': new FormGroup({
-        'group_id': new FormControl(null),
-        'subgroup_id': new FormControl(null),
-        'product_id': new FormControl(null),
+        'subgroup_id': new FormControl(null, Validators.required),
+        'product_id': new FormControl(null, Validators.required),
       })
     })
     
@@ -180,6 +232,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.companyBusiness = 1;
+
     this.crud.readArray('laravel', {
       route: 'groups?noPaginate=true'
     })
@@ -271,7 +325,7 @@ export class AppComponent implements OnInit {
   }
   /*Activity: end*/
 
-  /*Contact phones: start*/
+  /*Seller Contact phones: start*/
   clearContactPhone = (index) => {
     this.companyPhoneObject.splice(index, 1);
   }
@@ -288,9 +342,28 @@ export class AppComponent implements OnInit {
     this.signupForm.get('contact.company_phone_ddd').patchValue(null);
     this.signupForm.get('contact.company_phone_number').patchValue(null);
   }  
-  /*Contact phones: end*/
+  /*Seller Contact phones: end*/
 
-  /*Representative: start*/
+  /*Buyer Contact phones: start*/
+  clearBuyerContactPhone = (index) => {
+    this.companyPhoneObject.splice(index, 1);
+  }
+
+  createBuyerContactPhoneObject = () => {
+    this.companyPhoneObject.push({
+      phone_type_id: this.buyerSignupForm.get('contact.company_phone_type').value,
+      country_code: "+55",
+      ddd: this.buyerSignupForm.get('contact.company_phone_ddd').value,
+      number: this.buyerSignupForm.get('contact.company_phone_number').value
+    })
+
+    this.buyerSignupForm.get('contact.company_phone_type').patchValue(null);
+    this.buyerSignupForm.get('contact.company_phone_ddd').patchValue(null);
+    this.buyerSignupForm.get('contact.company_phone_number').patchValue(null);
+  }  
+  /*Buyer Contact phones: end*/
+
+  /*Seller Representative: start*/
   clearRepresentative = (index) => {
     this.representativeObject.splice(index, 1);
   }
@@ -323,9 +396,44 @@ export class AppComponent implements OnInit {
     this.signupForm.get('representative.representative_city').patchValue(null),
     this.signupForm.get('representative.representative_state').patchValue(null)
   }
-  /*Representative: end*/
+  /*Seller Representative: end*/
 
-  /*Representative phones: start*/
+  /*Buyer Representative: start*/
+  clearBuyerRepresentative = (index) => {
+    this.representativeObject.splice(index, 1);
+  }
+
+  createBuyerRepresentativeObject = () => {
+    this.representativeObject.push({
+      cpf: this.buyerSignupForm.get('representative.representative_cpf').value,
+      treatment: this.buyerSignupForm.get('representative.representative_treatment').value,
+      name: this.buyerSignupForm.get('representative.representative_name').value,
+      position: this.buyerSignupForm.get('representative.representative_position').value,
+      email: this.buyerSignupForm.get('representative.representative_email').value,
+      phones: this.representativePhoneObject,
+      birthday: this.buyerSignupForm.get('representative.representative_birthday').value,
+      schooling: this.buyerSignupForm.get('representative.representative_schooling').value,
+      postal_code: this.buyerSignupForm.get('representative.representative_postal_code').value,
+      address: this.buyerSignupForm.get('representative.representative_address').value,
+      city: this.buyerSignupForm.get('representative.representative_city').value,
+      state: this.buyerSignupForm.get('representative.representative_state').value
+    })
+
+    this.buyerSignupForm.get('representative.representative_cpf').patchValue(null),
+    this.buyerSignupForm.get('representative.representative_treatment').patchValue(null),
+    this.buyerSignupForm.get('representative.representative_name').patchValue(null),
+    this.buyerSignupForm.get('representative.representative_position').patchValue(null),
+    this.buyerSignupForm.get('representative.representative_email').patchValue(null),
+    this.buyerSignupForm.get('representative.representative_birthday').patchValue(null),
+    this.buyerSignupForm.get('representative.representative_schooling').patchValue(null),
+    this.buyerSignupForm.get('representative.representative_postal_code').patchValue(null),
+    this.buyerSignupForm.get('representative.representative_address').patchValue(null),
+    this.buyerSignupForm.get('representative.representative_city').patchValue(null),
+    this.buyerSignupForm.get('representative.representative_state').patchValue(null)
+  }
+  /*Buyer Representative: end*/
+
+  /*Seller Representative phones: start*/
   clearRepresentativePhone = (index) => {
     this.representativePhoneObject.splice(index, 1);
   }
@@ -341,7 +449,25 @@ export class AppComponent implements OnInit {
     this.signupForm.get('representative.representative_phone_ddd').patchValue(null);
     this.signupForm.get('representative.representative_phone_number').patchValue(null);
   }
-  /*Representative phones: end*/
+  /*Seller Representative phones: end*/
+
+  /*Buyer Representative phones: start*/
+  clearBuyerRepresentativePhone = (index) => {
+    this.representativePhoneObject.splice(index, 1);
+  }
+
+  createBuyerRepresentativePhoneObject = () => {
+    this.representativePhoneObject.push({
+      phone_type_id: this.buyerSignupForm.get('representative.representative_phone_type').value,
+      country_code: "+55",
+      ddd: this.buyerSignupForm.get('representative.representative_phone_ddd').value,
+      number: this.buyerSignupForm.get('representative.representative_phone_number').value,
+    });
+    this.buyerSignupForm.get('representative.representative_phone_type').patchValue(null);
+    this.buyerSignupForm.get('representative.representative_phone_ddd').patchValue(null);
+    this.buyerSignupForm.get('representative.representative_phone_number').patchValue(null);
+  }
+  /*Buyer Representative phones: end*/
 
   /*Representative revenues: start*/
   onChangeRepresentativeLocalRevenues = (event) => {
@@ -456,7 +582,7 @@ export class AppComponent implements OnInit {
       }
     }
 
-    console.log(newObject);
+    this.crud.create('laravel', {route: 'registration'})
   }
 
   removeObjectFromObjectArrayByPropertyValue = (objectsArray: any, property: string, value: string) => {
@@ -495,9 +621,25 @@ export class AppComponent implements OnInit {
     });
   }
 
+  republicaVirtualBuyerCepToRepresentative = (event) => {
+    let cep = event.srcElement.value;
+    this.outsidersService
+    .republicaVirtualCepSearch(cep)
+    .then(res => {
+      let string = JSON.stringify(res),
+      object = JSON.parse(string);
+      
+      this.representativeAddressObject = JSON.parse(object._body);
+
+      this.buyerSignupForm.get('representative.representative_address').patchValue(this.representativeAddressObject.logradouro);
+      this.buyerSignupForm.get('representative.representative_city').patchValue(this.representativeAddressObject.cidade);
+      this.buyerSignupForm.get('representative.representative_state').patchValue(this.representativeAddressObject.uf);
+    });
+  }
+
   receitaWsCnpj = (event) => {
     let cnpj = event.srcElement.value.replace(/[-./]/gi, '');
-    
+
     this.outsidersService
     .receitaWsCnpjSearch(cnpj)
     .then(res => {
@@ -531,6 +673,41 @@ export class AppComponent implements OnInit {
       }
     });
   }
+
+  receitaWsBuyerCnpj = (event) => {
+    let cnpj = event.srcElement.value.replace(/[-./]/gi, '');
+    
+    this.outsidersService
+    .receitaWsCnpjSearch(cnpj)
+    .then(res => {
+      let string = JSON.stringify(res),
+      object = JSON.parse(string);
+      
+      this.companyObject = JSON.parse(object._body);
+
+      this.buyerSignupForm.get('company.business_name').patchValue(this.companyObject.nome);
+      this.buyerSignupForm.get('company.tranding_name').patchValue(this.companyObject.fantasia);
+      this.buyerSignupForm.get('company.foundation_year').patchValue(this.companyObject.abertura);
+      this.buyerSignupForm.get('contact.postal_code').patchValue(this.companyObject.cep);
+      this.buyerSignupForm.get('contact.address').patchValue(this.companyObject.logradouro);
+      this.buyerSignupForm.get('contact.number').patchValue(this.companyObject.numero);
+      this.buyerSignupForm.get('contact.district').patchValue(this.companyObject.bairro);
+      this.buyerSignupForm.get('contact.city').patchValue(this.companyObject.municipio);
+      this.buyerSignupForm.get('contact.state').patchValue(this.companyObject.uf);
+
+      if(this.companyObject.capital_social) {
+        let number = Number(this.companyObject.capital_social);
+        let size;
+        if(number < 60000) {
+          size = "mei";
+        } else if(number < 360000) {
+          size = "micro";
+        } else {
+          size = "pequena";
+        }
+      }
+    });
+  }
   /*Share it?: end*/
   onSubmit = () => {
     let representativesObject = {
@@ -541,8 +718,26 @@ export class AppComponent implements OnInit {
       phones: this.companyPhoneObject
     }
 
+    console.log(phonesObject);
+    
     this.createNewObjectFromArrayOfObjects([
       this.signupForm,
+      phonesObject,
+      representativesObject
+    ]);
+  }
+
+  onBuyerSubmit = () => {
+    let representativesObject = {
+      representatives: this.representativeObject
+    }
+
+    let phonesObject = {
+      phones: this.companyPhoneObject
+    }
+    
+    this.createNewObjectFromArrayOfObjects([
+      this.buyerSignupForm,
       phonesObject,
       representativesObject
     ]);
