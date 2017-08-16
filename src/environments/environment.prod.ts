@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  urlToApi: 'https://events.al.senai.br/api/'
 };
