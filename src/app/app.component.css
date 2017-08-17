@@ -24,7 +24,10 @@
 
 #content {
     width: 95%;
-    background: #fbe8a6;
+    background: #fff;
+    opacity: 0.8;
+    margin-left: 1%;
+    padding-right: 1%;
 }
 
 #header {

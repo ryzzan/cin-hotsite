@@ -10,14 +10,15 @@
 </div>
 
 <md-card id="content">
-  <form (ngSubmit)="onSubmit()" [formGroup]="signupForm">
+  <!--Seller: start-->
+  <form (ngSubmit)="onSellerSubmit()" [formGroup]="sellerSignupForm" *ngIf="companyBusiness == 1">
     <md-tab-group>
       <!--Vendedor: start-->
       <md-tab label="Empresa" formGroupName="company">
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="8">
             <md-radio-group>
-              <md-radio-button (change)="onChangeCompanyBusiness($event)" value="1">Vendedor</md-radio-button>
+              <md-radio-button (change)="onChangeCompanyBusiness($event)" value="1" checked="true">Vendedor</md-radio-button>
               <md-radio-button (change)="onChangeCompanyBusiness($event)" value="2">Comprador</md-radio-button>
             </md-radio-group>
           </md-grid-tile>
@@ -29,8 +30,8 @@
               <input mdInput formControlName="cnpj_number" type="text"
               placeholder="CNPJ"
               [textMask]="{mask: mask.cnpj}"
-              (change)="receitaWsCnpj($event)">
-              <md-error *ngIf="!signupForm.get('company.cnpj_number').valid && !signupForm.get('company.cnpj_number').touched">Erro</md-error>
+              (change)="receitaWsCnpjToSeller($event)">
+              <md-error *ngIf="!sellerSignupForm.get('company.cnpj_number').valid && !sellerSignupForm.get('company.cnpj_number').touched">Erro</md-error>
             </md-input-container>
           </md-grid-tile>
 
@@ -72,7 +73,7 @@
           </md-grid-tile>
         </md-grid-list>
 
-        <md-grid-list cols="8" rowHeight="100px" *ngIf="companyBusiness == 1">
+        <md-grid-list cols="8" rowHeight="100px">
           <div>Porte da Empresa*</div>
 
           <md-grid-tile [colspan]="8">
@@ -84,41 +85,18 @@
             </md-radio-group>
           </md-grid-tile>
         </md-grid-list>
-
-        <md-grid-list cols="8" rowHeight="100px" *ngIf="companyBusiness == 2">
-          <md-grid-tile [colspan]="4">
-            <md-select placeholder="Idiomas nos quais deseja se comunicar" formControlName="language"
-            multiple>
-              <md-option *ngFor="let language of languages" [value]="language.description">{{language.description}}</md-option>
-            </md-select>
-          </md-grid-tile>
-        </md-grid-list>
       </md-tab>
 
       <md-tab label="Contatos da Empresa" 
       *ngIf="companyBusiness" 
       formGroupName="contact">
         <md-grid-list cols="8" rowHeight="100px">
-          <md-grid-tile [colspan]="1" *ngIf="companyBusiness == 2">
-            <md-input-container>
-              <input mdInput placeholder="País" 
-              [mdAutocomplete]="auto" 
-              formControlName="country"
-              (keyup)="filterCountries($event)">
-            </md-input-container>
-
-            <md-autocomplete #auto="mdAutocomplete">
-              <md-option *ngFor="let country of filteredCountries" [value]="country.country_name_pt">
-                {{country.country_name_pt}}
-              </md-option>
-            </md-autocomplete>
-          </md-grid-tile>
-
           <md-grid-tile [colspan]="2">
             <md-input-container>
               <input mdInput formControlName="postal_code" type="text" 
-              (change)="republicaVirtualCep($event)"
-              placeholder="CEP">
+              (change)="republicaVirtualCepToSeller($event)"
+              placeholder="CEP"
+              [textMask]="{mask: mask.zip}">
             </md-input-container>
           </md-grid-tile>
 
@@ -167,7 +145,7 @@
             </md-select>
           </md-grid-tile>
 
-          <md-grid-tile [colspan]="2" *ngIf="signupForm.get('contact.company_phone_type').value">
+          <md-grid-tile [colspan]="2" *ngIf="sellerSignupForm.get('contact.company_phone_type').value">
             <md-input-container style="width: 90px; margin-right: 5px;">
               <input mdInput type="text" placeholder="DDD" formControlName="company_phone_ddd">
             </md-input-container>
@@ -176,8 +154,8 @@
               maxlength="10">
             </md-input-container>            
             <a md-mini-fab 
-            *ngIf="signupForm.get('contact.company_phone_ddd').value && signupForm.get('contact.company_phone_number').value"
-            (click)="createContactPhoneObject()">
+            *ngIf="sellerSignupForm.get('contact.company_phone_ddd').value && sellerSignupForm.get('contact.company_phone_number').value"
+            (click)="createSellerContactPhoneObject()">
               <md-icon color="primary">add</md-icon>
             </a>
           </md-grid-tile>
@@ -193,7 +171,7 @@
               <input mdInput type="text" placeholder="URL da mídia social" formControlName="company_social_media">
             </md-input-container>            
             <a md-mini-fab 
-            *ngIf="signupForm.get('contact.company_social_media').value" 
+            *ngIf="sellerSignupForm.get('contact.company_social_media').value" 
             (click)="createRepresentativeSocialMediaObject()">
               <md-icon color="primary">add</md-icon>
             </a>
@@ -286,7 +264,7 @@
           </md-grid-tile>
 
           <md-grid-tile [colspan]="2" 
-          *ngIf="signupForm.get('representative.representative_phone_type').value">
+          *ngIf="sellerSignupForm.get('representative.representative_phone_type').value">
             <md-input-container style="width: 90px; margin-right: 5px;">
               <input mdInput type="text" placeholder="DDD" formControlName="representative_phone_ddd">
             </md-input-container>
@@ -295,8 +273,8 @@
               maxlength="10">
             </md-input-container>            
             <a md-mini-fab 
-            *ngIf="signupForm.get('representative.representative_phone_ddd').value && signupForm.get('representative.representative_phone_number').value" 
-            (click)="createRepresentativePhoneObject()">
+            *ngIf="sellerSignupForm.get('representative.representative_phone_ddd').value && sellerSignupForm.get('representative.representative_phone_number').value" 
+            (click)="createSellerRepresentativePhoneObject()">
               <md-icon color="primary">add</md-icon>
             </a>
           </md-grid-tile>
@@ -315,7 +293,7 @@
             <md-input-container>
               <input mdInput type="text"
               formControlName="representative_postal_code"
-              (change)="republicaVirtualCepToRepresentative($event)"
+              (change)="republicaVirtualCepToSellerRepresentative($event)"
               placeholder="CEP"
               [textMask]="{mask: mask.zip}">
             </md-input-container>
@@ -346,18 +324,18 @@
           </md-grid-tile>
         </md-grid-list>
 
-        <div *ngIf="signupForm.get('representative.representative_treatment').value &&
-        signupForm.get('representative.representative_cpf').value && 
-        signupForm.get('representative.representative_name').value && 
-        signupForm.get('representative.representative_position').value && 
-        signupForm.get('representative.representative_birthday').value &&
-        signupForm.get('representative.representative_schooling').value && 
-        signupForm.get('representative.representative_email').value && 
-        signupForm.get('representative.representative_postal_code').value && 
-        signupForm.get('representative.representative_address').value &&
-        signupForm.get('representative.representative_city').value &&
-        signupForm.get('representative.representative_state').value">
-          <a md-raised-button color="primary" (click)="createRepresentativeObject()">Adicionar Representantes</a>
+        <div *ngIf="sellerSignupForm.get('representative.representative_treatment').value &&
+        sellerSignupForm.get('representative.representative_cpf').value && 
+        sellerSignupForm.get('representative.representative_name').value && 
+        sellerSignupForm.get('representative.representative_position').value && 
+        sellerSignupForm.get('representative.representative_birthday').value &&
+        sellerSignupForm.get('representative.representative_schooling').value && 
+        sellerSignupForm.get('representative.representative_email').value && 
+        sellerSignupForm.get('representative.representative_postal_code').value && 
+        sellerSignupForm.get('representative.representative_address').value &&
+        sellerSignupForm.get('representative.representative_city').value &&
+        sellerSignupForm.get('representative.representative_state').value">
+          <a md-raised-button color="primary" (click)="createSellerRepresentativeObject()">Adicionar Representantes</a>
         </div>
 
         <div *ngIf="representativePhoneObject.length > 0"> 
@@ -385,7 +363,7 @@
 
       <md-tab label="Atividade" *ngIf="companyBusiness" formGroupName="activity">
         <md-grid-list cols="8" rowHeight="100px">
-          <md-grid-tile [colspan]="2" *ngIf="companyBusiness == 1">
+          <md-grid-tile [colspan]="2">
             <md-select placeholder="Ramos de Atividade" formControlName="group_id"
             (change)="onChangeSubgroup($event)"
             multiple>
@@ -393,7 +371,510 @@
             </md-select>
           </md-grid-tile>
 
-          <md-grid-tile [colspan]="2" *ngIf="companyBusiness == 2 || subgroupChanged">
+          <md-grid-tile [colspan]="2" *ngIf="subgroupChanged">
+            <md-select placeholder="Setor" formControlName="subgroup_id"
+            (change)="filterProduct($event)"
+            multiple>
+              <md-option *ngFor="let subgroup of subgroups" [value]="subgroup.id">{{subgroup.name}}</md-option>
+            </md-select>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2" *ngIf="productObject">
+            <md-select placeholder="Produtos" formControlName="product_id"
+            multiple>
+              <md-option *ngFor="let product of productObject" [value]="product.id">{{product.name}}</md-option>
+            </md-select>
+          </md-grid-tile>
+        </md-grid-list>
+      </md-tab>
+
+      <md-tab label="Interesses" *ngIf="companyBusiness" formGroupName="interest">
+        <md-grid-list cols="8" rowHeight="100px">
+          <md-grid-tile [colspan]="4">
+            <md-input-container>
+              <textarea mdInput placeholder="Eventos nacionais/internacionais que sua empresa participou" 
+              formControlName="participation_events">
+              </textarea>
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="4">
+            <md-input-container>
+              <textarea mdInput placeholder="Interesses da empresa / Observações"
+              formControlName="company_interests">
+              </textarea>
+            </md-input-container>
+          </md-grid-tile>
+        </md-grid-list>
+
+        <md-grid-list cols="8" rowHeight="100px">
+          <md-grid-tile [colspan]="3">
+            <md-input-container>
+              <input mdInput type="text"
+              placeholder="% de faturamento de vendas locais"
+              (keyup)="onChangeRepresentativeLocalRevenues($event)">
+            </md-input-container>
+
+            <a md-mini-fab *ngIf="createRepresentativeLocalRevenuesObjectButton" (click)="createLocalRevenuesObject()">
+              <md-icon color="primary">add</md-icon>
+            </a>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-select placeholder="Outros estados"
+            (change)="onChangeStatesBusiness($event)">
+              <md-option *ngFor="let state of states" [value]="state.description">{{state.description}}</md-option>
+            </md-select>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="3">
+            <md-input-container>
+              <input mdInput type="text" [disabled]="statesBusinessChanged == undefined"
+              placeholder="% de faturamento"
+              (keyup)="onChangeRepresentativeOtherStateRevenues($event)">
+            </md-input-container>
+
+            <a md-mini-fab *ngIf="createRepresentativeOtherStateRevenuesObjectButton" (click)="createOtherStateRevenuesObject()">
+              <md-icon color="primary">add</md-icon>
+            </a>
+          </md-grid-tile>
+        </md-grid-list>
+
+        <md-grid-list cols="8" rowHeight="100px">
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput placeholder="Outros países" 
+              [mdAutocomplete]="auto" 
+              formControlName="revenues_country"
+              (keyup)="filterCountries($event)">
+            </md-input-container>
+
+            <md-autocomplete #auto="mdAutocomplete">
+              <md-option *ngFor="let country of filteredCountries" [value]="country.country_name_pt">
+                {{country.country_name_pt}}
+              </md-option>
+            </md-autocomplete>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="3">
+            <md-input-container>
+              <input mdInput type="text" [disabled]="countriesBusinessChanged == undefined"
+              placeholder="% de faturamento"
+              (keyup)="onChangeRepresentativeOtherCountryRevenues($event)">
+            </md-input-container>
+
+            <a md-mini-fab *ngIf="createRepresentativeOtherCountryRevenuesObjectButton" (click)="createOtherCountryRevenuesObject()">
+              <md-icon color="primary">add</md-icon>
+            </a>
+          </md-grid-tile>
+        </md-grid-list>
+        
+        <md-grid-list cols="8" rowHeight="100px">
+          <md-grid-tile [colspan]="4">
+            <md-input-container>
+              <textarea mdInput placeholder="Capacidade de Venda (Exportação) / Mês (Unidades)"
+              formControlName="sales_capacity">
+              </textarea>
+            </md-input-container>
+          </md-grid-tile>
+        </md-grid-list>
+
+        <md-grid-list cols="8" *ngIf="representativeRevenuesObject.length > 0">
+          <div *ngFor="let revenue of representativeRevenuesObject">
+            {{revenue.place}}
+          </div> 
+           <!--<md-table #table [dataSource]="representativeRevenuesObject">
+            <ng-container cdkColumnDef="place_type">
+              <md-header-cell *cdkHeaderCellDef> Tipo de lugar </md-header-cell>
+              <md-cell *cdkCellDef="let row"> {{row.place_type}} </md-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="place">
+              <md-header-cell *cdkHeaderCellDef> Nome </md-header-cell>
+              <md-cell *cdkCellDef="let row"> {{row.place}} </md-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="revenues">
+              <md-header-cell *cdkHeaderCellDef> Faturamento </md-header-cell>
+              <md-cell *cdkCellDef="let row"> {{row.revenues}} </md-cell>
+            </ng-container>
+           </md-table>-->
+         </md-grid-list>
+      </md-tab>
+      <!--Vendedor: end-->
+    </md-tab-group>
+
+    <md-card-actions>
+      <button type="submit" md-raised-button color="primary" [disabled]="!sellerSignupForm.valid">Cadastrar</button>
+    </md-card-actions>
+  </form>
+  <!--Seler: end-->
+
+  <!--Buyer: start-->
+  <form (ngSubmit)="onSubmit()" [formGroup]="buyerSignupForm" *ngIf="companyBusiness == 2">
+    <md-tab-group>
+      <!--Vendedor: start-->
+      <md-tab label="Empresa" formGroupName="company">
+        <md-grid-list cols="8" rowHeight="100px">
+          <md-grid-tile [colspan]="8">
+            <md-radio-group>
+              <md-radio-button (change)="onChangeCompanyBusiness($event)" value="1">Vendedor</md-radio-button>
+              <md-radio-button (change)="onChangeCompanyBusiness($event)" checked="true" value="2">Comprador</md-radio-button>
+            </md-radio-group>
+          </md-grid-tile>
+        </md-grid-list>
+
+        <md-grid-list cols="8" rowHeight="100px" *ngIf="companyBusiness">
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput formControlName="cnpj_number" type="text"
+              placeholder="CNPJ"
+              [textMask]="{mask: mask.cnpj}"
+              (change)="receitaWsCnpjToBuyer($event)">
+              <md-error *ngIf="!buyerSignupForm.get('company.cnpj_number').valid && !buyerSignupForm.get('company.cnpj_number').touched">Erro</md-error>
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="3">
+            <md-input-container>
+              <input mdInput formControlName="business_name" type="text"
+              placeholder="Razão Social">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="3">
+            <md-input-container>
+              <input mdInput formControlName="tranding_name" type="text"
+              placeholder="Nome Fantasia">
+            </md-input-container>
+          </md-grid-tile>
+        </md-grid-list>
+
+        <md-grid-list cols="8" rowheight="100px" *ngIf="companyBusiness">
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput formControlName="foundation_year" type="text" 
+              placeholder="Data de Abertura">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput formControlName="employees_quantity" type="text" 
+              placeholder="Nº de Funcionários">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="4">
+            <md-input-container>
+              <input mdInput formControlName="legal_person" type="text" 
+              placeholder="Responsável Legal">
+            </md-input-container>
+          </md-grid-tile>
+        </md-grid-list>
+
+        <md-grid-list cols="8" rowHeight="100px">
+          <md-grid-tile [colspan]="4">
+            <md-select placeholder="Idiomas nos quais deseja se comunicar" formControlName="language"
+            multiple>
+              <md-option *ngFor="let language of languages" [value]="language.description">{{language.description}}</md-option>
+            </md-select>
+          </md-grid-tile>
+        </md-grid-list>
+      </md-tab>
+
+      <md-tab label="Contatos da Empresa" 
+      *ngIf="companyBusiness" 
+      formGroupName="contact">
+        <md-grid-list cols="8" rowHeight="100px">
+          <md-grid-tile [colspan]="1" *ngIf="companyBusiness == 2">
+            <md-input-container>
+              <input mdInput placeholder="País" 
+              [mdAutocomplete]="auto" 
+              formControlName="country"
+              (keyup)="filterCountries($event)">
+            </md-input-container>
+
+            <md-autocomplete #auto="mdAutocomplete">
+              <md-option *ngFor="let country of filteredCountries" [value]="country.country_name_pt">
+                {{country.country_name_pt}}
+              </md-option>
+            </md-autocomplete>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput formControlName="postal_code" type="text" 
+              (change)="republicaVirtualCepToBuyer($event)"
+              placeholder="CEP"
+              [textMask]="{mask: mask.zip}">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="4">
+            <md-input-container>
+              <input mdInput formControlName="address" type="text" 
+              placeholder="Logradouro">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="1">
+            <md-input-container>
+              <input mdInput formControlName="number" type="text" 
+              placeholder="Número">
+            </md-input-container>
+          </md-grid-tile>
+        </md-grid-list>
+
+        <md-grid-list cols="8" rowHeight="100px">
+          <md-grid-tile [colspan]="3">
+            <md-input-container>
+              <input mdInput formControlName="district" type="text" 
+              placeholder="Bairro">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="3">
+            <md-input-container>
+              <input mdInput formControlName="city" type="text" 
+              placeholder="Município">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput formControlName="state" type="text" 
+              placeholder="UF">
+            </md-input-container>
+          </md-grid-tile>
+        </md-grid-list>
+
+        <md-grid-list cols="8" rowHeight="100px">
+          <md-grid-tile [colspan]="2">
+            <md-select placeholder="Tipo de telefone" formControlName="company_phone_type">
+              <md-option *ngFor="let phone of phoneType" [value]="phone.value">{{phone.description}}</md-option>
+            </md-select>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2" *ngIf="buyerSignupForm.get('contact.company_phone_type').value">
+            <md-input-container style="width: 90px; margin-right: 5px;">
+              <input mdInput type="text" placeholder="DDD" formControlName="company_phone_ddd">
+            </md-input-container>
+            <md-input-container style="width: 110px;">
+              <input mdInput type="text" placeholder="Número" formControlName="company_phone_number"
+              maxlength="10">
+            </md-input-container>            
+            <a md-mini-fab 
+            *ngIf="buyerSignupForm.get('contact.company_phone_ddd').value && buyerSignupForm.get('contact.company_phone_number').value"
+            (click)="createBuyerContactPhoneObject()">
+              <md-icon color="primary">add</md-icon>
+            </a>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-select placeholder="Mídia Social" (change)="onChangeRepresentativeSocialMediaType($event)">
+              <md-option *ngFor="let socialMedia of socialMedias" [value]="socialMedia.value">{{socialMedia.description}}</md-option>
+            </md-select>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2" *ngIf="representativeSocialMediaTypeChanged">
+            <md-input-container style="width: 300px;">
+              <input mdInput type="text" placeholder="URL da mídia social" formControlName="company_social_media">
+            </md-input-container>            
+            <a md-mini-fab 
+            *ngIf="buyerSignupForm.get('contact.company_social_media').value" 
+            (click)="createRepresentativeSocialMediaObject()">
+              <md-icon color="primary">add</md-icon>
+            </a>
+          </md-grid-tile>
+        </md-grid-list>
+
+        <md-grid-list cols="8" rowHeight="100px">
+          <md-grid-tile [colspan]="3">
+            <md-input-container>
+              <input mdInput formControlName="company_email" type="text" 
+              placeholder="E-mail">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="4">
+            <md-input-container>
+              <input mdInput formControlName="company_site" type="text" 
+              placeholder="Site">
+            </md-input-container>
+          </md-grid-tile>
+        </md-grid-list>
+
+        <div *ngIf="companyPhoneObject.length > 0"> 
+          <md-chip-list>  
+            <span *ngFor="let companyPhone of companyPhoneObject; let i = index;" class="contact-phone-list">
+              <md-chip>
+                <span class="fs10 mr5">({{companyPhone.ddd}}){{companyPhone.number}}</span>
+                <span (click)="clearRepresentativePhone(i)"><md-icon class="fs10">clear</md-icon></span>
+              </md-chip>              
+            </span>
+          </md-chip-list>
+        </div>
+      </md-tab>
+
+      <md-tab label="Representantes" 
+      *ngIf="companyBusiness"
+      formGroupName="representative">
+        <md-grid-list cols="8" rowHeight="100px">
+          <md-grid-tile [colspan]="1">
+            <md-select placeholder="Título" formControlName="representative_treatment">
+              <md-option *ngFor="let treatment of treatments" [value]="treatment.value">{{treatment.description}}</md-option>
+            </md-select>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput type="text" 
+              placeholder="CPF" 
+              formControlName="representative_cpf"
+              [textMask]="{mask: mask.cpf}">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput type="text" placeholder="Nome" 
+              formControlName="representative_name">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput type="text" placeholder="Cargo" 
+              formControlName="representative_position">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="1">
+            <md-input-container>
+              <input mdInput placeholder="Nascimento" 
+              [textMask]="{mask: mask.date}"
+              formControlName="representative_birthday">
+            </md-input-container>
+          </md-grid-tile>
+        </md-grid-list>
+
+        <md-grid-list cols="8" rowHeight="100px">
+          <md-grid-tile [colspan]="2">
+            <md-select placeholder="Escolaridade" 
+            formControlName="representative_schooling">
+              <md-option *ngFor="let schoolingChoice of schooling" [value]="schoolingChoice.value">{{schoolingChoice.description}}</md-option>
+            </md-select>
+          </md-grid-tile>
+          
+          <!--Representative phone: start -->
+          <md-grid-tile [colspan]="2">
+            <md-select placeholder="Tipo de telefone" formControlName="representative_phone_type">
+              <md-option *ngFor="let phone of phoneType" [value]="phone.value">{{phone.description}}</md-option>
+            </md-select>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2" 
+          *ngIf="buyerSignupForm.get('representative.representative_phone_type').value">
+            <md-input-container style="width: 90px; margin-right: 5px;">
+              <input mdInput type="text" placeholder="DDD" formControlName="representative_phone_ddd">
+            </md-input-container>
+            <md-input-container style="width: 110px;">
+              <input mdInput type="text" placeholder="Número" formControlName="representative_phone_number"
+              maxlength="10">
+            </md-input-container>            
+            <a md-mini-fab 
+            *ngIf="buyerSignupForm.get('representative.representative_phone_ddd').value && buyerSignupForm.get('representative.representative_phone_number').value" 
+            (click)="createBuyerRepresentativePhoneObject()">
+              <md-icon color="primary">add</md-icon>
+            </a>
+          </md-grid-tile>
+          <!--Representative phone: end -->
+          
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput type="text" placeholder="E-mail"
+              formControlName="representative_email">
+            </md-input-container>
+          </md-grid-tile>
+        </md-grid-list>
+
+        <md-grid-list cols="8" rowHeight="100px">
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput type="text"
+              formControlName="representative_postal_code"
+              (change)="republicaVirtualCepToBuyerRepresentative($event)"
+              placeholder="CEP"
+              [textMask]="{mask: mask.zip}">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="3">
+            <md-input-container>
+              <input mdInput type="text"
+              formControlName="representative_address"
+              placeholder="Logradouro">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2">
+            <md-input-container>
+              <input mdInput type="text"
+              formControlName="representative_city"
+              placeholder="Cidade">
+            </md-input-container>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="1">
+            <md-input-container>
+              <input mdInput type="text"
+              formControlName="representative_state"
+              placeholder="UF">
+            </md-input-container>
+          </md-grid-tile>
+        </md-grid-list>
+
+        <div *ngIf="buyerSignupForm.get('representative.representative_treatment').value &&
+        buyerSignupForm.get('representative.representative_cpf').value && 
+        buyerSignupForm.get('representative.representative_name').value && 
+        buyerSignupForm.get('representative.representative_position').value && 
+        buyerSignupForm.get('representative.representative_birthday').value &&
+        buyerSignupForm.get('representative.representative_schooling').value && 
+        buyerSignupForm.get('representative.representative_email').value && 
+        buyerSignupForm.get('representative.representative_postal_code').value && 
+        buyerSignupForm.get('representative.representative_address').value &&
+        buyerSignupForm.get('representative.representative_city').value &&
+        buyerSignupForm.get('representative.representative_state').value">
+          <a md-raised-button color="primary" (click)="createBuyerRepresentativeObject()">Adicionar Representantes</a>
+        </div>
+
+        <div *ngIf="representativePhoneObject.length > 0"> 
+          <md-chip-list>  
+            <span *ngFor="let representativePhone of representativePhoneObject; let i = index;" class="contact-phone-list">
+              <md-chip>
+                <span class="fs10 mr5">({{representativePhone.ddd}}){{representativePhone.number}}</span>
+                <span (click)="clearRepresentativePhone(i)"><md-icon class="fs10">clear</md-icon></span>
+              </md-chip>              
+            </span>
+          </md-chip-list>
+        </div>
+
+        <div *ngIf="representativeObject.length > 0"> 
+          <md-chip-list>  
+            <span *ngFor="let representative of representativeObject; let i = index;">
+              <md-chip>
+                <span class="fs10 mr5">{{representative.cpf}}</span>
+                <span (click)="clearRepresentative(i)"><md-icon class="fs10">clear</md-icon></span>
+              </md-chip>              
+            </span>
+          </md-chip-list>
+        </div>
+      </md-tab>
+
+      <md-tab label="Atividade" *ngIf="companyBusiness" formGroupName="activity">
+        <md-grid-list cols="8" rowHeight="100px">
+          <md-grid-tile [colspan]="2">
             <md-select placeholder="Setor" formControlName="subgroup_id"
             (change)="filterProduct($event)"
             multiple>
@@ -492,7 +973,7 @@
         </md-grid-list>
 
         <md-grid-list cols="8" *ngIf="representativeRevenuesObject.length > 0">
-          <md-grid-tile [colspan]="4" *ngIf="companyBusiness == 2">
+          <md-grid-tile [colspan]="4">
             <md-input-container>
               <textarea mdInput placeholder="Perfil do parceiro"
               formControlName="partner_profile">
@@ -537,7 +1018,8 @@
     </md-tab-group>
 
     <md-card-actions>
-      <button type="submit" md-raised-button color="primary" [disabled]="!signupForm.valid">Cadastrar</button>
+      <button type="submit" md-raised-button color="primary" [disabled]="!buyerSignupForm.valid">Cadastrar</button>
     </md-card-actions>
   </form>
+  <!--Buyer: end-->
 </md-card>
