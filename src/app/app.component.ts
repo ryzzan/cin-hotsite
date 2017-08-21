@@ -35,6 +35,7 @@ export class AppComponent implements OnInit {
   states: any = brazilianStates;
   objectToAPI: any;
   errors: any = [];
+  errorsRevenues: any = [];
 
   /*activity products by subgroup trouble: start*/
   subgroupChanged: boolean = false;
@@ -62,18 +63,11 @@ export class AppComponent implements OnInit {
   /*company phone trouble: end*/
 
   /*representative revenues trouble: start*/
-  representativeRevenuesObject: any = [];
+  revenuesObject: any = [];
 
-  representativeLocalRevenuesChanged: any;
-  createRepresentativeLocalRevenuesObjectButton: boolean = false;
-
-  statesBusinessChanged: string;
   representativeOtherStateRevenuesChanged: any;
-  createRepresentativeOtherStateRevenuesObjectButton: boolean = false;
-
-  countriesBusinessChanged: string;
+  
   representativeOtherCountryRevenuesChanged: any;
-  createRepresentativeOtherCountryRevenuesObjectButton: boolean = false;
   /*representative revenues trouble: end*/
 
   /*representative social media trouble: start*/
@@ -86,7 +80,6 @@ export class AppComponent implements OnInit {
   represenativePosition: string;
   represenativeEmail: string;
   representativeObject: any = [];
-  createRepresentativeObjectButton: any;
   /*representative: end*/
   
   groups: any = [];
@@ -274,7 +267,7 @@ export class AppComponent implements OnInit {
   }
 
   filterCountries(val) {
-    let r = val.srcElement.value;
+    let r = val.target.value;
     
     if(val != null) {
       this.filteredCountries = this.countries.filter(s => s.country_name_pt.toLowerCase().indexOf(r.toLowerCase()) === 0)
@@ -302,10 +295,10 @@ export class AppComponent implements OnInit {
     this.addressObject = undefined;
     this.companyPhoneObject = [];
     this.representativePhoneObject = [];
-    this.representativeRevenuesObject = [];
+    this.revenuesObject = [];
     this.companySocialMediaObject = [];
     this.representativeObject = [];
-    this.representativeRevenuesObject = [];
+    this.revenuesObject = [];
   }
 
   /*Activity: start*/
@@ -367,6 +360,8 @@ export class AppComponent implements OnInit {
     this.sellerSignupForm.get('contact.company_phone_type').patchValue(null);
     this.sellerSignupForm.get('contact.company_phone_ddd').patchValue(null);
     this.sellerSignupForm.get('contact.company_phone_number').patchValue(null);
+
+    console.log(this.companyPhoneObject)
   }  
 
   createBuyerContactPhoneObject = () => {
@@ -379,7 +374,7 @@ export class AppComponent implements OnInit {
 
     this.buyerSignupForm.get('contact.company_phone_type').patchValue(null);
     this.buyerSignupForm.get('contact.company_phone_ddd').patchValue(null);
-    this.buyerSignupForm.get('contact.company_phone_number').patchValue(null);
+    this.buyerSignupForm.get('contact.company_phone_number').patchValue(null);    
   }  
   /*Contact phones: end*/
 
@@ -415,6 +410,8 @@ export class AppComponent implements OnInit {
     this.sellerSignupForm.get('representative.representative_address').patchValue(null),
     this.sellerSignupForm.get('representative.representative_city').patchValue(null),
     this.sellerSignupForm.get('representative.representative_state').patchValue(null)
+
+    this.representativePhoneObject = [];
   }
 
   createBuyerRepresentativeObject = () => {
@@ -444,6 +441,8 @@ export class AppComponent implements OnInit {
     this.buyerSignupForm.get('representative.representative_address').patchValue(null),
     this.buyerSignupForm.get('representative.representative_city').patchValue(null),
     this.buyerSignupForm.get('representative.representative_state').patchValue(null)
+
+    this.representativePhoneObject = [];
   }
   /*Representative: end*/
 
@@ -478,73 +477,139 @@ export class AppComponent implements OnInit {
   /*Representative phones: end*/
 
   /*Representative revenues: start*/
-  onChangeRepresentativeLocalRevenues = (event) => {
-    if(event) {
-      this.representativeLocalRevenuesChanged = event.srcElement.value;
-      this.createRepresentativeLocalRevenuesObjectButton = true;
+  createSellerLocalRevenuesObject = () => {
+    for(let lim = this.revenuesObject.length, i = 0; i < lim; i++) {
+      if(this.revenuesObject[i]) {
+        if(this.revenuesObject[i].place_type == 'local') {
+          this.revenuesObject.splice(i, 1);
+        }
+      }
     }
-  }
 
-  createLocalRevenuesObject = () => {
-    this.representativeRevenuesObject.push({
-      place_type: 'local',
-      place: 'local',
-      revenues: this.representativeLocalRevenuesChanged
-    })
-
-    this.representativeLocalRevenuesChanged = undefined;
-  }
-
-  clearRepresentativeLocalRevenues = (index) => {
-    this.representativeLocalRevenuesChanged.splice(index, 1);
-  }
-
-  onChangeStatesBusiness = (event) => {
-    this.statesBusinessChanged = event.value;
-  }
-
-  onChangeRepresentativeOtherStateRevenues = (event) => {
-    if(event) {
-      this.representativeOtherStateRevenuesChanged = event.srcElement.value;
-      this.createRepresentativeOtherStateRevenuesObjectButton = true;
+    if(this.sellerSignupForm.get('contact.city').value) {
+      this.revenuesObject.push({
+        place_type: 'local',
+        place: this.sellerSignupForm.get('contact.city').value,
+        revenues: this.sellerSignupForm.get('interest.local_revenues').value
+      })
+    } else {
+      this.revenuesObject.push({
+        place_type: 'local',
+        place: 'Local',
+        revenues: this.sellerSignupForm.get('interest.local_revenues').value
+      })
     }
-  }
+    console.log(this.revenuesObject);
+    this.sumRevenues();
 
-  createOtherStateRevenuesObject = () => {
-    this.representativeRevenuesObject.push({
-      place_type: 'brazilian_state',
-      place: this.statesBusinessChanged,
-      revenues: this.representativeOtherStateRevenuesChanged
-    })
     this.representativeOtherStateRevenuesChanged = undefined;
   }
 
-  clearRepresentativeOtherStateRevenues = (index) => {
-    this.representativeOtherStateRevenuesChanged.splice(index, 1);
-  }
-
-  onChangeCountriesBusiness = (event) => {
-    this.countriesBusinessChanged = event.value;
-  }
-
-  onChangeRepresentativeOtherCountryRevenues = (event) => {
-    if(event) {
-      this.representativeOtherCountryRevenuesChanged = event.srcElement.value;
-      this.createRepresentativeOtherCountryRevenuesObjectButton = true;
-    }
-  }
-
-  createOtherCountryRevenuesObject = () => {
-    this.representativeRevenuesObject.push({
-      place_type: 'country',
-      place: this.countriesBusinessChanged,
-      revenues: this.representativeOtherCountryRevenuesChanged
+  createSellerOtherStateRevenuesObject = () => {
+    this.revenuesObject.push({
+      place_type: 'brazilian_state',
+      place: this.sellerSignupForm.get('interest.other_state').value,
+      revenues: this.sellerSignupForm.get('interest.other_state_revenues').value
     })
+
+    this.sumRevenues();
+
+    this.sellerSignupForm.get('interest.other_state').patchValue(null);
+    this.sellerSignupForm.get('interest.other_state_revenues').patchValue(null);
+
+    this.representativeOtherStateRevenuesChanged = undefined;
+  }
+
+  createSellerOtherCountryRevenuesObject = () => {
+    this.revenuesObject.push({
+      place_type: 'country',
+      place: this.sellerSignupForm.get('interest.other_country').value,
+      revenues: this.sellerSignupForm.get('interest.other_country_revenues').value
+    })
+
+    this.sumRevenues();
+
+    this.sellerSignupForm.get('interest.other_country').patchValue(null);
+    this.sellerSignupForm.get('interest.other_country_revenues').patchValue(null);
+
     this.representativeOtherCountryRevenuesChanged = undefined;
   }
 
-  clearRepresentativeOtherCountryRevenues = (index) => {
+  createBuyerOtherStateRevenuesObject = () => {
+    this.revenuesObject.push({
+      place_type: 'brazilian_state',
+      place: this.buyerSignupForm.get('interest.other_state').value,
+      revenues: this.buyerSignupForm.get('interest.other_state_revenues').value
+    })
+
+    this.sumRevenues();
+
+    this.representativeOtherStateRevenuesChanged = undefined;
+  }
+
+  createBuyerOtherCountryRevenuesObject = () => {
+    this.revenuesObject.push({
+      place_type: 'country',
+      place: this.buyerSignupForm.get('interest.other_country').value,
+      revenues: this.buyerSignupForm.get('interest.other_country_revenues').value
+    })
+
+    this.sumRevenues();
+
+    this.buyerSignupForm.get('interest.other_country').patchValue(null);
+    this.buyerSignupForm.get('interest.other_country_revenues').patchValue(null);
+
+    this.representativeOtherCountryRevenuesChanged = undefined;
+  }
+
+  createBuyerLocalRevenuesObject = () => {
+    for(let lim = this.revenuesObject.length, i = 0; i < lim; i++) {
+      if(this.revenuesObject[i]) {
+        if(this.revenuesObject[i].place_type == 'local') {
+          this.revenuesObject.splice(i, 1);
+        }
+      }
+    }
+
+    if(this.buyerSignupForm.get('contact.city').value) {
+      this.revenuesObject.push({
+        place_type: 'local',
+        place: this.buyerSignupForm.get('contact.city').value,
+        revenues: this.buyerSignupForm.get('interest.local_revenues').value
+      })
+    } else {
+      this.revenuesObject.push({
+        place_type: 'local',
+        place: 'Local',
+        revenues: this.buyerSignupForm.get('interest.local_revenues').value
+      })
+    }
+
+    this.sumRevenues();
+
+    this.representativeOtherStateRevenuesChanged = undefined;
+  }
+
+  clearRevenues = (index) => {
     this.representativeOtherCountryRevenuesChanged.splice(index, 1);
+  }
+
+  sumRevenues = () => {
+    let sum = 0;
+    for(let lim = this.revenuesObject.length, i =0; i < lim; i++) {
+      sum += this.revenuesObject[i].revenues;
+    }
+
+    if(sum > 100) {
+      this.errorsRevenues.push({
+        code: "er-01",
+        message: "A soma dos faturamentos está ultrapassando 100%. Favor rever valores."
+      });
+
+      this.revenuesObject.pop();
+    } else {
+      this.errorsRevenues = [];
+    }
   }
   /*Representative revenues: end*/
 
@@ -587,8 +652,6 @@ export class AppComponent implements OnInit {
         }
       }
     }
-
-    console.log(newObject);
   }
 
   removeObjectFromObjectArrayByPropertyValue = (objectsArray: any, property: string, value: string) => {
@@ -600,7 +663,7 @@ export class AppComponent implements OnInit {
   }
 
   republicaVirtualCepToSeller = (event) => {
-    let cep = event.srcElement.value;
+    let cep = event.target.value;
     this.outsidersService
     .republicaVirtualCepSearch(cep)
     .then(res => {
@@ -608,11 +671,16 @@ export class AppComponent implements OnInit {
       object = JSON.parse(string);
       
       this.addressObject = JSON.parse(object._body);
+
+      this.sellerSignupForm.get('contact.address').patchValue(this.addressObject.logradouro);
+      this.sellerSignupForm.get('contact.district').patchValue(this.addressObject.bairro);
+      this.sellerSignupForm.get('contact.city').patchValue(this.addressObject.cidade);
+      this.sellerSignupForm.get('contact.state').patchValue(this.addressObject.uf);
     });
   }
 
   republicaVirtualCepToSellerRepresentative = (event) => {
-    let cep = event.srcElement.value;
+    let cep = event.target.value;
     this.outsidersService
     .republicaVirtualCepSearch(cep)
     .then(res => {
@@ -628,7 +696,7 @@ export class AppComponent implements OnInit {
   }
 
   republicaVirtualCepToBuyer = (event) => {
-    let cep = event.srcElement.value;
+    let cep = event.target.value;
     this.outsidersService
     .republicaVirtualCepSearch(cep)
     .then(res => {
@@ -636,11 +704,16 @@ export class AppComponent implements OnInit {
       object = JSON.parse(string);
       
       this.addressObject = JSON.parse(object._body);
+
+      this.buyerSignupForm.get('contact.address').patchValue(this.addressObject.logradouro);
+      this.buyerSignupForm.get('contact.district').patchValue(this.addressObject.bairro);
+      this.buyerSignupForm.get('contact.city').patchValue(this.addressObject.cidade);
+      this.buyerSignupForm.get('contact.state').patchValue(this.addressObject.uf);
     });
   }
 
   republicaVirtualCepToBuyerRepresentative = (event) => {
-    let cep = event.srcElement.value;
+    let cep = event.target.value;
     this.outsidersService
     .republicaVirtualCepSearch(cep)
     .then(res => {
@@ -656,7 +729,7 @@ export class AppComponent implements OnInit {
   }
 
   receitaWsCnpjToSeller = (event) => {
-    let cnpj = event.srcElement.value.replace(/[-./]/gi, '');
+    let cnpj = event.target.value.replace(/[-./]/gi, '');
     
     this.outsidersService
     .receitaWsCnpjSearch(cnpj)
@@ -693,7 +766,7 @@ export class AppComponent implements OnInit {
   }
 
   receitaWsCnpjToBuyer = (event) => {
-    let cnpj = event.srcElement.value.replace(/[-./]/gi, '');
+    let cnpj = event.target.value.replace(/[-./]/gi, '');
     
     this.outsidersService
     .receitaWsCnpjSearch(cnpj)

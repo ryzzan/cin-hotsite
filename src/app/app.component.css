@@ -22,6 +22,14 @@
     vertical-align: middle;
 }
 
+hr {
+    border-color: lightslategrey;
+}
+
+.odd-background {
+    background-color: lightgrey;
+}
+
 #content {
     width: 95%;
     background: #fff;

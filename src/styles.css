@@ -21,6 +21,10 @@ body {
   background-size: cover;
 }
 
+a {
+  cursor: pointer;
+}
+
 h1 {
   font-weight: bold;
 }

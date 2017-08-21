@@ -138,7 +138,7 @@
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="2">
             <md-select placeholder="Tipo de telefone" formControlName="company_phone_type">
-              <md-option *ngFor="let phone of phoneType" [value]="phone.value">{{phone.description}}</md-option>
+              <md-option *ngFor="let phone of phoneType" [value]="phone.description">{{phone.description}}</md-option>
             </md-select>
           </md-grid-tile>
 
@@ -191,27 +191,67 @@
           </md-grid-tile>
         </md-grid-list>
 
-        <div *ngIf="companyPhoneObject.length > 0"> 
-          <md-chip-list>  
-            <span *ngFor="let companyPhone of companyPhoneObject; let i = index;" class="contact-phone-list">
-              <md-chip>
-                <span class="fs10 mr5">({{companyPhone.ddd}}){{companyPhone.number}}</span>
-                <span (click)="clearRepresentativePhone(i)"><md-icon class="fs10">clear</md-icon></span>
-              </md-chip>              
-            </span>
-          </md-chip-list>
-        </div>
+        <md-grid-list cols="8">
+          <md-grid-tile [colspan]="4" *ngIf="companyPhoneObject.length > 0">
+            <table>
+              <tr style="text-align: left;">
+                <th style="width: 150px;">
+                  Tipo
+                </th>
 
-        <div *ngIf="companySocialMediaObject.length > 0"> 
-            <md-chip-list>  
-              <span *ngFor="let companySocialMedia of companySocialMediaObject; let i = index;" class="contact-phone-list">
-                <md-chip>
-                  <span class="fs10 mr5">{{companySocialMedia.digital_data_type}} - {{companySocialMedia.url}}</span>
-                  <span (click)="clearCompanySocialMedia(i)"><md-icon class="fs10">clear</md-icon></span>
-                </md-chip>              
-              </span>
-            </md-chip-list>
-          </div>
+                <th>
+                  Número
+                </th>
+              </tr>
+
+              <tr *ngFor="let companyPhone of companyPhoneObject" style="height: 40px;">
+                <td>
+                    {{companyPhone.phone_type_id}}
+                </td>
+
+                <td>
+                    <span>({{companyPhone.ddd}}){{companyPhone.number}}</span>
+
+                    <a (click)="clearContactPhone(i)"><md-icon class="fs10">clear</md-icon></a>
+                </td>
+              </tr>
+            </table>
+
+            <div *ngFor="let error of errorsRevenues">
+              <md-error>{{error.message}}</md-error>
+            </div>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="4" *ngIf="companySocialMediaObject.length > 0">
+            <table>
+              <tr style="text-align: left;">
+                <th style="width: 150px;">
+                  Tipo
+                </th>
+
+                <th>
+                  URL
+                </th>
+              </tr>
+
+              <tr *ngFor="let companySocialMedia of companySocialMediaObject" style="vertical-align: text-top; marging: 0; padding: 0; height: 40px;">
+                <td>
+                    {{companySocialMedia.digital_data_type}}
+                </td>
+
+                <td>
+                    <span>{{companySocialMedia.url}}</span>
+
+                    <a (click)="clearContactPhone(i)"><md-icon class="fs10">clear</md-icon></a>
+                </td>
+              </tr>
+            </table>
+
+            <div *ngFor="let error of errorsRevenues">
+              <md-error>{{error.message}}</md-error>
+            </div>
+          </md-grid-tile>
+        </md-grid-list>
       </md-tab>
 
       <md-tab label="Representantes" 
@@ -267,7 +307,7 @@
           <!--Representative phone: start -->
           <md-grid-tile [colspan]="2">
             <md-select placeholder="Tipo de telefone" formControlName="representative_phone_type">
-              <md-option *ngFor="let phone of phoneType" [value]="phone.value">{{phone.description}}</md-option>
+              <md-option *ngFor="let phone of phoneType" [value]="phone.description">{{phone.description}}</md-option>
             </md-select>
           </md-grid-tile>
 
@@ -346,28 +386,78 @@
         sellerSignupForm.get('representative.representative_state').value">
           <a md-raised-button color="primary" (click)="createSellerRepresentativeObject()">Adicionar Representantes</a>
         </div>
+        
+        <md-grid-list cols="8">
+          <md-grid-tile [colspan]="4" *ngIf="representativePhoneObject.length > 0">
+            <table>
+              <tr style="text-align: left;">
+                <th style="width: 150px;">
+                  Tipo
+                </th>
 
-        <div *ngIf="representativePhoneObject.length > 0"> 
-          <md-chip-list>  
-            <span *ngFor="let representativePhone of representativePhoneObject; let i = index;" class="contact-phone-list">
-              <md-chip>
-                <span class="fs10 mr5">({{representativePhone.ddd}}){{representativePhone.number}}</span>
-                <span (click)="clearRepresentativePhone(i)"><md-icon class="fs10">clear</md-icon></span>
-              </md-chip>              
-            </span>
-          </md-chip-list>
-        </div>
+                <th>
+                  Número
+                </th>
+              </tr>
 
-        <div *ngIf="representativeObject.length > 0"> 
-          <md-chip-list>  
-            <span *ngFor="let representative of representativeObject; let i = index;">
-              <md-chip>
-                <span class="fs10 mr5">{{representative.cpf}}</span>
-                <span (click)="clearRepresentative(i)"><md-icon class="fs10">clear</md-icon></span>
-              </md-chip>              
-            </span>
-          </md-chip-list>
-        </div>
+              <tr *ngFor="let representativePhone of representativePhoneObject" style="vertical-align: text-top; marging: 0; padding: 0; height: 40px;">
+                <td>
+                    {{representativePhone.phone_type_id}}
+                </td>
+
+                <td>
+                    <span>({{representativePhone.ddd}}){{representativePhone.number}}</span>
+
+                    <a (click)="clearContactPhone(i)"><md-icon class="fs10">clear</md-icon></a>
+                </td>
+              </tr>
+            </table>
+
+            <div *ngFor="let error of errorsRevenues">
+              <md-error>{{error.message}}</md-error>
+            </div>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="4" *ngIf="representativeObject.length > 0">
+              <table>
+                <tr style="text-align: left;">
+                  <th style="width: 150px;">
+                    CPF
+                  </th>
+  
+                  <th>
+                    Nome
+                  </th>
+
+                  <th>
+                    Telefones
+                  </th>
+                </tr>
+  
+                <tr *ngFor="let representative of representativeObject; let i = index;" [class.odd-background]="i % 2 == 0">
+                  <td style="vertical-align: text-top; marging: 10px; padding: 10px;">
+                      {{representative.cpf}}
+                  </td>
+  
+                  <td style="vertical-align: text-top; marging: 10px; padding: 10px;">
+                      <span>{{representative.name}}</span>
+                  </td>
+
+                  <td style="vertical-align: text-top; marging: 10px; padding: 10px;">
+                    <span *ngFor="let phone of representativeObject[i].phones">
+                      ({{phone.ddd}}){{phone.number}}
+                    </span>
+
+                    <a (click)="clearRepresentative(i)"><md-icon class="fs10">clear</md-icon></a>
+                  </td>
+                </tr>
+              </table>
+  
+              <div *ngFor="let error of errorsRevenues">
+                <md-error>{{error.message}}</md-error>
+              </div>
+            </md-grid-tile>
+        </md-grid-list>
       </md-tab>
 
       <md-tab label="Atividade" *ngIf="companyBusiness" formGroupName="activity">
@@ -430,18 +520,14 @@
               <input mdInput type="number"
               placeholder="% de faturamento de vendas locais"
               formControlName="local_revenues"
-              (keyup)="onChangeRepresentativeLocalRevenues($event)">
+              maxlength="3"
+              (change)="createSellerLocalRevenuesObject()">
             </md-input-container>
-
-            <a md-mini-fab *ngIf="sellerSignupForm.get('interest.local_revenues').value" (click)="createLocalRevenuesObject()">
-              <md-icon color="primary">add</md-icon>
-            </a>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="2">
             <md-select placeholder="Outros estados"
-            formControlName="other_state"
-            (change)="onChangeStatesBusiness($event)">
+            formControlName="other_state">
               <md-option *ngFor="let state of states" [value]="state.description">{{state.description}}</md-option>
             </md-select>
           </md-grid-tile>
@@ -450,11 +536,10 @@
             <md-input-container *ngIf="sellerSignupForm.get('interest.other_state').value">
               <input mdInput type="number"
               placeholder="% de faturamento"
-              formControlName="other_state_revenues"
-              (keyup)="onChangeRepresentativeOtherStateRevenues($event)">
+              formControlName="other_state_revenues">
             </md-input-container>
 
-            <a md-mini-fab *ngIf="sellerSignupForm.get('interest.other_state_revenues').value" (click)="createOtherStateRevenuesObject()">
+            <a md-mini-fab *ngIf="sellerSignupForm.get('interest.other_state_revenues').value" (click)="createSellerOtherStateRevenuesObject()">
               <md-icon color="primary">add</md-icon>
             </a>
           </md-grid-tile>
@@ -480,11 +565,10 @@
             <md-input-container *ngIf="sellerSignupForm.get('interest.other_country').value">
               <input mdInput type="number"
               placeholder="% de faturamento"
-              formControlName="other_country_revenues"
-              (keyup)="onChangeRepresentativeOtherCountryRevenues($event)">
+              formControlName="other_country_revenues">
             </md-input-container>
 
-            <a md-mini-fab *ngIf="sellerSignupForm.get('interest.other_country_revenues').value" (click)="createOtherCountryRevenuesObject()">
+            <a md-mini-fab *ngIf="sellerSignupForm.get('interest.other_country_revenues').value" (click)="createSellerOtherCountryRevenuesObject()">
               <md-icon color="primary">add</md-icon>
             </a>
           </md-grid-tile>
@@ -500,27 +584,27 @@
           </md-grid-tile>
         </md-grid-list>        
 
-        <md-grid-list cols="8" *ngIf="representativeRevenuesObject.length > 0">
-          <div *ngFor="let revenue of representativeRevenuesObject">
-            {{revenue.place}}
-          </div> 
-           <!--<md-table #table [dataSource]="representativeRevenuesObject">
-            <ng-container cdkColumnDef="place_type">
-              <md-header-cell *cdkHeaderCellDef> Tipo de lugar </md-header-cell>
-              <md-cell *cdkCellDef="let row"> {{row.place_type}} </md-cell>
-            </ng-container>
+        <md-grid-list cols="8" *ngIf="revenuesObject.length > 0">
+          <div class="float-left mr10">
+            <h3>Local</h3>
+            <div *ngFor="let revenue of revenuesObject">
+              {{revenue.place}}
+            </div> 
+          </div>
 
-            <ng-container cdkColumnDef="place">
-              <md-header-cell *cdkHeaderCellDef> Nome </md-header-cell>
-              <md-cell *cdkCellDef="let row"> {{row.place}} </md-cell>
-            </ng-container>
+          <div class="float-left">
+            <h3>Faturamento</h3>
+            <div *ngFor="let revenue of revenuesObject" style="text-align: right;">
+              {{revenue.revenues}}%
+            </div> 
+          </div>
 
-            <ng-container cdkColumnDef="revenues">
-              <md-header-cell *cdkHeaderCellDef> Faturamento </md-header-cell>
-              <md-cell *cdkCellDef="let row"> {{row.revenues}} </md-cell>
-            </ng-container>
-           </md-table>-->
-         </md-grid-list>
+          <div class="clear-both"></div>
+
+          <div *ngFor="let error of errorsRevenues">
+            <md-error>{{error.message}}</md-error>
+          </div>
+        </md-grid-list>
       </md-tab>
       <!--Vendedor: end-->
     </md-tab-group>
@@ -675,7 +759,7 @@
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="2">
             <md-select placeholder="Tipo de telefone" formControlName="company_phone_type">
-              <md-option *ngFor="let phone of phoneType" [value]="phone.value">{{phone.description}}</md-option>
+              <md-option *ngFor="let phone of phoneType" [value]="phone.description">{{phone.description}}</md-option>
             </md-select>
           </md-grid-tile>
 
@@ -733,7 +817,7 @@
             <span *ngFor="let companyPhone of companyPhoneObject; let i = index;" class="contact-phone-list">
               <md-chip>
                 <span class="fs10 mr5">({{companyPhone.ddd}}){{companyPhone.number}}</span>
-                <span (click)="clearRepresentativePhone(i)"><md-icon class="fs10">clear</md-icon></span>
+                <a (click)="clearRepresentativePhone(i)"><md-icon class="fs10">clear</md-icon></a>
               </md-chip>              
             </span>
           </md-chip-list>
@@ -744,7 +828,7 @@
             <span *ngFor="let companySocialMedia of companySocialMediaObject; let i = index;" class="contact-phone-list">
               <md-chip>
                 <span class="fs10 mr5">{{companySocialMedia.digital_data_type}} - {{companySocialMedia.url}}</span>
-                <span (click)="clearCompanySocialMedia(i)"><md-icon class="fs10">clear</md-icon></span>
+                <a (click)="clearCompanySocialMedia(i)"><md-icon class="fs10">clear</md-icon></a>
               </md-chip>              
             </span>
           </md-chip-list>
@@ -804,7 +888,7 @@
           <!--Representative phone: start -->
           <md-grid-tile [colspan]="2">
             <md-select placeholder="Tipo de telefone" formControlName="representative_phone_type">
-              <md-option *ngFor="let phone of phoneType" [value]="phone.value">{{phone.description}}</md-option>
+              <md-option *ngFor="let phone of phoneType" [value]="phone.descirption">{{phone.description}}</md-option>
             </md-select>
           </md-grid-tile>
 
@@ -889,7 +973,7 @@
             <span *ngFor="let representativePhone of representativePhoneObject; let i = index;" class="contact-phone-list">
               <md-chip>
                 <span class="fs10 mr5">({{representativePhone.ddd}}){{representativePhone.number}}</span>
-                <span (click)="clearRepresentativePhone(i)"><md-icon class="fs10">clear</md-icon></span>
+                <a (click)="clearRepresentativePhone(i)"><md-icon class="fs10">clear</md-icon></a>
               </md-chip>              
             </span>
           </md-chip-list>
@@ -900,7 +984,7 @@
             <span *ngFor="let representative of representativeObject; let i = index;">
               <md-chip>
                 <span class="fs10 mr5">{{representative.cpf}}</span>
-                <span (click)="clearRepresentative(i)"><md-icon class="fs10">clear</md-icon></span>
+                <a (click)="clearRepresentative(i)"><md-icon class="fs10">clear</md-icon></a>
               </md-chip>              
             </span>
           </md-chip-list>
@@ -952,17 +1036,12 @@
               placeholder="% de faturamento de vendas locais"
               formControlName="local_revenues"
               maxlength="3"
-              (keyup)="onChangeRepresentativeLocalRevenues($event)">
+              (change)="createBuyerLocalRevenuesObject()">
             </md-input-container>
-
-            <a md-mini-fab *ngIf="buyerSignupForm.get('interest.local_revenues').value" (click)="createLocalRevenuesObject()">
-              <md-icon color="primary">add</md-icon>
-            </a>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="2">
             <md-select placeholder="Outros estados"
-            (change)="onChangeStatesBusiness($event)"
             formControlName="other_state">
               <md-option *ngFor="let state of states" [value]="state.description">{{state.description}}</md-option>
             </md-select>
@@ -973,11 +1052,10 @@
               <input mdInput type="number" 
               formControlName="other_state_revenues"
               maxlength="3"
-              placeholder="% de faturamento"
-              (keyup)="onChangeRepresentativeOtherStateRevenues($event)">
+              placeholder="% de faturamento">
             </md-input-container>
 
-            <a md-mini-fab *ngIf="buyerSignupForm.get('interest.other_state_revenues').value" (click)="createOtherStateRevenuesObject()">
+            <a md-mini-fab *ngIf="buyerSignupForm.get('interest.other_state_revenues').value" (click)="createBuyerOtherStateRevenuesObject()">
               <md-icon color="primary">add</md-icon>
             </a>
           </md-grid-tile>
@@ -1003,17 +1081,16 @@
             <md-input-container *ngIf="buyerSignupForm.get('interest.other_country').value">
               <input mdInput type="number"
               formControlName="other_country_revenues"
-              placeholder="% de faturamento"
-              (keyup)="onChangeRepresentativeOtherCountryRevenues($event)">
+              placeholder="% de faturamento">
             </md-input-container>
 
-            <a md-mini-fab *ngIf="buyerSignupForm.get('interest.other_country_revenues').value" (click)="createOtherCountryRevenuesObject()">
+            <a md-mini-fab *ngIf="buyerSignupForm.get('interest.other_country_revenues').value" (click)="createBuyerOtherCountryRevenuesObject()">
               <md-icon color="primary">add</md-icon>
             </a>
           </md-grid-tile>
         </md-grid-list>
 
-        <md-grid-list cols="8" *ngIf="representativeRevenuesObject.length > 0">
+        <md-grid-list cols="8">
           <md-grid-tile [colspan]="4">
             <md-input-container>
               <textarea mdInput placeholder="Perfil do parceiro"
@@ -1033,27 +1110,27 @@
           </md-grid-tile>
         </md-grid-list>
 
-        <md-grid-list cols="8" *ngIf="representativeRevenuesObject.length > 0">
-          <div *ngFor="let revenue of representativeRevenuesObject">
-            {{revenue.place}}
-          </div> 
-           <!--<md-table #table [dataSource]="representativeRevenuesObject">
-            <ng-container cdkColumnDef="place_type">
-              <md-header-cell *cdkHeaderCellDef> Tipo de lugar </md-header-cell>
-              <md-cell *cdkCellDef="let row"> {{row.place_type}} </md-cell>
-            </ng-container>
+        <md-grid-list cols="8" *ngIf="revenuesObject.length > 0">
+          <div class="float-left mr10">
+            <h3>Local</h3>
+            <div *ngFor="let revenue of revenuesObject">
+              {{revenue.place}}
+            </div> 
+          </div>
 
-            <ng-container cdkColumnDef="place">
-              <md-header-cell *cdkHeaderCellDef> Nome </md-header-cell>
-              <md-cell *cdkCellDef="let row"> {{row.place}} </md-cell>
-            </ng-container>
+          <div class="float-left">
+            <h3>Faturamento</h3>
+            <div *ngFor="let revenue of revenuesObject" style="text-align: right;">
+              {{revenue.revenues}}%
+            </div> 
+          </div>
 
-            <ng-container cdkColumnDef="revenues">
-              <md-header-cell *cdkHeaderCellDef> Faturamento </md-header-cell>
-              <md-cell *cdkCellDef="let row"> {{row.revenues}} </md-cell>
-            </ng-container>
-           </md-table>-->
-         </md-grid-list>
+          <div class="clear-both"></div>
+
+          <div *ngFor="let error of errorsRevenues">
+            <md-error>{{error.message}}</md-error>
+          </div>
+        </md-grid-list>
       </md-tab>
       <!--Vendedor: end-->
     </md-tab-group>
