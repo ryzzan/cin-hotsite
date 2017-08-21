@@ -93,7 +93,7 @@ let selects: any = [{
         description: 'Fundamental completo'
     }, {
         value: 'medio',
-        description: 'Fundamental completo'
+        description: 'Médio completo'
     }, {
         value: 'superior',
         description: 'Superior completo'
@@ -103,7 +103,7 @@ let selects: any = [{
     }, {
         description: "Francês"
     }, {
-        description: "Epanhol"
+        description: "Espanhol"
     }, {
         description: "Português"
     }, {

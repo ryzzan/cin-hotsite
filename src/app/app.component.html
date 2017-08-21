@@ -3,11 +3,6 @@
   <h2>FICHA DE INSCRIÇÃO</h2>
 </div>
 
-<div *ngIf="errors.length > 0">
-  <md-error *ngFor="let error of errors">
-    {{error.message}}
-  </md-error>
-</div>
 
 <md-card id="content">
   <!--Seller: start-->
@@ -54,13 +49,14 @@
           <md-grid-tile [colspan]="2">
             <md-input-container>
               <input mdInput formControlName="foundation_year" type="text" 
-              placeholder="Data de Abertura">
+              placeholder="Data de Abertura"
+              [textMask]="{mask: mask.date}">
             </md-input-container>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="2">
             <md-input-container>
-              <input mdInput formControlName="employees_quantity" type="text" 
+              <input mdInput formControlName="employees_quantity" type="number" 
               placeholder="Nº de Funcionários">
             </md-input-container>
           </md-grid-tile>
@@ -133,7 +129,8 @@
           <md-grid-tile [colspan]="2">
             <md-input-container>
               <input mdInput formControlName="state" type="text" 
-              placeholder="UF">
+              placeholder="UF"
+              [textMask]="{mask: mask.uf}">
             </md-input-container>
           </md-grid-tile>
         </md-grid-list>
@@ -161,18 +158,18 @@
           </md-grid-tile>
 
           <md-grid-tile [colspan]="2">
-            <md-select placeholder="Mídia Social" (change)="onChangeRepresentativeSocialMediaType($event)">
+            <md-select placeholder="Mídia Social" formControlName="digital_data_type">
               <md-option *ngFor="let socialMedia of socialMedias" [value]="socialMedia.value">{{socialMedia.description}}</md-option>
             </md-select>
           </md-grid-tile>
 
-          <md-grid-tile [colspan]="2" *ngIf="representativeSocialMediaTypeChanged">
+          <md-grid-tile [colspan]="2" *ngIf="sellerSignupForm.get('contact.digital_data_type').value">
             <md-input-container style="width: 300px;">
-              <input mdInput type="text" placeholder="URL da mídia social" formControlName="company_social_media">
+              <input mdInput type="text" placeholder="URL da mídia social" formControlName="company_social_media_url">
             </md-input-container>            
             <a md-mini-fab 
-            *ngIf="sellerSignupForm.get('contact.company_social_media').value" 
-            (click)="createRepresentativeSocialMediaObject()">
+            *ngIf="sellerSignupForm.get('contact.company_social_media_url').value" 
+            (click)="createSellerCompanySocialMediaObject()">
               <md-icon color="primary">add</md-icon>
             </a>
           </md-grid-tile>
@@ -204,6 +201,17 @@
             </span>
           </md-chip-list>
         </div>
+
+        <div *ngIf="companySocialMediaObject.length > 0"> 
+            <md-chip-list>  
+              <span *ngFor="let companySocialMedia of companySocialMediaObject; let i = index;" class="contact-phone-list">
+                <md-chip>
+                  <span class="fs10 mr5">{{companySocialMedia.digital_data_type}} - {{companySocialMedia.url}}</span>
+                  <span (click)="clearCompanySocialMedia(i)"><md-icon class="fs10">clear</md-icon></span>
+                </md-chip>              
+              </span>
+            </md-chip-list>
+          </div>
       </md-tab>
 
       <md-tab label="Representantes" 
@@ -319,7 +327,8 @@
             <md-input-container>
               <input mdInput type="text"
               formControlName="representative_state"
-              placeholder="UF">
+              placeholder="UF"
+              [textMask]="{mask: mask.uf}">
             </md-input-container>
           </md-grid-tile>
         </md-grid-list>
@@ -386,6 +395,14 @@
             </md-select>
           </md-grid-tile>
         </md-grid-list>
+
+        <md-grid-list cols="8" rowHeight="100px" *ngIf="errors.length > 0">
+          <md-grid-tile [colspan]="8">
+            <md-error *ngFor="let error of errors">
+              {{error.message}}
+            </md-error>
+          </md-grid-tile>
+        </md-grid-list>
       </md-tab>
 
       <md-tab label="Interesses" *ngIf="companyBusiness" formGroupName="interest">
@@ -410,8 +427,9 @@
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="3">
             <md-input-container>
-              <input mdInput type="text"
+              <input mdInput type="number"
               placeholder="% de faturamento de vendas locais"
+              formControlName="local_revenues"
               (keyup)="onChangeRepresentativeLocalRevenues($event)">
             </md-input-container>
 
@@ -422,15 +440,17 @@
 
           <md-grid-tile [colspan]="2">
             <md-select placeholder="Outros estados"
+            formControlName="other_state"
             (change)="onChangeStatesBusiness($event)">
               <md-option *ngFor="let state of states" [value]="state.description">{{state.description}}</md-option>
             </md-select>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="3">
-            <md-input-container>
-              <input mdInput type="text" [disabled]="statesBusinessChanged == undefined"
+            <md-input-container *ngIf="sellerSignupForm.get('interest.other_state').value">
+              <input mdInput type="number"
               placeholder="% de faturamento"
+              formControlName="other_state_revenues"
               (keyup)="onChangeRepresentativeOtherStateRevenues($event)">
             </md-input-container>
 
@@ -444,8 +464,8 @@
           <md-grid-tile [colspan]="2">
             <md-input-container>
               <input mdInput placeholder="Outros países" 
+              formControlName="other_country"
               [mdAutocomplete]="auto" 
-              formControlName="revenues_country"
               (keyup)="filterCountries($event)">
             </md-input-container>
 
@@ -457,9 +477,10 @@
           </md-grid-tile>
 
           <md-grid-tile [colspan]="3">
-            <md-input-container>
-              <input mdInput type="text" [disabled]="countriesBusinessChanged == undefined"
+            <md-input-container *ngIf="sellerSignupForm.get('interest.other_country').value">
+              <input mdInput type="number"
               placeholder="% de faturamento"
+              formControlName="other_country_revenues"
               (keyup)="onChangeRepresentativeOtherCountryRevenues($event)">
             </md-input-container>
 
@@ -477,7 +498,7 @@
               </textarea>
             </md-input-container>
           </md-grid-tile>
-        </md-grid-list>
+        </md-grid-list>        
 
         <md-grid-list cols="8" *ngIf="representativeRevenuesObject.length > 0">
           <div *ngFor="let revenue of representativeRevenuesObject">
@@ -554,13 +575,14 @@
           <md-grid-tile [colspan]="2">
             <md-input-container>
               <input mdInput formControlName="foundation_year" type="text" 
-              placeholder="Data de Abertura">
+              placeholder="Data de Abertura"
+              [textMask]="{mask: mask.date}">
             </md-input-container>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="2">
             <md-input-container>
-              <input mdInput formControlName="employees_quantity" type="text" 
+              <input mdInput formControlName="employees_quantity" type="number" 
               placeholder="Nº de Funcionários">
             </md-input-container>
           </md-grid-tile>
@@ -644,7 +666,8 @@
           <md-grid-tile [colspan]="2">
             <md-input-container>
               <input mdInput formControlName="state" type="text" 
-              placeholder="UF">
+              placeholder="UF"
+              [textMask]="{mask: mask.uf}">
             </md-input-container>
           </md-grid-tile>
         </md-grid-list>
@@ -672,18 +695,18 @@
           </md-grid-tile>
 
           <md-grid-tile [colspan]="2">
-            <md-select placeholder="Mídia Social" (change)="onChangeRepresentativeSocialMediaType($event)">
+            <md-select placeholder="Mídia Social" formControlName="digital_data_type">
               <md-option *ngFor="let socialMedia of socialMedias" [value]="socialMedia.value">{{socialMedia.description}}</md-option>
             </md-select>
           </md-grid-tile>
 
-          <md-grid-tile [colspan]="2" *ngIf="representativeSocialMediaTypeChanged">
+          <md-grid-tile [colspan]="2" *ngIf="buyerSignupForm.get('contact.digital_data_type').value">
             <md-input-container style="width: 300px;">
-              <input mdInput type="text" placeholder="URL da mídia social" formControlName="company_social_media">
+              <input mdInput type="text" placeholder="URL da mídia social" formControlName="company_social_media_url">
             </md-input-container>            
             <a md-mini-fab 
-            *ngIf="buyerSignupForm.get('contact.company_social_media').value" 
-            (click)="createRepresentativeSocialMediaObject()">
+            *ngIf="buyerSignupForm.get('contact.company_social_media_url').value" 
+            (click)="createBuyerCompanySocialMediaObject()">
               <md-icon color="primary">add</md-icon>
             </a>
           </md-grid-tile>
@@ -711,6 +734,17 @@
               <md-chip>
                 <span class="fs10 mr5">({{companyPhone.ddd}}){{companyPhone.number}}</span>
                 <span (click)="clearRepresentativePhone(i)"><md-icon class="fs10">clear</md-icon></span>
+              </md-chip>              
+            </span>
+          </md-chip-list>
+        </div>
+
+        <div *ngIf="companySocialMediaObject.length > 0"> 
+          <md-chip-list>  
+            <span *ngFor="let companySocialMedia of companySocialMediaObject; let i = index;" class="contact-phone-list">
+              <md-chip>
+                <span class="fs10 mr5">{{companySocialMedia.digital_data_type}} - {{companySocialMedia.url}}</span>
+                <span (click)="clearCompanySocialMedia(i)"><md-icon class="fs10">clear</md-icon></span>
               </md-chip>              
             </span>
           </md-chip-list>
@@ -830,7 +864,8 @@
             <md-input-container>
               <input mdInput type="text"
               formControlName="representative_state"
-              placeholder="UF">
+              placeholder="UF"
+              [textMask]="{mask: mask.uf}">
             </md-input-container>
           </md-grid-tile>
         </md-grid-list>
@@ -913,8 +948,10 @@
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="3">
             <md-input-container>
-              <input mdInput type="text"
+              <input mdInput type="number"
               placeholder="% de faturamento de vendas locais"
+              formControlName="local_revenues"
+              maxlength="3"
               (keyup)="onChangeRepresentativeLocalRevenues($event)">
             </md-input-container>
 
@@ -925,14 +962,17 @@
 
           <md-grid-tile [colspan]="2">
             <md-select placeholder="Outros estados"
-            (change)="onChangeStatesBusiness($event)">
+            (change)="onChangeStatesBusiness($event)"
+            formControlName="other_state">
               <md-option *ngFor="let state of states" [value]="state.description">{{state.description}}</md-option>
             </md-select>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="3">
-            <md-input-container>
-              <input mdInput type="text" [disabled]="statesBusinessChanged == undefined"
+            <md-input-container *ngIf="buyerSignupForm.get('interest.other_state').value">
+              <input mdInput type="number" 
+              formControlName="other_state_revenues"
+              maxlength="3"
               placeholder="% de faturamento"
               (keyup)="onChangeRepresentativeOtherStateRevenues($event)">
             </md-input-container>
@@ -947,8 +987,8 @@
           <md-grid-tile [colspan]="2">
             <md-input-container>
               <input mdInput placeholder="Outros países" 
+              formControlName="other_country"
               [mdAutocomplete]="auto" 
-              formControlName="revenues_country"
               (keyup)="filterCountries($event)">
             </md-input-container>
 
@@ -960,8 +1000,9 @@
           </md-grid-tile>
 
           <md-grid-tile [colspan]="3">
-            <md-input-container>
-              <input mdInput type="text" [disabled]="countriesBusinessChanged == undefined"
+            <md-input-container *ngIf="buyerSignupForm.get('interest.other_country').value">
+              <input mdInput type="number"
+              formControlName="other_country_revenues"
               placeholder="% de faturamento"
               (keyup)="onChangeRepresentativeOtherCountryRevenues($event)">
             </md-input-container>

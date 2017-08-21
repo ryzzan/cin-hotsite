@@ -54,13 +54,11 @@ export class AppComponent implements OnInit {
   
   /*company phone trouble: start*/
   companyPhoneObject: any = [];
-  createContactPhoneObjectButton: boolean = false;
   /*company phone trouble: end*/
 
   /*representative phone trouble: start*/
   representativePhoneObject: any = [];
   representativeAddressObject: any;
-  createRepresentativePhoneObjectButton: boolean = false;
   /*company phone trouble: end*/
 
   /*representative revenues trouble: start*/
@@ -79,12 +77,9 @@ export class AppComponent implements OnInit {
   /*representative revenues trouble: end*/
 
   /*representative social media trouble: start*/
-  representativeSocialMediaTypeChanged: number;
-  representativeSocialMediaURLChanged: string;
-  representativeSocialMediaObject: any = [];
-  createRepresentativeSocialMediaObjectButton: boolean = false;
+  companySocialMediaObject: any = [];
   /*company social media trouble: end*/
-
+  
   /*representative: start*/
   representativeTreatment: string;
   represenativeName: string;
@@ -93,7 +88,7 @@ export class AppComponent implements OnInit {
   representativeObject: any = [];
   createRepresentativeObjectButton: any;
   /*representative: end*/
-
+  
   groups: any = [];
   subgroups: any = [];
   products: any = [];
@@ -104,7 +99,8 @@ export class AppComponent implements OnInit {
     date: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
     zip: [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/],
     phone: ['(', /\d/, /\d/, ')',' ' , /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/,],
-    cell_phone: ['(', /\d/, /\d/, ')',' ' , /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, /\d/,]
+    cell_phone: ['(', /\d/, /\d/, ')',' ' , /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, /\d/,],
+    uf: [/\w/,/\w/,]
   };
 
   //SELECTS values
@@ -142,7 +138,8 @@ export class AppComponent implements OnInit {
         'district': new FormControl(null),
         'company_email': new FormControl(null),
         'company_site': new FormControl(null),
-        'company_social_media': new FormControl(null),
+        'digital_data_type': new FormControl(null),
+        'company_social_media_url': new FormControl(null),
         'company_phone_type': new FormControl(null),
         'company_phone_ddd': new FormControl(null),
         'company_phone_number': new FormControl(null),        
@@ -169,6 +166,11 @@ export class AppComponent implements OnInit {
         'participation_events': new FormControl(null),
         'revenues_country': new FormControl(null),
         'sales_capacity': new FormControl(null),
+        'local_revenues': new FormControl(null),
+        'other_state': new FormControl(null),
+        'other_state_revenues': new FormControl(null),
+        'other_country': new FormControl(null),
+        'other_country_revenues': new FormControl(null),
       }),
       'activity': new FormGroup({
         'group_id': new FormControl(null),
@@ -198,7 +200,8 @@ export class AppComponent implements OnInit {
         'district': new FormControl(null),
         'company_email': new FormControl(null),
         'company_site': new FormControl(null),
-        'company_social_media': new FormControl(null),
+        'digital_data_type': new FormControl(null),
+        'company_social_media_url': new FormControl(null),
         'company_phone_type': new FormControl(null),
         'company_phone_ddd': new FormControl(null),
         'company_phone_number': new FormControl(null),        
@@ -225,6 +228,11 @@ export class AppComponent implements OnInit {
         'participation_events': new FormControl(null),
         'revenues_country': new FormControl(null),
         'sales_capacity': new FormControl(null),
+        'local_revenues': new FormControl(null),
+        'other_state': new FormControl(null),
+        'other_state_revenues': new FormControl(null),
+        'other_country': new FormControl(null),
+        'other_country_revenues': new FormControl(null),
       }),
       'activity': new FormGroup({
         'group_id': new FormControl(null),
@@ -283,6 +291,21 @@ export class AppComponent implements OnInit {
     } else {
       this.companyBusiness = undefined;
     }
+    this.buyerSignupForm.reset();
+    this.sellerSignupForm.reset();
+
+    this.subgroupChanged = false;
+    this.productObject = undefined;
+    this.subgroupObject = undefined;
+
+    this.companyObject = undefined;
+    this.addressObject = undefined;
+    this.companyPhoneObject = [];
+    this.representativePhoneObject = [];
+    this.representativeRevenuesObject = [];
+    this.companySocialMediaObject = [];
+    this.representativeObject = [];
+    this.representativeRevenuesObject = [];
   }
 
   /*Activity: start*/
@@ -527,30 +550,28 @@ export class AppComponent implements OnInit {
 
   
   /*Representative social medias: start*/
-  clearRepresentativeSocialMedia = (index) => {
-    this.representativeSocialMediaObject.splice(index, 1);
+  clearCompanySocialMedia = (index) => {
+    this.companySocialMediaObject.splice(index, 1);
   }
 
-  createRepresentativeSocialMediaObject = () => {
-    this.representativeSocialMediaObject.push({
-      digital_data_type: this.representativeSocialMediaTypeChanged,
-      url: this.representativeSocialMediaURLChanged
+  createBuyerCompanySocialMediaObject = () => {
+    this.companySocialMediaObject.push({
+      digital_data_type: this.buyerSignupForm.get('contact.digital_data_type').value,
+      url: this.buyerSignupForm.get('contact.company_social_media_url').value
     })
-    this.representativeSocialMediaTypeChanged = undefined;
+
+    this.buyerSignupForm.get('contact.digital_data_type').patchValue(null);
+    this.buyerSignupForm.get('contact.company_social_media_url').patchValue(null);
   }
 
-  onChangeRepresentativeSocialMediaURL = (event) => {
-    if(event) {
-      this.representativeSocialMediaURLChanged = event.srcElement.value;
+  createSellerCompanySocialMediaObject = () => {
+    this.companySocialMediaObject.push({
+      digital_data_type: this.sellerSignupForm.get('contact.digital_data_type').value,
+      url: this.sellerSignupForm.get('contact.company_social_media_url').value
+    })
 
-      this.createRepresentativeSocialMediaObjectButton = true;
-    }
-  }
-
-  onChangeRepresentativeSocialMediaType = (event) => {
-    if(event.value) {      
-      this.representativeSocialMediaTypeChanged = event.value;
-    }
+    this.sellerSignupForm.get('contact.digital_data_type').patchValue(null);
+    this.sellerSignupForm.get('contact.company_social_media_url').patchValue(null);
   }
   /*Representative social medias: end*/
 
