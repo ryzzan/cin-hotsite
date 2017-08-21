@@ -433,7 +433,7 @@
               (keyup)="onChangeRepresentativeLocalRevenues($event)">
             </md-input-container>
 
-            <a md-mini-fab *ngIf="createRepresentativeLocalRevenuesObjectButton" (click)="createLocalRevenuesObject()">
+            <a md-mini-fab *ngIf="sellerSignupForm.get('interest.local_revenues').value" (click)="createLocalRevenuesObject()">
               <md-icon color="primary">add</md-icon>
             </a>
           </md-grid-tile>
@@ -454,7 +454,7 @@
               (keyup)="onChangeRepresentativeOtherStateRevenues($event)">
             </md-input-container>
 
-            <a md-mini-fab *ngIf="createRepresentativeOtherStateRevenuesObjectButton" (click)="createOtherStateRevenuesObject()">
+            <a md-mini-fab *ngIf="sellerSignupForm.get('interest.other_state_revenues').value" (click)="createOtherStateRevenuesObject()">
               <md-icon color="primary">add</md-icon>
             </a>
           </md-grid-tile>
@@ -484,7 +484,7 @@
               (keyup)="onChangeRepresentativeOtherCountryRevenues($event)">
             </md-input-container>
 
-            <a md-mini-fab *ngIf="createRepresentativeOtherCountryRevenuesObjectButton" (click)="createOtherCountryRevenuesObject()">
+            <a md-mini-fab *ngIf="sellerSignupForm.get('interest.other_country_revenues').value" (click)="createOtherCountryRevenuesObject()">
               <md-icon color="primary">add</md-icon>
             </a>
           </md-grid-tile>
@@ -955,7 +955,7 @@
               (keyup)="onChangeRepresentativeLocalRevenues($event)">
             </md-input-container>
 
-            <a md-mini-fab *ngIf="createRepresentativeLocalRevenuesObjectButton" (click)="createLocalRevenuesObject()">
+            <a md-mini-fab *ngIf="buyerSignupForm.get('interest.local_revenues').value" (click)="createLocalRevenuesObject()">
               <md-icon color="primary">add</md-icon>
             </a>
           </md-grid-tile>
@@ -977,7 +977,7 @@
               (keyup)="onChangeRepresentativeOtherStateRevenues($event)">
             </md-input-container>
 
-            <a md-mini-fab *ngIf="createRepresentativeOtherStateRevenuesObjectButton" (click)="createOtherStateRevenuesObject()">
+            <a md-mini-fab *ngIf="buyerSignupForm.get('interest.other_state_revenues').value" (click)="createOtherStateRevenuesObject()">
               <md-icon color="primary">add</md-icon>
             </a>
           </md-grid-tile>
@@ -1007,7 +1007,7 @@
               (keyup)="onChangeRepresentativeOtherCountryRevenues($event)">
             </md-input-container>
 
-            <a md-mini-fab *ngIf="createRepresentativeOtherCountryRevenuesObjectButton" (click)="createOtherCountryRevenuesObject()">
+            <a md-mini-fab *ngIf="buyerSignupForm.get('interest.other_country_revenues').value" (click)="createOtherCountryRevenuesObject()">
               <md-icon color="primary">add</md-icon>
             </a>
           </md-grid-tile>
