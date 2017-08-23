@@ -49,3 +49,16 @@ hr {
 #header img {
     width: 200px;
 }
+
+#loading {
+    background: #fff; 
+    opacity: 0.8;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: 999;
+}
+
+#progress-bar {
+    top: 50%;
+}

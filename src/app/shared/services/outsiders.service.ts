@@ -16,6 +16,20 @@ export class OutsidersService {
     });
   })
 
+  receitaCpfSearch = (cpf) => new Promise((resolve, reject) => {
+    let header = new Headers({
+      'Access-Control-Allow-Origin': '*'
+    });
+
+    let options = new RequestOptions({ headers: header});
+
+    this.http.get(
+      environment.urlToApi+"cpfws?cpf="+cpf
+    ).subscribe(res => {
+      resolve(res);
+    });
+  })
+
   receitaWsCnpjSearch = (cnpj) => new Promise((resolve, reject) => {
     let header = new Headers({
       'Access-Control-Allow-Origin': '*'

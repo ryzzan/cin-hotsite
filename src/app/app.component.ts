@@ -36,6 +36,7 @@ export class AppComponent implements OnInit {
   objectToAPI: any;
   errors: any = [];
   errorsRevenues: any = [];
+  loading: boolean = false;
 
   /*activity products by subgroup trouble: start*/
   subgroupChanged: boolean = false;
@@ -113,49 +114,46 @@ export class AppComponent implements OnInit {
     this.sellerSignupForm = new FormGroup({
       'company': new FormGroup({
         'cnpj_number': new FormControl(null, Validators.required),
-        'business_name': new FormControl(null),
-        'tranding_name': new FormControl(null),
-        'foundation_year': new FormControl(null),
-        'employees_quantity': new FormControl(null),
-        'legal_person': new FormControl(null),
-        'company_size': new FormControl(null),
-        'language': new FormControl(null),
+        'business_name': new FormControl(null, Validators.required),
+        'tranding_name': new FormControl(null, Validators.required),
+        'foundation_year': new FormControl(null, Validators.required),
+        'employees_quantity': new FormControl(null, Validators.required),
+        'legal_person': new FormControl(null, Validators.required),
+        'company_size': new FormControl(null, Validators.required)
       }),
       'contact': new FormGroup({
-        'country': new FormControl(null),
-        'postal_code': new FormControl(null),
-        'address': new FormControl(null),
-        'number': new FormControl(null),
-        'city': new FormControl(null),
-        'state': new FormControl(null),
-        'district': new FormControl(null),
-        'company_email': new FormControl(null),
+        'postal_code': new FormControl(null, Validators.required),
+        'address': new FormControl(null, Validators.required),
+        'number': new FormControl(null, Validators.required),
+        'city': new FormControl(null, Validators.required),
+        'state': new FormControl(null, Validators.required),
+        'district': new FormControl(null, Validators.required),
+        'company_email': new FormControl(null, Validators.required),
         'company_site': new FormControl(null),
         'digital_data_type': new FormControl(null),
         'company_social_media_url': new FormControl(null),
-        'company_phone_type': new FormControl(null),
+        'company_phone_type': new FormControl(null), //Require companyPhoneObject
         'company_phone_ddd': new FormControl(null),
         'company_phone_number': new FormControl(null),        
       }),      
       'representative': new FormGroup({
-        'representative_treatment': new FormControl(null),
-        'representative_cpf': new FormControl(null),
-        'representative_name': new FormControl(null),
+        'representative_treatment': new FormControl(null, Validators.required),
+        'representative_cpf': new FormControl(null, Validators.required),
+        'representative_name': new FormControl(null, Validators.required),
         'representative_position': new FormControl(null),
         'representative_birthday': new FormControl(null),
         'representative_schooling': new FormControl(null),
-        'representative_email': new FormControl(null),
-        'representative_postal_code': new FormControl(null),
-        'representative_address': new FormControl(null),
-        'representative_city': new FormControl(null),
-        'representative_state': new FormControl(null),
-        'representative_phone_type': new FormControl(null),
+        'representative_email': new FormControl(null, Validators.required),
+        'representative_postal_code': new FormControl(null, Validators.required),
+        'representative_address': new FormControl(null, Validators.required),
+        'representative_city': new FormControl(null, Validators.required),
+        'representative_state': new FormControl(null, Validators.required),
+        'representative_phone_type': new FormControl(null), //Require representativePhoneObject
         'representative_phone_ddd': new FormControl(null),
         'representative_phone_number': new FormControl(null),
       }),
       'interest': new FormGroup({
         'company_interests': new FormControl(null),
-        'partner_profile': new FormControl(null),
         'participation_events': new FormControl(null),
         'revenues_country': new FormControl(null),
         'sales_capacity': new FormControl(null),
@@ -166,61 +164,52 @@ export class AppComponent implements OnInit {
         'other_country_revenues': new FormControl(null),
       }),
       'activity': new FormGroup({
-        'group_id': new FormControl(null),
-        'subgroup_id': new FormControl(null),
-        'product_id': new FormControl(null),
+        'group_id': new FormControl(null, Validators.required),
+        'subgroup_id': new FormControl(null, Validators.required),
+        'product_id': new FormControl(null, Validators.required),
       })
     })
 
     this.buyerSignupForm = new FormGroup({
       'company': new FormGroup({
         'cnpj_number': new FormControl(null, Validators.required),
-        'business_name': new FormControl(null),
-        'tranding_name': new FormControl(null),
-        'foundation_year': new FormControl(null),
-        'employees_quantity': new FormControl(null),
-        'legal_person': new FormControl(null),
-        'company_size': new FormControl(null),
-        'language': new FormControl(null),
+        'business_name': new FormControl(null, Validators.required),
+        'tranding_name': new FormControl(null, Validators.required),
+        'foundation_year': new FormControl(null, Validators.required),
+        'employees_quantity': new FormControl(null, Validators.required),
+        'legal_person': new FormControl(null, Validators.required),
+        'language': new FormControl(null, Validators.required),
       }),
       'contact': new FormGroup({
-        'country': new FormControl(null),
-        'postal_code': new FormControl(null),
-        'address': new FormControl(null),
-        'number': new FormControl(null),
-        'city': new FormControl(null),
-        'state': new FormControl(null),
-        'district': new FormControl(null),
-        'company_email': new FormControl(null),
+        'country': new FormControl(null, Validators.required),
+        'postal_code': new FormControl(null, Validators.required),
+        'address': new FormControl(null, Validators.required),
+        'number': new FormControl(null, Validators.required),
+        'city': new FormControl(null, Validators.required),
+        'state': new FormControl(null, Validators.required),
+        'district': new FormControl(null, Validators.required),
+        'company_email': new FormControl(null, Validators.required),
         'company_site': new FormControl(null),
         'digital_data_type': new FormControl(null),
         'company_social_media_url': new FormControl(null),
-        'company_phone_type': new FormControl(null),
+        'company_phone_type': new FormControl(null), //Require companyPhoneObject
         'company_phone_ddd': new FormControl(null),
         'company_phone_number': new FormControl(null),        
       }),      
       'representative': new FormGroup({
-        'representative_treatment': new FormControl(null),
-        'representative_cpf': new FormControl(null),
-        'representative_name': new FormControl(null),
+        'representative_treatment': new FormControl(null, Validators.required),
+        'representative_cpf': new FormControl(null, Validators.required),
+        'representative_name': new FormControl(null, Validators.required),
         'representative_position': new FormControl(null),
-        'representative_birthday': new FormControl(null),
-        'representative_schooling': new FormControl(null),
-        'representative_email': new FormControl(null),
-        'representative_postal_code': new FormControl(null),
-        'representative_address': new FormControl(null),
-        'representative_city': new FormControl(null),
-        'representative_state': new FormControl(null),
-        'representative_phone_type': new FormControl(null),
+        'representative_email': new FormControl(null, Validators.required),
+        'representative_phone_type': new FormControl(null), //Require representativePhoneObject
         'representative_phone_ddd': new FormControl(null),
         'representative_phone_number': new FormControl(null),
       }),
       'interest': new FormGroup({
         'company_interests': new FormControl(null),
         'partner_profile': new FormControl(null),
-        'participation_events': new FormControl(null),
         'revenues_country': new FormControl(null),
-        'sales_capacity': new FormControl(null),
         'local_revenues': new FormControl(null),
         'other_state': new FormControl(null),
         'other_state_revenues': new FormControl(null),
@@ -228,9 +217,8 @@ export class AppComponent implements OnInit {
         'other_country_revenues': new FormControl(null),
       }),
       'activity': new FormGroup({
-        'group_id': new FormControl(null),
-        'subgroup_id': new FormControl(null),
-        'product_id': new FormControl(null),
+        'subgroup_id': new FormControl(null, Validators.required),
+        'product_id': new FormControl(null, Validators.required),
       })
     })
     
@@ -422,8 +410,6 @@ export class AppComponent implements OnInit {
       position: this.buyerSignupForm.get('representative.representative_position').value,
       email: this.buyerSignupForm.get('representative.representative_email').value,
       phones: this.representativePhoneObject,
-      birthday: this.buyerSignupForm.get('representative.representative_birthday').value,
-      schooling: this.buyerSignupForm.get('representative.representative_schooling').value,
       postal_code: this.buyerSignupForm.get('representative.representative_postal_code').value,
       address: this.buyerSignupForm.get('representative.representative_address').value,
       city: this.buyerSignupForm.get('representative.representative_city').value,
@@ -435,8 +421,6 @@ export class AppComponent implements OnInit {
     this.buyerSignupForm.get('representative.representative_name').patchValue(null),
     this.buyerSignupForm.get('representative.representative_position').patchValue(null),
     this.buyerSignupForm.get('representative.representative_email').patchValue(null),
-    this.buyerSignupForm.get('representative.representative_birthday').patchValue(null),
-    this.buyerSignupForm.get('representative.representative_schooling').patchValue(null),
     this.buyerSignupForm.get('representative.representative_postal_code').patchValue(null),
     this.buyerSignupForm.get('representative.representative_address').patchValue(null),
     this.buyerSignupForm.get('representative.representative_city').patchValue(null),
@@ -544,6 +528,9 @@ export class AppComponent implements OnInit {
 
     this.sumRevenues();
 
+    this.buyerSignupForm.get('interest.other_state').patchValue(null);
+    this.buyerSignupForm.get('interest.other_state_revenues').patchValue(null);
+
     this.representativeOtherStateRevenuesChanged = undefined;
   }
 
@@ -591,7 +578,7 @@ export class AppComponent implements OnInit {
   }
 
   clearRevenues = (index) => {
-    this.representativeOtherCountryRevenuesChanged.splice(index, 1);
+    this.revenuesObject.splice(index, 1);
   }
 
   sumRevenues = () => {
@@ -663,6 +650,12 @@ export class AppComponent implements OnInit {
   }
 
   republicaVirtualCepToSeller = (event) => {
+    this.loading = true;
+    
+    setTimeout(() => {
+      this.loading = false;
+    }, 2000);
+
     let cep = event.target.value;
     this.outsidersService
     .republicaVirtualCepSearch(cep)
@@ -679,8 +672,14 @@ export class AppComponent implements OnInit {
     });
   }
 
-  republicaVirtualCepToSellerRepresentative = (event) => {
-    let cep = event.target.value;
+  republicaVirtualCepToSellerRepresentative = () => {
+    this.loading = true;
+    
+    setTimeout(() => {
+      this.loading = false;
+    }, 2000);
+
+    let cep = this.sellerSignupForm.get('representative.representative_postal_code').value;
     this.outsidersService
     .republicaVirtualCepSearch(cep)
     .then(res => {
@@ -696,6 +695,12 @@ export class AppComponent implements OnInit {
   }
 
   republicaVirtualCepToBuyer = (event) => {
+    this.loading = true;
+    
+    setTimeout(() => {
+      this.loading = false;
+    }, 2000);
+
     let cep = event.target.value;
     this.outsidersService
     .republicaVirtualCepSearch(cep)
@@ -713,6 +718,18 @@ export class AppComponent implements OnInit {
   }
 
   republicaVirtualCepToBuyerRepresentative = (event) => {
+    this.loading = true;
+    
+    setTimeout(() => {
+      this.loading = false;
+    }, 2000);
+
+    this.loading = true;
+    
+    setTimeout(() => {
+      this.loading = false;
+    }, 2000);
+
     let cep = event.target.value;
     this.outsidersService
     .republicaVirtualCepSearch(cep)
@@ -728,7 +745,81 @@ export class AppComponent implements OnInit {
     });
   }
 
+  receitaCpfToSeller = (event) => {
+    this.loading = true;
+    
+    setTimeout(() => {
+      this.loading = false;
+    }, 2000);
+
+    this.loading = true;
+    
+    setTimeout(() => {
+      this.loading = false;
+    }, 2000);
+
+    let cpf = event.target.value.replace(/[-./]/gi, '');
+    
+    this.outsidersService
+    .receitaCpfSearch(cpf)
+    .then(res => {
+      let string = JSON.stringify(res),
+      object = JSON.parse(string);
+      
+      this.representativeObject = JSON.parse(object._body);
+
+      this.sellerSignupForm.get('representative.representative_name').patchValue(this.representativeObject.nome);
+      this.sellerSignupForm.get('representative.representative_birthday').patchValue(this.representativeObject.dataNascimento);
+      this.sellerSignupForm.get('representative.representative_postal_code').patchValue(this.representativeObject.enderecoCep);
+
+      if(this.representativeObject.sexo == "M") {
+        this.sellerSignupForm.get('representative.representative_treatment').patchValue('sr');
+      }
+
+      if(this.representativeObject.sexo == "F") {
+        this.sellerSignupForm.get('representative.representative_treatment').patchValue('sra');
+      }
+
+      this.republicaVirtualCepToSellerRepresentative();
+    });
+  }
+
+  receitaCpfToBuyer = (event) => {
+    this.loading = true;
+    
+    setTimeout(() => {
+      this.loading = false;
+    }, 2000);
+
+    let cpf = event.target.value.replace(/[-./]/gi, '');
+    
+    this.outsidersService
+    .receitaCpfSearch(cpf)
+    .then(res => {
+      let string = JSON.stringify(res),
+      object = JSON.parse(string);
+      
+      this.representativeObject = JSON.parse(object._body);
+
+      this.buyerSignupForm.get('representative.representative_name').patchValue(this.representativeObject.nome);
+
+      if(this.representativeObject.sexo == "M") {
+        this.buyerSignupForm.get('representative.representative_treatment').patchValue('sr');
+      }
+
+      if(this.representativeObject.sexo == "F") {
+        this.buyerSignupForm.get('representative.representative_treatment').patchValue('sra');
+      }
+    });
+  }
+
   receitaWsCnpjToSeller = (event) => {
+    this.loading = true;
+    
+    setTimeout(() => {
+      this.loading = false;
+    }, 2000);
+
     let cnpj = event.target.value.replace(/[-./]/gi, '');
     
     this.outsidersService
@@ -766,6 +857,12 @@ export class AppComponent implements OnInit {
   }
 
   receitaWsCnpjToBuyer = (event) => {
+    this.loading = true;
+    
+    setTimeout(() => {
+      this.loading = false;
+    }, 2000);
+
     let cnpj = event.target.value.replace(/[-./]/gi, '');
     
     this.outsidersService
