@@ -30,6 +30,7 @@ export class AppComponent implements OnInit {
   @ViewChild('myForm') form: NgForm;
 
   countries: any = countries;
+  disabled: boolean = true;
   sellerSignupForm: FormGroup;
   buyerSignupForm: FormGroup;
   states: any = brazilianStates;
@@ -81,6 +82,7 @@ export class AppComponent implements OnInit {
   represenativePosition: string;
   represenativeEmail: string;
   representativeObject: any = [];
+  representativeSearchObject: any;
   /*representative: end*/
   
   groups: any = [];
@@ -92,8 +94,9 @@ export class AppComponent implements OnInit {
     cpf: [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/,'.', /\d/, /\d/, /\d/,'-', /\d/, /\d/],
     date: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
     zip: [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/],
-    phone: ['(', /\d/, /\d/, ')',' ' , /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/,],
-    cell_phone: ['(', /\d/, /\d/, ')',' ' , /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, /\d/,],
+    ddd: [/\d/,/\d/],
+    phone: [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/,],
+    cellphone: [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/,],
     uf: [/\w/,/\w/,]
   };
 
@@ -128,7 +131,7 @@ export class AppComponent implements OnInit {
         'city': new FormControl(null, Validators.required),
         'state': new FormControl(null, Validators.required),
         'district': new FormControl(null, Validators.required),
-        'company_email': new FormControl(null, Validators.required),
+        'company_email': new FormControl(null, [Validators.required, Validators.email]),
         'company_site': new FormControl(null),
         'digital_data_type': new FormControl(null),
         'company_social_media_url': new FormControl(null),
@@ -137,20 +140,20 @@ export class AppComponent implements OnInit {
         'company_phone_number': new FormControl(null),        
       }),      
       'representative': new FormGroup({
-        'representative_treatment': new FormControl(null, Validators.required),
-        'representative_cpf': new FormControl(null, Validators.required),
-        'representative_name': new FormControl(null, Validators.required),
+        'representative_treatment': new FormControl(null),//required
+        'representative_cpf': new FormControl(null),//required
+        'representative_name': new FormControl(null),//required
         'representative_position': new FormControl(null),
         'representative_birthday': new FormControl(null),
         'representative_schooling': new FormControl(null),
-        'representative_email': new FormControl(null, Validators.required),
-        'representative_postal_code': new FormControl(null, Validators.required),
-        'representative_address': new FormControl(null, Validators.required),
-        'representative_city': new FormControl(null, Validators.required),
-        'representative_state': new FormControl(null, Validators.required),
+        'representative_email': new FormControl(null), //required, email
+        'representative_postal_code': new FormControl(null),//required
+        'representative_address': new FormControl(null),//required
+        'representative_city': new FormControl(null),//required
+        'representative_state': new FormControl(null),//required
         'representative_phone_type': new FormControl(null), //Require representativePhoneObject
-        'representative_phone_ddd': new FormControl(null),
-        'representative_phone_number': new FormControl(null),
+        'representative_phone_ddd': new FormControl(null),//required
+        'representative_phone_number': new FormControl(null),//required
       }),
       'interest': new FormGroup({
         'company_interests': new FormControl(null),
@@ -188,7 +191,7 @@ export class AppComponent implements OnInit {
         'city': new FormControl(null, Validators.required),
         'state': new FormControl(null, Validators.required),
         'district': new FormControl(null, Validators.required),
-        'company_email': new FormControl(null, Validators.required),
+        'company_email': new FormControl(null, [Validators.required, Validators.email]),
         'company_site': new FormControl(null),
         'digital_data_type': new FormControl(null),
         'company_social_media_url': new FormControl(null),
@@ -197,14 +200,14 @@ export class AppComponent implements OnInit {
         'company_phone_number': new FormControl(null),        
       }),      
       'representative': new FormGroup({
-        'representative_treatment': new FormControl(null, Validators.required),
-        'representative_cpf': new FormControl(null, Validators.required),
-        'representative_name': new FormControl(null, Validators.required),
+        'representative_treatment': new FormControl(null), //required
+        'representative_cpf': new FormControl(null), //required
+        'representative_name': new FormControl(null), //required
         'representative_position': new FormControl(null),
-        'representative_email': new FormControl(null, Validators.required),
+        'representative_email': new FormControl(null), //required, email
         'representative_phone_type': new FormControl(null), //Require representativePhoneObject
-        'representative_phone_ddd': new FormControl(null),
-        'representative_phone_number': new FormControl(null),
+        'representative_phone_ddd': new FormControl(null), //required
+        'representative_phone_number': new FormControl(null), //required
       }),
       'interest': new FormGroup({
         'company_interests': new FormControl(null),
@@ -286,6 +289,7 @@ export class AppComponent implements OnInit {
     this.revenuesObject = [];
     this.companySocialMediaObject = [];
     this.representativeObject = [];
+    this.representativeSearchObject = [];
     this.revenuesObject = [];
   }
 
@@ -409,22 +413,14 @@ export class AppComponent implements OnInit {
       name: this.buyerSignupForm.get('representative.representative_name').value,
       position: this.buyerSignupForm.get('representative.representative_position').value,
       email: this.buyerSignupForm.get('representative.representative_email').value,
-      phones: this.representativePhoneObject,
-      postal_code: this.buyerSignupForm.get('representative.representative_postal_code').value,
-      address: this.buyerSignupForm.get('representative.representative_address').value,
-      city: this.buyerSignupForm.get('representative.representative_city').value,
-      state: this.buyerSignupForm.get('representative.representative_state').value
+      phones: this.representativePhoneObject
     })
 
     this.buyerSignupForm.get('representative.representative_cpf').patchValue(null),
     this.buyerSignupForm.get('representative.representative_treatment').patchValue(null),
     this.buyerSignupForm.get('representative.representative_name').patchValue(null),
     this.buyerSignupForm.get('representative.representative_position').patchValue(null),
-    this.buyerSignupForm.get('representative.representative_email').patchValue(null),
-    this.buyerSignupForm.get('representative.representative_postal_code').patchValue(null),
-    this.buyerSignupForm.get('representative.representative_address').patchValue(null),
-    this.buyerSignupForm.get('representative.representative_city').patchValue(null),
-    this.buyerSignupForm.get('representative.representative_state').patchValue(null)
+    this.buyerSignupForm.get('representative.representative_email').patchValue(null)
 
     this.representativePhoneObject = [];
   }
@@ -687,7 +683,7 @@ export class AppComponent implements OnInit {
       object = JSON.parse(string);
       
       this.representativeAddressObject = JSON.parse(object._body);
-
+      
       this.sellerSignupForm.get('representative.representative_address').patchValue(this.representativeAddressObject.logradouro);
       this.sellerSignupForm.get('representative.representative_city').patchValue(this.representativeAddressObject.cidade);
       this.sellerSignupForm.get('representative.representative_state').patchValue(this.representativeAddressObject.uf);
@@ -766,17 +762,17 @@ export class AppComponent implements OnInit {
       let string = JSON.stringify(res),
       object = JSON.parse(string);
       
-      this.representativeObject = JSON.parse(object._body);
+      this.representativeSearchObject = JSON.parse(object._body);
 
-      this.sellerSignupForm.get('representative.representative_name').patchValue(this.representativeObject.nome);
-      this.sellerSignupForm.get('representative.representative_birthday').patchValue(this.representativeObject.dataNascimento);
-      this.sellerSignupForm.get('representative.representative_postal_code').patchValue(this.representativeObject.enderecoCep);
+      this.sellerSignupForm.get('representative.representative_name').patchValue(this.representativeSearchObject.nome);
+      this.sellerSignupForm.get('representative.representative_birthday').patchValue(this.representativeSearchObject.dataNascimento);
+      this.sellerSignupForm.get('representative.representative_postal_code').patchValue(this.representativeSearchObject.enderecoCep);
 
-      if(this.representativeObject.sexo == "M") {
+      if(this.representativeSearchObject.sexo == "M") {
         this.sellerSignupForm.get('representative.representative_treatment').patchValue('sr');
       }
 
-      if(this.representativeObject.sexo == "F") {
+      if(this.representativeSearchObject.sexo == "F") {
         this.sellerSignupForm.get('representative.representative_treatment').patchValue('sra');
       }
 
@@ -799,15 +795,15 @@ export class AppComponent implements OnInit {
       let string = JSON.stringify(res),
       object = JSON.parse(string);
       
-      this.representativeObject = JSON.parse(object._body);
+      this.representativeSearchObject = JSON.parse(object._body);
 
-      this.buyerSignupForm.get('representative.representative_name').patchValue(this.representativeObject.nome);
+      this.buyerSignupForm.get('representative.representative_name').patchValue(this.representativeSearchObject.nome);
 
-      if(this.representativeObject.sexo == "M") {
+      if(this.representativeSearchObject.sexo == "M") {
         this.buyerSignupForm.get('representative.representative_treatment').patchValue('sr');
       }
 
-      if(this.representativeObject.sexo == "F") {
+      if(this.representativeSearchObject.sexo == "F") {
         this.buyerSignupForm.get('representative.representative_treatment').patchValue('sra');
       }
     });
@@ -906,11 +902,13 @@ export class AppComponent implements OnInit {
       phones: this.companyPhoneObject
     }
 
-    this.createNewObjectFromArrayOfObjects([
+    let object = this.createNewObjectFromArrayOfObjects([
       this.buyerSignupForm,
       phonesObject,
       representativesObject
     ]);
+
+    console.log(object);
   }
 
   onSellerSubmit = () => {
@@ -922,11 +920,13 @@ export class AppComponent implements OnInit {
       phones: this.companyPhoneObject
     }
 
-    this.createNewObjectFromArrayOfObjects([
+    let object = this.createNewObjectFromArrayOfObjects([
       this.sellerSignupForm,
       phonesObject,
       representativesObject
     ]);
+
+    console.log(object);
   }
 
   /*objectCheckGenericValidator(control: FormControl): {[s: string]: boolean} {
