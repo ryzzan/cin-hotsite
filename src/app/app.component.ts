@@ -784,7 +784,10 @@ export class AppComponent implements OnInit {
       }
     }
 
-    console.log(newObject);
+    let string = JSON.stringify(newObject),
+    finalObject = JSON.parse(string);
+
+    console.log(finalObject);
   }
 
   removeObjectFromObjectArrayByPropertyValue = (objectsArray: any, property: string, value: string) => {
@@ -1028,11 +1031,16 @@ export class AppComponent implements OnInit {
       revenues: this.revenuesObject
     }
 
+    let socialMediasObject = {
+      socialMedias: this.companySocialMediaObject
+    }
+
     this.createNewObjectFromArrayOfObjects([
-      this.buyerSignupForm,
+      this.buyerSignupForm.value,
       phonesObject,
       representativesObject,
-      revenuesObject
+      revenuesObject,
+      socialMediasObject
     ]);
   }
 
@@ -1049,11 +1057,16 @@ export class AppComponent implements OnInit {
       revenues: this.revenuesObject
     }
 
+    let socialMediasObject = {
+      socialMedias: this.companySocialMediaObject
+    }
+
     this.createNewObjectFromArrayOfObjects([
-      this.sellerSignupForm,
+      this.sellerSignupForm.value,
       phonesObject,
       representativesObject,
-      revenuesObject
+      revenuesObject,
+      socialMediasObject
     ]);
   }
 

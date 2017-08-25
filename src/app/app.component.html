@@ -661,7 +661,7 @@
   <!--Seler: end-->
 
   <!--Buyer: start-->
-  <form (ngSubmit)="onSubmit()" [formGroup]="buyerSignupForm" *ngIf="companyBusiness == 2">
+  <form (ngSubmit)="onBuyerSubmit()" [formGroup]="buyerSignupForm" *ngIf="companyBusiness == 2">
     <md-tab-group>
       <!--Vendedor: start-->
       <md-tab label="Empresa" formGroupName="company">
