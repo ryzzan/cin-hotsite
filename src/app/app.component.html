@@ -137,7 +137,8 @@
             <md-input-container>
               <input mdInput formControlName="state" type="text" 
               placeholder="UF"
-              [textMask]="{mask: mask.uf}">
+              [textMask]="{mask: mask.uf}"
+              style="text-transform:uppercase">
             </md-input-container>
           </md-grid-tile>
         </md-grid-list>
@@ -272,7 +273,8 @@
       formGroupName="representative">
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="1">
-            <md-select placeholder="Título" formControlName="representative_treatment">
+            <md-select placeholder="Título" formControlName="representative_treatment"
+            (blur)="validateSellerRepresentativeTreatment()">
               <md-option *ngFor="let treatment of treatments" [value]="treatment.value">{{treatment.description}}</md-option>
             </md-select>
           </md-grid-tile>
@@ -283,14 +285,16 @@
               placeholder="CPF" 
               formControlName="representative_cpf"
               [textMask]="{mask: mask.cpf}"
-              (change)="receitaCpfToSeller($event)">
+              (change)="receitaCpfToSeller($event);"
+              (blur) = "validateSellerRepresentativeCpf()">
             </md-input-container>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="2">
             <md-input-container>
               <input mdInput type="text" placeholder="Nome" 
-              formControlName="representative_name">
+              formControlName="representative_name"
+              (blur)="validateSellerRepresentativeName()">
             </md-input-container>
           </md-grid-tile>
 
@@ -320,7 +324,8 @@
           
           <!--Representative phone: start -->
           <md-grid-tile [colspan]="2">
-            <md-select placeholder="Tipo de telefone" formControlName="representative_phone_type">
+            <md-select placeholder="Tipo de telefone" formControlName="representative_phone_type"
+            (blur)="validateSellerRepresentativePhoneType()">
               <md-option *ngFor="let phone of phoneType" [value]="phone.description">{{phone.description}}</md-option>
             </md-select>
           </md-grid-tile>
@@ -329,18 +334,20 @@
           *ngIf="sellerSignupForm.get('representative.representative_phone_type').value">
             <md-input-container style="width: 90px; margin-right: 5px;">
               <input mdInput type="text" placeholder="DDD" formControlName="representative_phone_ddd"
-              [textMask]="{mask: mask.ddd}">
+              [textMask]="{mask: mask.ddd}"
+              (blur)="validateSellerRepresentativePhoneDdd()">
             </md-input-container>
             <md-input-container style="width: 110px;">
               <input mdInput type="text" placeholder="Número" formControlName="representative_phone_number"
               maxlength="10"
               [textMask]="{mask: mask.phone}"
-              *ngIf="sellerSignupForm.get('representative.representative_phone_type').value == 'Telefone fixo'">
+              *ngIf="sellerSignupForm.get('representative.representative_phone_type').value == 'Telefone fixo'"
+              (blur)="validateSellerRepresentativePhoneNumber()">
 
               <input mdInput type="text" placeholder="Número" formControlName="representative_phone_number"
-              maxlength="10"
               [textMask]="{mask: mask.cellphone}"
-              *ngIf="sellerSignupForm.get('representative.representative_phone_type').value != 'Telefone fixo'">
+              *ngIf="sellerSignupForm.get('representative.representative_phone_type').value != 'Telefone fixo'"
+              (blur)="validateSellerRepresentativePhoneNumber()">
             </md-input-container>            
             <a md-mini-fab 
             *ngIf="sellerSignupForm.get('representative.representative_phone_ddd').value && sellerSignupForm.get('representative.representative_phone_number').value" 
@@ -353,7 +360,8 @@
           <md-grid-tile [colspan]="2">
             <md-input-container>
               <input mdInput type="text" placeholder="E-mail"
-              formControlName="representative_email">
+              formControlName="representative_email"
+              (blur)="validateSellerRepresentativeEmail()">
             </md-input-container>
           </md-grid-tile>
         </md-grid-list>
@@ -363,6 +371,7 @@
             <md-input-container>
               <input mdInput type="text"
               formControlName="representative_postal_code"
+              (blur)="validateSellerRepresentativePostalCode()"
               (change)="republicaVirtualCepToSellerRepresentative()"
               placeholder="CEP"
               [textMask]="{mask: mask.zip}">
@@ -373,7 +382,8 @@
             <md-input-container>
               <input mdInput type="text"
               formControlName="representative_address"
-              placeholder="Logradouro">
+              placeholder="Logradouro"
+              (blur)="validateSellerRepresentativeAddress()">
             </md-input-container>
           </md-grid-tile>
 
@@ -381,7 +391,8 @@
             <md-input-container>
               <input mdInput type="text"
               formControlName="representative_city"
-              placeholder="Cidade">
+              placeholder="Cidade"
+              (blur)="validateSellerRepresentativeCity()">
             </md-input-container>
           </md-grid-tile>
 
@@ -390,7 +401,9 @@
               <input mdInput type="text"
               formControlName="representative_state"
               placeholder="UF"
-              [textMask]="{mask: mask.uf}">
+              [textMask]="{mask: mask.uf}"
+              style="text-transform:uppercase"
+              (blur)="validateSellerRepresentativeState()">
             </md-input-container>
           </md-grid-tile>
         </md-grid-list>
@@ -783,7 +796,8 @@
             <md-input-container>
               <input mdInput formControlName="state" type="text" 
               placeholder="UF"
-              [textMask]="{mask: mask.uf}">
+              [textMask]="{mask: mask.uf}"
+              style="text-transform:uppercase">
             </md-input-container>
           </md-grid-tile>
         </md-grid-list>
@@ -917,7 +931,8 @@
       formGroupName="representative">
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="1">
-            <md-select placeholder="Título" formControlName="representative_treatment">
+            <md-select placeholder="Título" formControlName="representative_treatment"
+            (blur)="validateBuyerRepresentativeTreatment()">
               <md-option *ngFor="let treatment of treatments" [value]="treatment.value">{{treatment.description}}</md-option>
             </md-select>
           </md-grid-tile>
@@ -928,14 +943,16 @@
               placeholder="CPF" 
               formControlName="representative_cpf"
               [textMask]="{mask: mask.cpf}"
-              (change)="receitaCpfToBuyer($event)">
+              (change)="receitaCpfToBuyer($event)"
+              (blur)="validateBuyerRepresentativeName();">
             </md-input-container>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="2">
             <md-input-container>
               <input mdInput type="text" placeholder="Nome" 
-              formControlName="representative_name">
+              formControlName="representative_name"
+              (blur)="validateBuyerRepresentativeName()">
             </md-input-container>
           </md-grid-tile>
 
@@ -950,7 +967,8 @@
         <md-grid-list cols="8" rowHeight="100px">
           <!--Representative phone: start -->
           <md-grid-tile [colspan]="2">
-            <md-select placeholder="Tipo de telefone" formControlName="representative_phone_type">
+            <md-select placeholder="Tipo de telefone" formControlName="representative_phone_type"
+            (blur)="validateBuyerRepresentativePhoneType()">
               <md-option *ngFor="let phone of phoneType" [value]="phone.description">{{phone.description}}</md-option>
             </md-select>
           </md-grid-tile>
@@ -958,16 +976,19 @@
           <md-grid-tile [colspan]="2" 
           *ngIf="buyerSignupForm.get('representative.representative_phone_type').value">
             <md-input-container style="width: 90px; margin-right: 5px;">
-              <input mdInput type="text" placeholder="DDD" formControlName="representative_phone_ddd">
+              <input mdInput type="text" placeholder="DDD" formControlName="representative_phone_ddd"
+              (blur)="validateBuyerRepresentativePhoneDdd()">
             </md-input-container>
             <md-input-container style="width: 110px;">
               <input mdInput type="text" placeholder="Número" formControlName="representative_phone_number"
               [textMask]="{mask: mask.phone}"
-              *ngIf="buyerSignupForm.get('representative.representative_phone_type').value == 'Telefone fixo'">
+              *ngIf="buyerSignupForm.get('representative.representative_phone_type').value == 'Telefone fixo'"
+              (blur)="validateBuyerRepresentativePhoneNumber()">
 
               <input mdInput type="text" placeholder="Número" formControlName="representative_phone_number"
               [textMask]="{mask: mask.cellphone}"
-              *ngIf="buyerSignupForm.get('representative.representative_phone_type').value != 'Telefone fixo'">
+              *ngIf="buyerSignupForm.get('representative.representative_phone_type').value != 'Telefone fixo'"
+              (blur)="validateBuyerRepresentativePhoneNumber()">
             </md-input-container>            
             <a md-mini-fab 
             *ngIf="buyerSignupForm.get('representative.representative_phone_ddd').value && buyerSignupForm.get('representative.representative_phone_number').value" 
@@ -980,7 +1001,8 @@
           <md-grid-tile [colspan]="2">
             <md-input-container>
               <input mdInput type="text" placeholder="E-mail"
-              formControlName="representative_email">
+              formControlName="representative_email"
+              (blur)="validateBuyerRepresentativeEmail()">
             </md-input-container>
           </md-grid-tile>
         </md-grid-list>

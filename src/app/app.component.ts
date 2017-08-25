@@ -97,7 +97,7 @@ export class AppComponent implements OnInit {
     ddd: [/\d/,/\d/],
     phone: [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/,],
     cellphone: [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/,],
-    uf: [/\w/,/\w/,]
+    uf: [/[A-Za-z]/,/[A-Za-z]/,]
   };
 
   //SELECTS values
@@ -153,7 +153,7 @@ export class AppComponent implements OnInit {
         'representative_state': new FormControl(null),//required
         'representative_phone_type': new FormControl(null), //Require representativePhoneObject
         'representative_phone_ddd': new FormControl(null),//required
-        'representative_phone_number': new FormControl(null),//required
+        'representative_phone_number': new FormControl(null),//required        
       }),
       'interest': new FormGroup({
         'company_interests': new FormControl(null),
@@ -371,6 +371,150 @@ export class AppComponent implements OnInit {
   /*Contact phones: end*/
 
   /*Representative: start*/
+  validateSellerRepresentativeTreatment() {
+    if(this.representativeObject.length < 1) {
+      if(!this.sellerSignupForm.get('representative.representative_treatment').value) {
+        this.sellerSignupForm.get('representative.representative_treatment').setErrors({'required': true});
+      }
+    }
+  }
+
+  validateSellerRepresentativeCpf() {
+    if(this.representativeObject.length < 1) {
+      if(!this.sellerSignupForm.get('representative.representative_cpf').value) {
+        this.sellerSignupForm.get('representative.representative_cpf').setErrors({'required': true});
+      }
+    }
+  }
+
+  validateSellerRepresentativeName() {
+    if(this.representativeObject.length < 1) {
+      if(!this.sellerSignupForm.get('representative.representative_name').value) {
+        this.sellerSignupForm.get('representative.representative_name').setErrors({'required': true});
+      }
+    }
+  }
+
+  validateSellerRepresentativeEmail() {
+    if(this.representativeObject.length < 1) {
+      if(!this.sellerSignupForm.get('representative.representative_email').value) {
+        this.sellerSignupForm.get('representative.representative_email').setErrors({'required': true});
+      }
+    }
+  }
+
+  validateSellerRepresentativePostalCode() {
+    if(this.representativeObject.length < 1) {
+      if(!this.sellerSignupForm.get('representative.representative_postal_code').value) {
+        this.sellerSignupForm.get('representative.representative_postal_code').setErrors({'required': true});
+      }
+    }
+  }
+
+  validateSellerRepresentativeAddress() {
+    if(this.representativeObject.length < 1) {
+      if(!this.sellerSignupForm.get('representative.representative_address').value) {
+        this.sellerSignupForm.get('representative.representative_address').setErrors({'required': true});
+      }
+    }
+  }
+
+  validateSellerRepresentativeCity() {
+    if(this.representativeObject.length < 1) {
+      if(!this.sellerSignupForm.get('representative.representative_city').value) {
+        this.sellerSignupForm.get('representative.representative_city').setErrors({'required': true});
+      }
+    }
+  }
+
+  validateSellerRepresentativeState() {
+    if(this.representativeObject.length < 1) {
+      if(!this.sellerSignupForm.get('representative.representative_state').value) {
+        this.sellerSignupForm.get('representative.representative_state').setErrors({'required': true});
+      }
+    }
+  }
+
+  validateSellerRepresentativePhoneType() {
+    if(this.representativeObject.length < 1) {
+      if(!this.sellerSignupForm.get('representative.representative_phone_type').value) {
+        this.sellerSignupForm.get('representative.representative_phone_type').setErrors({'required': true});
+      }
+    }
+  }
+
+  validateSellerRepresentativePhoneDdd() {
+    if(this.representativeObject.length < 1) {
+      if(!this.sellerSignupForm.get('representative.representative_phone_ddd').value) {
+        this.sellerSignupForm.get('representative.representative_phone_ddd').setErrors({'required': true});
+      }
+    }
+  }
+
+  validateSellerRepresentativePhoneNumber() {
+    if(this.representativeObject.length < 1) {
+      if(!this.sellerSignupForm.get('representative.representative_phone_number').value) {
+        this.sellerSignupForm.get('representative.representative_phone_number').setErrors({'required': true});
+      }
+    }
+  }
+
+  validateBuyerRepresentativeTreatment() {
+    if(this.representativeObject.length < 1) {
+      if(!this.buyerSignupForm.get('representative.representative_treatment').value) {
+        this.buyerSignupForm.get('representative.representative_treatment').setErrors({'required': true});
+      }
+    }
+  }
+
+  validateBuyerRepresentativeCpf() {
+    if(this.representativeObject.length < 1) {
+      if(!this.buyerSignupForm.get('representative.representative_cpf').value) {
+        this.buyerSignupForm.get('representative.representative_cpf').setErrors({'required': true});
+      }
+    }
+  }
+
+  validateBuyerRepresentativeName() {
+    if(this.representativeObject.length < 1) {
+      if(!this.buyerSignupForm.get('representative.representative_name').value) {
+        this.buyerSignupForm.get('representative.representative_name').setErrors({'required': true});
+      }
+    }
+  }
+
+  validateBuyerRepresentativeEmail() {
+    if(this.representativeObject.length < 1) {
+      if(!this.buyerSignupForm.get('representative.representative_email').value) {
+        this.buyerSignupForm.get('representative.representative_email').setErrors({'required': true});
+      }
+    }
+  }
+
+  validateBuyerRepresentativePhoneType() {
+    if(this.representativeObject.length < 1) {
+      if(!this.buyerSignupForm.get('representative.representative_phone_type').value) {
+        this.buyerSignupForm.get('representative.representative_phone_type').setErrors({'required': true});
+      }
+    }
+  }
+
+  validateBuyerRepresentativePhoneDdd() {
+    if(this.representativeObject.length < 1) {
+      if(!this.buyerSignupForm.get('representative.representative_phone_ddd').value) {
+        this.buyerSignupForm.get('representative.representative_phone_ddd').setErrors({'required': true});
+      }
+    }
+  }
+
+  validateBuyerRepresentativePhoneNumber() {
+    if(this.representativeObject.length < 1) {
+      if(!this.buyerSignupForm.get('representative.representative_phone_number').value) {
+        this.buyerSignupForm.get('representative.representative_phone_number').setErrors({'required': true});
+      }
+    }
+  }
+
   clearRepresentative = (index) => {
     this.representativeObject.splice(index, 1);
   }
