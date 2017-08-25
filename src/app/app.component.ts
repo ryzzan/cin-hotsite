@@ -520,6 +520,8 @@ export class AppComponent implements OnInit {
   }
 
   createSellerRepresentativeObject = () => {
+    this.disabled = false;
+
     this.representativeObject.push({
       cpf: this.sellerSignupForm.get('representative.representative_cpf').value,
       treatment: this.sellerSignupForm.get('representative.representative_treatment').value,
@@ -551,6 +553,8 @@ export class AppComponent implements OnInit {
   }
 
   createBuyerRepresentativeObject = () => {
+    this.disabled = false;
+
     this.representativeObject.push({
       cpf: this.buyerSignupForm.get('representative.representative_cpf').value,
       treatment: this.buyerSignupForm.get('representative.representative_treatment').value,
@@ -779,6 +783,8 @@ export class AppComponent implements OnInit {
         }
       }
     }
+
+    console.log(newObject);
   }
 
   removeObjectFromObjectArrayByPropertyValue = (objectsArray: any, property: string, value: string) => {
@@ -791,10 +797,6 @@ export class AppComponent implements OnInit {
 
   republicaVirtualCepToSeller = (event) => {
     this.loading = true;
-    
-    setTimeout(() => {
-      this.loading = false;
-    }, 2000);
 
     let cep = event.target.value;
     this.outsidersService
@@ -809,15 +811,13 @@ export class AppComponent implements OnInit {
       this.sellerSignupForm.get('contact.district').patchValue(this.addressObject.bairro);
       this.sellerSignupForm.get('contact.city').patchValue(this.addressObject.cidade);
       this.sellerSignupForm.get('contact.state').patchValue(this.addressObject.uf);
+
+      this.loading = false;
     });
   }
 
   republicaVirtualCepToSellerRepresentative = () => {
     this.loading = true;
-    
-    setTimeout(() => {
-      this.loading = false;
-    }, 2000);
 
     let cep = this.sellerSignupForm.get('representative.representative_postal_code').value;
     this.outsidersService
@@ -831,15 +831,13 @@ export class AppComponent implements OnInit {
       this.sellerSignupForm.get('representative.representative_address').patchValue(this.representativeAddressObject.logradouro);
       this.sellerSignupForm.get('representative.representative_city').patchValue(this.representativeAddressObject.cidade);
       this.sellerSignupForm.get('representative.representative_state').patchValue(this.representativeAddressObject.uf);
+
+      this.loading = false;
     });
   }
 
   republicaVirtualCepToBuyer = (event) => {
     this.loading = true;
-    
-    setTimeout(() => {
-      this.loading = false;
-    }, 2000);
 
     let cep = event.target.value;
     this.outsidersService
@@ -854,22 +852,14 @@ export class AppComponent implements OnInit {
       this.buyerSignupForm.get('contact.district').patchValue(this.addressObject.bairro);
       this.buyerSignupForm.get('contact.city').patchValue(this.addressObject.cidade);
       this.buyerSignupForm.get('contact.state').patchValue(this.addressObject.uf);
+
+      this.loading = false;
     });
   }
 
   republicaVirtualCepToBuyerRepresentative = (event) => {
     this.loading = true;
     
-    setTimeout(() => {
-      this.loading = false;
-    }, 2000);
-
-    this.loading = true;
-    
-    setTimeout(() => {
-      this.loading = false;
-    }, 2000);
-
     let cep = event.target.value;
     this.outsidersService
     .republicaVirtualCepSearch(cep)
@@ -882,21 +872,13 @@ export class AppComponent implements OnInit {
       this.buyerSignupForm.get('representative.representative_address').patchValue(this.representativeAddressObject.logradouro);
       this.buyerSignupForm.get('representative.representative_city').patchValue(this.representativeAddressObject.cidade);
       this.buyerSignupForm.get('representative.representative_state').patchValue(this.representativeAddressObject.uf);
+
+      this.loading = false;
     });
   }
 
   receitaCpfToSeller = (event) => {
     this.loading = true;
-    
-    setTimeout(() => {
-      this.loading = false;
-    }, 2000);
-
-    this.loading = true;
-    
-    setTimeout(() => {
-      this.loading = false;
-    }, 2000);
 
     let cpf = event.target.value.replace(/[-./]/gi, '');
     
@@ -921,15 +903,13 @@ export class AppComponent implements OnInit {
       }
 
       this.republicaVirtualCepToSellerRepresentative();
+
+      this.loading = false;
     });
   }
 
   receitaCpfToBuyer = (event) => {
     this.loading = true;
-    
-    setTimeout(() => {
-      this.loading = false;
-    }, 2000);
 
     let cpf = event.target.value.replace(/[-./]/gi, '');
     
@@ -950,15 +930,13 @@ export class AppComponent implements OnInit {
       if(this.representativeSearchObject.sexo == "F") {
         this.buyerSignupForm.get('representative.representative_treatment').patchValue('sra');
       }
+
+      this.loading = false;
     });
   }
 
   receitaWsCnpjToSeller = (event) => {
     this.loading = true;
-    
-    setTimeout(() => {
-      this.loading = false;
-    }, 2000);
 
     let cnpj = event.target.value.replace(/[-./]/gi, '');
     
@@ -993,15 +971,13 @@ export class AppComponent implements OnInit {
 
         this.sellerSignupForm.get('company.company_size').patchValue(size);
       }
+
+      this.loading = false;
     });
   }
 
   receitaWsCnpjToBuyer = (event) => {
     this.loading = true;
-    
-    setTimeout(() => {
-      this.loading = false;
-    }, 2000);
 
     let cnpj = event.target.value.replace(/[-./]/gi, '');
     
@@ -1034,6 +1010,8 @@ export class AppComponent implements OnInit {
           size = "pequena";
         }
       }
+
+      this.loading = false;
     });
   }
   /*Share it?: end*/
@@ -1046,13 +1024,16 @@ export class AppComponent implements OnInit {
       phones: this.companyPhoneObject
     }
 
-    let object = this.createNewObjectFromArrayOfObjects([
+    let revenuesObject = {
+      revenues: this.revenuesObject
+    }
+
+    this.createNewObjectFromArrayOfObjects([
       this.buyerSignupForm,
       phonesObject,
-      representativesObject
+      representativesObject,
+      revenuesObject
     ]);
-
-    console.log(object);
   }
 
   onSellerSubmit = () => {
@@ -1064,13 +1045,16 @@ export class AppComponent implements OnInit {
       phones: this.companyPhoneObject
     }
 
-    let object = this.createNewObjectFromArrayOfObjects([
+    let revenuesObject = {
+      revenues: this.revenuesObject
+    }
+
+    this.createNewObjectFromArrayOfObjects([
       this.sellerSignupForm,
       phonesObject,
-      representativesObject
+      representativesObject,
+      revenuesObject
     ]);
-
-    console.log(object);
   }
 
   /*objectCheckGenericValidator(control: FormControl): {[s: string]: boolean} {
