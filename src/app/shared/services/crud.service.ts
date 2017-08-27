@@ -11,6 +11,7 @@ export class CrudService {
   headersToAuth: Headers;
   optionsToAuth: RequestOptions;
   url = environment.urlToApi;
+  crudUrl = environment.urlToCrud;
 
   constructor(private http: Http) { }
 
@@ -59,9 +60,8 @@ export class CrudService {
 
         this.http
         .post(
-          this.url+route,
-          objectToCreate,
-          this.optionsToAuth
+          this.crudUrl+route,
+          objectToCreate
         ).subscribe(res => {
           resolve({
             cod: "c-02",
@@ -266,7 +266,7 @@ export class CrudService {
         let ref2: any;
         let setKey: boolean;
         let updateFromSpecificKey: any;
-        let apiUrl: string = this.url;
+        let apiUrl: string = this.crudUrl;
         let objectToCreate: any = params.objectToCreate;
         let route: string = params.route;
         let value: string = params.value;

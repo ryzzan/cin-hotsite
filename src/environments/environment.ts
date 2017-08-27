@@ -5,5 +5,6 @@
 
 export const environment = {
   production: false,
-  urlToApi: 'https://events.al.senai.br/api/'
+  urlToApi: 'https://events.al.senai.br/api/',
+  urlToCrud: 'https://events.nitrofull.com.br/api/'
 };

@@ -785,8 +785,13 @@ export class AppComponent implements OnInit {
     }
 
     let string = JSON.stringify(newObject),
-    finalObject = JSON.parse(string);
+    finalObject = JSON.parse(string),
+    params = {
+      route: 'registration',
+      objectToCreate: finalObject
+    };
 
+    this.crud.create('laravel', params)
     console.log(finalObject);
   }
 
