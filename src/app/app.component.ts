@@ -122,7 +122,7 @@ export class AppComponent implements OnInit {
   ) { 
     this.sellerSignupForm = new FormGroup({
       'participant': new FormGroup({
-        'profile': new FormControl(null),
+        'profile': new FormControl('seller'),
         'cnpj_number': new FormControl(null, Validators.required),
         'business_name': new FormControl(null, Validators.required),
         'tranding_name': new FormControl(null, Validators.required),
@@ -183,7 +183,7 @@ export class AppComponent implements OnInit {
 
     this.buyerSignupForm = new FormGroup({
       'participant': new FormGroup({
-        'profile': new FormControl(null),
+        'profile': new FormControl('buyer'),
         'cnpj_number': new FormControl(null, Validators.required),
         'business_name': new FormControl(null, Validators.required),
         'tranding_name': new FormControl(null, Validators.required),
@@ -821,7 +821,12 @@ export class AppComponent implements OnInit {
     };
 
     this.crud.create('laravel', params)
-    console.log(finalObject);
+
+    this.participantBusiness = 3;
+
+    setTimeout(() => {
+      this.participantBusiness = undefined;
+    }, 4000)
   }
 
   removeObjectFromObjectArrayByPropertyValue = (objectsArray: any, property: string, value: string) => {
@@ -1056,7 +1061,6 @@ export class AppComponent implements OnInit {
   }
   /*Share it?: end*/
   onBuyerSubmit = () => {
-    this.buyerSignupForm.get('profile').setValue('seller');
 
     let representativesObject = {
       representatives: this.representativeObject
@@ -1084,8 +1088,6 @@ export class AppComponent implements OnInit {
   }
 
   onSellerSubmit = () => {
-    this.sellerSignupForm.get('profile').setValue('seller');
-
     let representativesObject = {
       representatives: this.representativeObject
     }

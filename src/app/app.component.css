@@ -70,3 +70,12 @@ hr {
 #progress-bar {
     top: 50%;
 }
+
+#saved {
+    position: absolute;
+    top: 150px;
+    left: 50%;
+    margin-left: -400px;
+    text-align: center;
+    width: 800px;
+}
