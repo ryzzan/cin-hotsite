@@ -378,7 +378,55 @@ export class AppComponent implements OnInit {
     this.buyerSignupForm.get('contact.company_phone_type').patchValue(null);
     this.buyerSignupForm.get('contact.company_phone_ddd').patchValue(null);
     this.buyerSignupForm.get('contact.company_phone_number').patchValue(null);    
-  }  
+  }
+
+  validateSellerCompanyPhoneType() {
+    if(this.participantPhoneObject.length < 1) {
+      if(!this.sellerSignupForm.get('contact.company_phone_type').value) {
+        this.sellerSignupForm.get('contact.company_phone_type').setErrors({'requiredCompanyPhoneType': true});
+      }
+    }
+  }
+
+  validateSellerCompanyPhoneDDD() {
+    if(this.participantPhoneObject.length < 1) {
+      if(!this.sellerSignupForm.get('contact.company_phone_ddd').value) {
+        this.sellerSignupForm.get('contact.company_phone_ddd').setErrors({'requiredCompanyPhoneDDD': true});
+      }
+    }
+  }
+
+  validateSellerCompanyPhoneNumber() {
+    if(this.participantPhoneObject.length < 1) {
+      if(!this.sellerSignupForm.get('contact.company_phone_number').value) {
+        this.sellerSignupForm.get('contact.company_phone_number').setErrors({'requiredCompanyPhoneNumber': true});
+      }
+    }
+  }
+
+  validateBuyerCompanyPhoneType() {
+    if(this.participantPhoneObject.length < 1) {
+      if(!this.buyerSignupForm.get('contact.company_phone_type').value) {
+        this.buyerSignupForm.get('contact.company_phone_type').setErrors({'requiredCompanyPhoneType': true});
+      }
+    }
+  }
+
+  validateBuyerCompanyPhoneDDD() {
+    if(this.participantPhoneObject.length < 1) {
+      if(!this.buyerSignupForm.get('contact.company_phone_ddd').value) {
+        this.buyerSignupForm.get('contact.company_phone_ddd').setErrors({'requiredCompanyPhoneDDD': true});
+      }
+    }
+  }
+
+  validateBuyerCompanyPhoneNumber() {
+    if(this.participantPhoneObject.length < 1) {
+      if(!this.buyerSignupForm.get('contact.company_phone_number').value) {
+        this.buyerSignupForm.get('contact.company_phone_number').setErrors({'requiredCompanyPhoneNumber': true});
+      }
+    }
+  }
   /*Contact phones: end*/
 
   /*Representative: start*/

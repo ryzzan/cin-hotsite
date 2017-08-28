@@ -4,12 +4,12 @@
 
 <div id="header"> 
   <img src="assets/img/logo.svg" alt="CIN - Centro Internacional de Negócios" (click)="participantBusiness = undefined">
-  <h2 *ngIf="participantBusiness != 3">FICHA DE INSCRIÇÃO</h2>
+  <h2 *ngIf="participantBusiness && participantBusiness != 3">FICHA DE INSCRIÇÃO</h2>
 </div>
 
 <!--Presentation: start-->
 <md-card id="presentation" *ngIf="!participantBusiness">
-  <h2>ENIN 6º edição</h2>
+  <h2>ENIN 6ª edição</h2>
   De 09 a 11 de outubro de 2017<br>
   
   <p>Local: Hotel Best Western Premier - Av. Dr. Antônio Gouveia, 925 - Pajuçara, Maceió – AL</p>
@@ -157,7 +157,8 @@
 
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="2">
-            <md-select placeholder="Tipo de telefone" formControlName="company_phone_type">
+            <md-select placeholder="Tipo de telefone" formControlName="company_phone_type"
+            (blur)="validateSellerCompanyPhoneType()">
               <md-option *ngFor="let phone of phoneType" [value]="phone.description">{{phone.description}}</md-option>
             </md-select>
           </md-grid-tile>
@@ -165,16 +166,19 @@
           <md-grid-tile [colspan]="2" *ngIf="sellerSignupForm.get('contact.company_phone_type').value">
             <md-input-container style="width: 90px; margin-right: 5px;">
               <input mdInput type="text" placeholder="DDD" formControlName="company_phone_ddd"
-              [textMask]="{mask: mask.ddd}">
+              [textMask]="{mask: mask.ddd}"
+              (blur)="validateSellerCompanyPhoneDDD()">
             </md-input-container>
             <md-input-container style="width: 110px;">
               <input mdInput type="text" placeholder="Número" formControlName="company_phone_number"
               [textMask]="{mask: mask.phone}"
-              *ngIf="sellerSignupForm.get('contact.company_phone_type').value == 'Telefone fixo'">
+              *ngIf="sellerSignupForm.get('contact.company_phone_type').value == 'Telefone fixo'"
+              (blur)="validateSellerCompanyPhoneNumber()">
 
               <input mdInput type="text" placeholder="Número" formControlName="company_phone_number"
               [textMask]="{mask: mask.cellphone}"
-              *ngIf="sellerSignupForm.get('contact.company_phone_type').value != 'Telefone fixo'">
+              *ngIf="sellerSignupForm.get('contact.company_phone_type').value != 'Telefone fixo'"
+              (blur)="validateSellerCompanyPhoneNumber()">
             </md-input-container>            
             <a md-mini-fab 
             *ngIf="sellerSignupForm.get('contact.company_phone_ddd').value && sellerSignupForm.get('contact.company_phone_number').value"
@@ -527,9 +531,18 @@
 
           <md-grid-tile [colspan]="2" *ngIf="productObject">
             <md-select placeholder="Produtos" formControlName="product_id"
-            multiple>
+            multiple
+            (change)="onChangeOthersProduct($event)">
               <md-option *ngFor="let product of productObject" [value]="product.id">{{product.name}}</md-option>
+              <md-option [value]="'Outro(s)'">Outro(s)</md-option>
             </md-select>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="2" *ngIf="otherProduct">
+              <md-input-container>
+                <input mdInput placeholder="Outro(s) produto(s)" 
+                formControlName="other_product">
+              </md-input-container>
           </md-grid-tile>
         </md-grid-list>
 
@@ -631,37 +644,35 @@
           </md-grid-tile>
         </md-grid-list>        
 
-        <md-grid-list cols="8" *ngIf="revenuesObject.length > 0">
-          <md-grid-tile [colspan]="4">
-              <table>
-                <tr style="text-align: left;">
-                  <th style="width: 150px;">
-                    Local
-                  </th>
-  
-                  <th>
-                    Faturamento
-                  </th>
-                </tr>
-  
-                <tr *ngFor="let revenue of revenuesObject; let i = index;" style="height: 40px;">
-                  <td>
-                      {{revenue.place}}
-                  </td>
-  
-                  <td>
-                      <span>{{revenue.revenues}}%</span>
-  
-                      <a (click)="clearRevenues(i)"><md-icon class="fs10">clear</md-icon></a>
-                  </td>
-                </tr>
-              </table>
-          </md-grid-tile>          
+        <div *ngIf="revenuesObject.length > 0">
+          <table>
+            <tr style="text-align: left;">
+              <th style="width: 150px;">
+                Local
+              </th>
+
+              <th>
+                Faturamento
+              </th>
+            </tr>
+
+            <tr *ngFor="let revenue of revenuesObject; let i = index;" style="height: 40px;">
+              <td>
+                  {{revenue.place}}
+              </td>
+
+              <td>
+                  <span>{{revenue.revenues}}%</span>
+
+                  <a (click)="clearRevenues(i)"><md-icon class="fs10">clear</md-icon></a>
+              </td>
+            </tr>
+          </table>
           
           <div *ngFor="let error of errorsRevenues">
             <md-error>{{error.message}}</md-error>
           </div>
-        </md-grid-list>
+        </div>
       </md-tab>
       <!--Vendedor: end-->
     </md-tab-group>
@@ -824,23 +835,26 @@
 
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="2">
-            <md-select placeholder="Tipo de telefone" formControlName="company_phone_type">
+            <md-select placeholder="Tipo de telefone" formControlName="company_phone_type"
+            (blur)="validateBuyerCompanyPhoneType()">
               <md-option *ngFor="let phone of phoneType" [value]="phone.description">{{phone.description}}</md-option>
             </md-select>
           </md-grid-tile>
 
           <md-grid-tile [colspan]="2" *ngIf="buyerSignupForm.get('contact.company_phone_type').value">
             <md-input-container style="width: 90px; margin-right: 5px;">
-              <input mdInput type="text" placeholder="DDD" formControlName="company_phone_ddd">
+              <input mdInput type="text" placeholder="DDD" formControlName="company_phone_ddd" (blur)="validateBuyerCompanyPhoneDDD()">
             </md-input-container>
             <md-input-container style="width: 110px;">
               <input mdInput type="text" placeholder="Número" formControlName="company_phone_number"
               [textMask]="{mask: mask.phone}"
-              *ngIf="buyerSignupForm.get('contact.company_phone_type').value == 'Telefone fixo'">
+              *ngIf="buyerSignupForm.get('contact.company_phone_type').value == 'Telefone fixo'"
+              (blur)="validateBuyerCompanyPhoneNumber()">
 
               <input mdInput type="text" placeholder="Número" formControlName="company_phone_number"
               [textMask]="{mask: mask.cellphone}"
-              *ngIf="buyerSignupForm.get('contact.company_phone_type').value != 'Telefone fixo'">
+              *ngIf="buyerSignupForm.get('contact.company_phone_type').value != 'Telefone fixo'"
+              (blur)="validateBuyerCompanyPhoneNUmber()">
             </md-input-container>            
             <a md-mini-fab 
             *ngIf="buyerSignupForm.get('contact.company_phone_ddd').value && buyerSignupForm.get('contact.company_phone_number').value"
@@ -1218,27 +1232,31 @@
           </md-grid-tile>
         </md-grid-list>
 
-        <md-grid-list cols="8" *ngIf="revenuesObject.length > 0">
-          <div class="float-left mr10">
-            <h3>Local</h3>
-            <div *ngFor="let revenue of revenuesObject">
-              {{revenue.place}}
-            </div> 
-          </div>
+        <div *ngIf="revenuesObject.length > 0">
+          <table>
+            <tr style="text-align: left;">
+              <th style="width: 150px;">
+                Local
+              </th>
 
-          <div class="float-left">
-            <h3>Faturamento</h3>
-            <div *ngFor="let revenue of revenuesObject" style="text-align: right;">
-              {{revenue.revenues}}%
-            </div> 
-          </div>
+              <th>
+                Faturamento
+              </th>
+            </tr>
 
-          <div class="clear-both"></div>
+            <tr *ngFor="let revenue of revenuesObject; let i = index;" style="height: 40px;">
+              <td>
+                  {{revenue.place}}
+              </td>
 
-          <div *ngFor="let error of errorsRevenues">
-            <md-error>{{error.message}}</md-error>
-          </div>
-        </md-grid-list>
+              <td>
+                  <span>{{revenue.revenues}}%</span>
+
+                  <a (click)="clearRevenues(i)"><md-icon class="fs10">clear</md-icon></a>
+              </td>
+            </tr>
+          </table>
+        </div>
       </md-tab>
       <!--Vendedor: end-->
     </md-tab-group>
