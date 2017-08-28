@@ -3,34 +3,47 @@
 </div>
 
 <div id="header"> 
-  <img src="assets/img/logo.svg" alt="CIN - Centro Internacional de Negócios">
-  <h2>FICHA DE INSCRIÇÃO</h2>
+  <img src="assets/img/logo.svg" alt="CIN - Centro Internacional de Negócios" (click)="participantBusiness = undefined">
+  <h2 *ngIf="participantBusiness">FICHA DE INSCRIÇÃO</h2>
 </div>
 
+<!--Presentation: start-->
+<md-card id="presentation" *ngIf="!participantBusiness">
+  <h2>ENIN 6º edição</h2>
+  De 09 a 11 de outubro de 2017<br>
+  
+  <p>Local: Hotel Best Western Premier - Av. Dr. Antônio Gouveia, 925 - Pajuçara, Maceió – AL</p>
+    
+  <p>Inscrições até 30 de setembro</p>
 
-<md-card id="content">
+  <button md-raised-button color="primary" (click)="participantBusiness = 1">Inscreva-se como vendedor</button>
+  <button md-raised-button color="accent" (click)="participantBusiness = 2">Inscreva-se como comprador</button>
+</md-card>
+<!--Presentation: end-->
+
+<md-card id="content" *ngIf="participantBusiness">
   <!--Seller: start-->
-  <form (ngSubmit)="onSellerSubmit()" [formGroup]="sellerSignupForm" *ngIf="companyBusiness == 1">
+  <form (ngSubmit)="onSellerSubmit()" [formGroup]="sellerSignupForm" *ngIf="participantBusiness == 1">
     <md-tab-group>
       <!--Vendedor: start-->
-      <md-tab label="Empresa" formGroupName="company">
+      <md-tab label="Empresa" formGroupName="participant">
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="8">
             <md-radio-group>
-              <md-radio-button (change)="onChangeCompanyBusiness($event)" value="1" checked="true">Vendedor</md-radio-button>
-              <md-radio-button (change)="onChangeCompanyBusiness($event)" value="2">Comprador</md-radio-button>
+              <md-radio-button (change)="onChangeparticipantBusiness($event)" value="1" checked="true">Vendedor</md-radio-button>
+              <md-radio-button (change)="onChangeparticipantBusiness($event)" value="2">Comprador</md-radio-button>
             </md-radio-group>
           </md-grid-tile>
         </md-grid-list>
 
-        <md-grid-list cols="8" rowHeight="100px" *ngIf="companyBusiness">
+        <md-grid-list cols="8" rowHeight="100px" *ngIf="participantBusiness">
           <md-grid-tile [colspan]="2">
             <md-input-container>
               <input mdInput formControlName="cnpj_number" type="text"
               placeholder="CNPJ"
               [textMask]="{mask: mask.cnpj}"
               (change)="receitaWsCnpjToSeller($event)">
-              <md-error *ngIf="!sellerSignupForm.get('company.cnpj_number').valid && !sellerSignupForm.get('company.cnpj_number').touched">Erro</md-error>
+              <md-error *ngIf="!sellerSignupForm.get('participant.cnpj_number').valid && !sellerSignupForm.get('participant.cnpj_number').touched">Erro</md-error>
             </md-input-container>
           </md-grid-tile>
 
@@ -49,7 +62,7 @@
           </md-grid-tile>
         </md-grid-list>
 
-        <md-grid-list cols="8" rowheight="100px" *ngIf="companyBusiness">
+        <md-grid-list cols="8" rowheight="100px" *ngIf="participantBusiness">
           <md-grid-tile [colspan]="2">
             <md-input-container>
               <input mdInput formControlName="foundation_year" type="text" 
@@ -80,7 +93,6 @@
           <div>Porte da Empresa*</div>
 
           <md-grid-tile [colspan]="8">
-            {{companySize}}
             <md-radio-group formControlName="company_size">
               <md-radio-button value="mei">MEI - Até R$ 60.000,00</md-radio-button>
               <md-radio-button value="micro">Microempresa - Até R$ 360.000,00</md-radio-button>
@@ -91,7 +103,7 @@
       </md-tab>
 
       <md-tab label="Contatos da Empresa" 
-      *ngIf="companyBusiness" 
+      *ngIf="participantBusiness" 
       formGroupName="contact">
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="2">
@@ -183,7 +195,7 @@
             </md-input-container>            
             <a md-mini-fab 
             *ngIf="sellerSignupForm.get('contact.company_social_media_url').value" 
-            (click)="createSellerCompanySocialMediaObject()">
+            (click)="createSellerparticipantSocialMediaObject()">
               <md-icon color="primary">add</md-icon>
             </a>
           </md-grid-tile>
@@ -206,7 +218,7 @@
         </md-grid-list>
 
         <md-grid-list cols="8">
-          <md-grid-tile [colspan]="4" *ngIf="companyPhoneObject.length > 0">
+          <md-grid-tile [colspan]="4" *ngIf="participantPhoneObject.length > 0">
             <table>
               <tr style="text-align: left;">
                 <th style="width: 150px;">
@@ -218,13 +230,13 @@
                 </th>
               </tr>
 
-              <tr *ngFor="let companyPhone of companyPhoneObject" style="vertical-align: text-top; margin: 0; padding: 0; height: 40px;">
+              <tr *ngFor="let participantPhone of participantPhoneObject" style="vertical-align: text-top; margin: 0; padding: 0; height: 40px;">
                 <td>
-                    {{companyPhone.phone_type_id}}
+                    {{participantPhone.phone_type_id}}
                 </td>
 
                 <td>
-                    <span>({{companyPhone.ddd}}){{companyPhone.number}}</span>
+                    <span>({{participantPhone.ddd}}){{participantPhone.number}}</span>
 
                     <a (click)="clearContactPhone(i)"><md-icon class="fs10">clear</md-icon></a>
                 </td>
@@ -236,7 +248,7 @@
             </div>
           </md-grid-tile>
 
-          <md-grid-tile [colspan]="4" *ngIf="companySocialMediaObject.length > 0">
+          <md-grid-tile [colspan]="4" *ngIf="participantSocialMediaObject.length > 0">
             <table>
               <tr style="text-align: left;">
                 <th style="width: 150px;">
@@ -248,15 +260,15 @@
                 </th>
               </tr>
 
-              <tr *ngFor="let companySocialMedia of companySocialMediaObject" style="vertical-align: text-top; margin: 0; padding: 0; height: 40px;">
+              <tr *ngFor="let participantSocialMedia of participantSocialMediaObject" style="vertical-align: text-top; margin: 0; padding: 0; height: 40px;">
                 <td>
-                    {{companySocialMedia.digital_data_type}}
+                    {{participantSocialMedia.digital_data_type}}
                 </td>
 
                 <td>
-                    <span>{{companySocialMedia.url}}</span>
+                    <span>{{participantSocialMedia.url}}</span>
 
-                    <a (click)="clearCompanySocialMedia(i)"><md-icon class="fs10">clear</md-icon></a>
+                    <a (click)="clearparticipantSocialMedia(i)"><md-icon class="fs10">clear</md-icon></a>
                 </td>
               </tr>
             </table>
@@ -269,7 +281,7 @@
       </md-tab>
 
       <md-tab label="Representantes" 
-      *ngIf="companyBusiness"
+      *ngIf="participantBusiness"
       formGroupName="representative">
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="1">
@@ -285,7 +297,7 @@
               placeholder="CPF" 
               formControlName="representative_cpf"
               [textMask]="{mask: mask.cpf}"
-              (change)="receitaCpfToSeller($event);"
+              
               (blur) = "validateSellerRepresentativeCpf()">
             </md-input-container>
           </md-grid-tile>
@@ -495,7 +507,7 @@
         </md-grid-list>
       </md-tab>
 
-      <md-tab label="Atividade" *ngIf="companyBusiness" formGroupName="activity">
+      <md-tab label="Atividade" *ngIf="participantBusiness" formGroupName="activity">
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="2">
             <md-select placeholder="Ramos de Atividade" formControlName="group_id"
@@ -530,7 +542,7 @@
         </md-grid-list>
       </md-tab>
 
-      <md-tab label="Interesses" *ngIf="companyBusiness" formGroupName="interest">
+      <md-tab label="Interesses" *ngIf="participantBusiness" formGroupName="interest">
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="4">
             <md-input-container>
@@ -567,8 +579,8 @@
             </md-select>
           </md-grid-tile>
 
-          <md-grid-tile [colspan]="3">
-            <md-input-container *ngIf="sellerSignupForm.get('interest.other_state').value">
+          <md-grid-tile [colspan]="3" *ngIf="sellerSignupForm.get('interest.other_state').value">
+            <md-input-container>
               <input mdInput type="number"
               placeholder="% de faturamento"
               formControlName="other_state_revenues">
@@ -596,8 +608,8 @@
             </md-autocomplete>
           </md-grid-tile>
 
-          <md-grid-tile [colspan]="3">
-            <md-input-container *ngIf="sellerSignupForm.get('interest.other_country').value">
+          <md-grid-tile [colspan]="3" *ngIf="sellerSignupForm.get('interest.other_country').value">
+            <md-input-container>
               <input mdInput type="number"
               placeholder="% de faturamento"
               formControlName="other_country_revenues">
@@ -661,27 +673,27 @@
   <!--Seler: end-->
 
   <!--Buyer: start-->
-  <form (ngSubmit)="onBuyerSubmit()" [formGroup]="buyerSignupForm" *ngIf="companyBusiness == 2">
+  <form (ngSubmit)="onBuyerSubmit()" [formGroup]="buyerSignupForm" *ngIf="participantBusiness == 2">
     <md-tab-group>
       <!--Vendedor: start-->
-      <md-tab label="Empresa" formGroupName="company">
+      <md-tab label="Empresa" formGroupName="participant">
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="8">
             <md-radio-group>
-              <md-radio-button (change)="onChangeCompanyBusiness($event)" value="1">Vendedor</md-radio-button>
-              <md-radio-button (change)="onChangeCompanyBusiness($event)" checked="true" value="2">Comprador</md-radio-button>
+              <md-radio-button (change)="onChangeparticipantBusiness($event)" value="1">Vendedor</md-radio-button>
+              <md-radio-button (change)="onChangeparticipantBusiness($event)" checked="true" value="2">Comprador</md-radio-button>
             </md-radio-group>
           </md-grid-tile>
         </md-grid-list>
 
-        <md-grid-list cols="8" rowHeight="100px" *ngIf="companyBusiness">
+        <md-grid-list cols="8" rowHeight="100px" *ngIf="participantBusiness">
           <md-grid-tile [colspan]="2">
             <md-input-container>
               <input mdInput formControlName="cnpj_number" type="text"
               placeholder="CNPJ"
               [textMask]="{mask: mask.cnpj}"
               (change)="receitaWsCnpjToBuyer($event)">
-              <md-error *ngIf="!buyerSignupForm.get('company.cnpj_number').valid && !buyerSignupForm.get('company.cnpj_number').touched">Erro</md-error>
+              <md-error *ngIf="!buyerSignupForm.get('participant.cnpj_number').valid && !buyerSignupForm.get('participant.cnpj_number').touched">Erro</md-error>
             </md-input-container>
           </md-grid-tile>
 
@@ -700,7 +712,7 @@
           </md-grid-tile>
         </md-grid-list>
 
-        <md-grid-list cols="8" rowheight="100px" *ngIf="companyBusiness">
+        <md-grid-list cols="8" rowheight="100px" *ngIf="participantBusiness">
           <md-grid-tile [colspan]="2">
             <md-input-container>
               <input mdInput formControlName="foundation_year" type="text" 
@@ -727,18 +739,26 @@
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="4">
             <md-select placeholder="Idiomas nos quais deseja se comunicar" formControlName="language"
-            multiple>
+            multiple
+            (change)="onChangeOthersLanguage($event)">
               <md-option *ngFor="let language of languages" [value]="language.description">{{language.description}}</md-option>
             </md-select>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="4" *ngIf="otherLanguage">
+              <md-input-container>
+                <input mdInput placeholder="Outra(s) língua(s)" 
+                formControlName="other_language">
+              </md-input-container>
           </md-grid-tile>
         </md-grid-list>
       </md-tab>
 
       <md-tab label="Contatos da Empresa" 
-      *ngIf="companyBusiness" 
+      *ngIf="participantBusiness" 
       formGroupName="contact">
         <md-grid-list cols="8" rowHeight="100px">
-          <md-grid-tile [colspan]="1" *ngIf="companyBusiness == 2">
+          <md-grid-tile [colspan]="1" *ngIf="participantBusiness == 2">
             <md-input-container>
               <input mdInput placeholder="País" 
               [mdAutocomplete]="auto" 
@@ -841,7 +861,7 @@
             </md-input-container>            
             <a md-mini-fab 
             *ngIf="buyerSignupForm.get('contact.company_social_media_url').value" 
-            (click)="createBuyerCompanySocialMediaObject()">
+            (click)="createBuyerparticipantSocialMediaObject()">
               <md-icon color="primary">add</md-icon>
             </a>
           </md-grid-tile>
@@ -864,7 +884,7 @@
         </md-grid-list>
 
         <md-grid-list cols="8">
-          <md-grid-tile [colspan]="4" *ngIf="companyPhoneObject.length > 0">
+          <md-grid-tile [colspan]="4" *ngIf="participantPhoneObject.length > 0">
             <table>
               <tr style="text-align: left;">
                 <th style="width: 150px;">
@@ -876,13 +896,13 @@
                 </th>
               </tr>
 
-              <tr *ngFor="let companyPhone of companyPhoneObject" style="vertical-align: text-top; margin: 0; padding: 0; height: 40px;">
+              <tr *ngFor="let participantPhone of participantPhoneObject" style="vertical-align: text-top; margin: 0; padding: 0; height: 40px;">
                 <td>
-                    {{companyPhone.phone_type_id}}
+                    {{participantPhone.phone_type_id}}
                 </td>
 
                 <td>
-                    <span>({{companyPhone.ddd}}){{companyPhone.number}}</span>
+                    <span>({{participantPhone.ddd}}){{participantPhone.number}}</span>
 
                     <a (click)="clearContactPhone(i)"><md-icon class="fs10">clear</md-icon></a>
                 </td>
@@ -894,7 +914,7 @@
             </div>
           </md-grid-tile>
 
-          <md-grid-tile [colspan]="4" *ngIf="companySocialMediaObject.length > 0">
+          <md-grid-tile [colspan]="4" *ngIf="participantSocialMediaObject.length > 0">
             <table>
               <tr style="text-align: left;">
                 <th style="width: 150px;">
@@ -906,15 +926,15 @@
                 </th>
               </tr>
 
-              <tr *ngFor="let companySocialMedia of companySocialMediaObject" style="vertical-align: text-top; margin: 0; padding: 0; height: 40px;">
+              <tr *ngFor="let participantSocialMedia of participantSocialMediaObject" style="vertical-align: text-top; margin: 0; padding: 0; height: 40px;">
                 <td>
-                    {{companySocialMedia.digital_data_type}}
+                    {{participantSocialMedia.digital_data_type}}
                 </td>
 
                 <td>
-                    <span>{{companySocialMedia.url}}</span>
+                    <span>{{participantSocialMedia.url}}</span>
 
-                    <a (click)="clearCompanySocialMedia(i)"><md-icon class="fs10">clear</md-icon></a>
+                    <a (click)="clearparticipantSocialMedia(i)"><md-icon class="fs10">clear</md-icon></a>
                 </td>
               </tr>
             </table>
@@ -927,7 +947,7 @@
       </md-tab>
 
       <md-tab label="Representantes" 
-      *ngIf="companyBusiness"
+      *ngIf="participantBusiness"
       formGroupName="representative">
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="1">
@@ -943,7 +963,7 @@
               placeholder="CPF" 
               formControlName="representative_cpf"
               [textMask]="{mask: mask.cpf}"
-              (change)="receitaCpfToBuyer($event)"
+              
               (blur)="validateBuyerRepresentativeName();">
             </md-input-container>
           </md-grid-tile>
@@ -1088,7 +1108,7 @@
         </md-grid-list>
       </md-tab>
 
-      <md-tab label="Atividade" *ngIf="companyBusiness" formGroupName="activity">
+      <md-tab label="Atividade" *ngIf="participantBusiness" formGroupName="activity">
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="2">
             <md-select placeholder="Setor" formControlName="subgroup_id"
@@ -1100,14 +1120,23 @@
 
           <md-grid-tile [colspan]="2" *ngIf="productObject">
             <md-select placeholder="Produtos" formControlName="product_id"
-            multiple>
+            multiple
+            (change)="onChangeOthersProduct($event)">
               <md-option *ngFor="let product of productObject" [value]="product.id">{{product.name}}</md-option>
+              <md-option [value]="'Outro(s)'">Outro(s)</md-option>
             </md-select>
+          </md-grid-tile>
+
+          <md-grid-tile [colspan]="4" *ngIf="otherProduct">
+              <md-input-container>
+                <input mdInput placeholder="Outro(s) produto(s)" 
+                formControlName="other_product">
+              </md-input-container>
           </md-grid-tile>
         </md-grid-list>
       </md-tab>
 
-      <md-tab label="Interesses" *ngIf="companyBusiness" formGroupName="interest">
+      <md-tab label="Interesses" *ngIf="participantBusiness" formGroupName="interest">
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="4">
             <md-input-container>
@@ -1136,8 +1165,8 @@
             </md-select>
           </md-grid-tile>
 
-          <md-grid-tile [colspan]="3">
-            <md-input-container *ngIf="buyerSignupForm.get('interest.other_state').value">
+          <md-grid-tile [colspan]="3" *ngIf="buyerSignupForm.get('interest.other_state').value">
+            <md-input-container>
               <input mdInput type="number" 
               formControlName="other_state_revenues"
               maxlength="3"
@@ -1166,8 +1195,8 @@
             </md-autocomplete>
           </md-grid-tile>
 
-          <md-grid-tile [colspan]="3">
-            <md-input-container *ngIf="buyerSignupForm.get('interest.other_country').value">
+          <md-grid-tile [colspan]="3" *ngIf="buyerSignupForm.get('interest.other_country').value">
+            <md-input-container>
               <input mdInput type="number"
               formControlName="other_country_revenues"
               placeholder="% de faturamento">

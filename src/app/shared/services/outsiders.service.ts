@@ -10,7 +10,7 @@ export class OutsidersService {
 
   republicaVirtualCepSearch = (cep) => new Promise((resolve, reject) => {
     this.http.get(
-      'http://events.nitrofull.com.br/api/cepws?cep='+cep
+      'https://events.nitrofull.com.br/api/cepws?cep='+cep
     ).subscribe(res => {
       resolve(res);
     });

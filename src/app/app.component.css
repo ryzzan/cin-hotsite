@@ -59,6 +59,11 @@ hr {
     z-index: 999;
 }
 
+#presentation {
+    position: absolute;
+    top: 150px;
+}
+
 #progress-bar {
     top: 50%;
 }

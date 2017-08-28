@@ -39,6 +39,12 @@ export class AppComponent implements OnInit {
   errorsRevenues: any = [];
   loading: boolean = false;
 
+  otherLanguage: boolean = false;
+  otherProduct: boolean = false;
+
+  otherStateRevenue: boolean = false;
+  otherCountryRevenue: boolean = false;
+
   /*activity products by subgroup trouble: start*/
   subgroupChanged: boolean = false;
   productObject: any;
@@ -46,8 +52,8 @@ export class AppComponent implements OnInit {
   /*activity products by subgroup trouble: end*/
   
   /*company: start*/
-  companyObject: any;
-  companyBusiness: number = 1;
+  participantObject: any;
+  participantBusiness: number;
   companySize: string;
   /*company: end*/
 
@@ -56,7 +62,7 @@ export class AppComponent implements OnInit {
   /*company address trouble: start*/
   
   /*company phone trouble: start*/
-  companyPhoneObject: any = [];
+  participantPhoneObject: any = [];
   /*company phone trouble: end*/
 
   /*representative phone trouble: start*/
@@ -73,7 +79,7 @@ export class AppComponent implements OnInit {
   /*representative revenues trouble: end*/
 
   /*representative social media trouble: start*/
-  companySocialMediaObject: any = [];
+  participantSocialMediaObject: any = [];
   /*company social media trouble: end*/
   
   /*representative: start*/
@@ -115,7 +121,8 @@ export class AppComponent implements OnInit {
     public validator: MyValidators
   ) { 
     this.sellerSignupForm = new FormGroup({
-      'company': new FormGroup({
+      'participant': new FormGroup({
+        'profile': new FormControl(null),
         'cnpj_number': new FormControl(null, Validators.required),
         'business_name': new FormControl(null, Validators.required),
         'tranding_name': new FormControl(null, Validators.required),
@@ -135,7 +142,7 @@ export class AppComponent implements OnInit {
         'company_site': new FormControl(null),
         'digital_data_type': new FormControl(null),
         'company_social_media_url': new FormControl(null),
-        'company_phone_type': new FormControl(null), //Require companyPhoneObject
+        'company_phone_type': new FormControl(null), //Require participantPhoneObject
         'company_phone_ddd': new FormControl(null),
         'company_phone_number': new FormControl(null),        
       }),      
@@ -170,11 +177,13 @@ export class AppComponent implements OnInit {
         'group_id': new FormControl(null, Validators.required),
         'subgroup_id': new FormControl(null, Validators.required),
         'product_id': new FormControl(null, Validators.required),
+        'other_product': new FormControl(null),
       })
     })
 
     this.buyerSignupForm = new FormGroup({
-      'company': new FormGroup({
+      'participant': new FormGroup({
+        'profile': new FormControl(null),
         'cnpj_number': new FormControl(null, Validators.required),
         'business_name': new FormControl(null, Validators.required),
         'tranding_name': new FormControl(null, Validators.required),
@@ -182,6 +191,7 @@ export class AppComponent implements OnInit {
         'employees_quantity': new FormControl(null, Validators.required),
         'legal_person': new FormControl(null, Validators.required),
         'language': new FormControl(null, Validators.required),
+        'other_language': new FormControl(null),
       }),
       'contact': new FormGroup({
         'country': new FormControl(null, Validators.required),
@@ -195,7 +205,7 @@ export class AppComponent implements OnInit {
         'company_site': new FormControl(null),
         'digital_data_type': new FormControl(null),
         'company_social_media_url': new FormControl(null),
-        'company_phone_type': new FormControl(null), //Require companyPhoneObject
+        'company_phone_type': new FormControl(null), //Require participantPhoneObject
         'company_phone_ddd': new FormControl(null),
         'company_phone_number': new FormControl(null),        
       }),      
@@ -222,6 +232,7 @@ export class AppComponent implements OnInit {
       'activity': new FormGroup({
         'subgroup_id': new FormControl(null, Validators.required),
         'product_id': new FormControl(null, Validators.required),
+        'other_product': new FormControl(null),
       })
     })
     
@@ -269,11 +280,11 @@ export class AppComponent implements OnInit {
     return this.filteredCountries;
   }
 
-  onChangeCompanyBusiness = (event) => {
+  onChangeparticipantBusiness = (event) => {
     if(event) {
-      this.companyBusiness = event.value;
+      this.participantBusiness = event.value;
     } else {
-      this.companyBusiness = undefined;
+      this.participantBusiness = undefined;
     }
     this.buyerSignupForm.reset();
     this.sellerSignupForm.reset();
@@ -282,12 +293,12 @@ export class AppComponent implements OnInit {
     this.productObject = undefined;
     this.subgroupObject = undefined;
 
-    this.companyObject = undefined;
+    this.participantObject = undefined;
     this.addressObject = undefined;
-    this.companyPhoneObject = [];
+    this.participantPhoneObject = [];
     this.representativePhoneObject = [];
     this.revenuesObject = [];
-    this.companySocialMediaObject = [];
+    this.participantSocialMediaObject = [];
     this.representativeObject = [];
     this.representativeSearchObject = [];
     this.revenuesObject = [];
@@ -338,11 +349,11 @@ export class AppComponent implements OnInit {
 
   /*Contact phones: start*/
   clearContactPhone = (index) => {
-    this.companyPhoneObject.splice(index, 1);
+    this.participantPhoneObject.splice(index, 1);
   }
 
   createSellerContactPhoneObject = () => {
-    this.companyPhoneObject.push({
+    this.participantPhoneObject.push({
       phone_type_id: this.sellerSignupForm.get('contact.company_phone_type').value,
       country_code: "+55",
       ddd: this.sellerSignupForm.get('contact.company_phone_ddd').value,
@@ -353,11 +364,11 @@ export class AppComponent implements OnInit {
     this.sellerSignupForm.get('contact.company_phone_ddd').patchValue(null);
     this.sellerSignupForm.get('contact.company_phone_number').patchValue(null);
 
-    console.log(this.companyPhoneObject)
+    console.log(this.participantPhoneObject)
   }  
 
   createBuyerContactPhoneObject = () => {
-    this.companyPhoneObject.push({
+    this.participantPhoneObject.push({
       phone_type_id: this.buyerSignupForm.get('contact.company_phone_type').value,
       country_code: "+55",
       ddd: this.buyerSignupForm.get('contact.company_phone_ddd').value,
@@ -747,11 +758,11 @@ export class AppComponent implements OnInit {
   
   /*Representative social medias: start*/
   clearCompanySocialMedia = (index) => {
-    this.companySocialMediaObject.splice(index, 1);
+    this.participantSocialMediaObject.splice(index, 1);
   }
 
-  createBuyerCompanySocialMediaObject = () => {
-    this.companySocialMediaObject.push({
+  createBuyerparticipantSocialMediaObject = () => {
+    this.participantSocialMediaObject.push({
       digital_data_type: this.buyerSignupForm.get('contact.digital_data_type').value,
       url: this.buyerSignupForm.get('contact.company_social_media_url').value
     })
@@ -760,8 +771,8 @@ export class AppComponent implements OnInit {
     this.buyerSignupForm.get('contact.company_social_media_url').patchValue(null);
   }
 
-  createSellerCompanySocialMediaObject = () => {
-    this.companySocialMediaObject.push({
+  createSellerparticipantSocialMediaObject = () => {
+    this.participantSocialMediaObject.push({
       digital_data_type: this.sellerSignupForm.get('contact.digital_data_type').value,
       url: this.sellerSignupForm.get('contact.company_social_media_url').value
     })
@@ -770,6 +781,24 @@ export class AppComponent implements OnInit {
     this.sellerSignupForm.get('contact.company_social_media_url').patchValue(null);
   }
   /*Representative social medias: end*/
+
+  onChangeOthersLanguage(event) {
+    this.otherLanguage = false;
+    for(let lim = event.value.length, i = 0; i < lim; i++) {
+      if(event.value[i] == "Outra(s)") {
+        this.otherLanguage = true;
+      }
+    }
+  }
+
+  onChangeOthersProduct(event) {
+    this.otherProduct = false;
+    for(let lim = event.value.length, i = 0; i < lim; i++) {
+      if(event.value[i] == "Outro(s)") {
+        this.otherProduct = true;
+      }
+    }
+  }
 
   /*Share it?: start*/
   createNewObjectFromArrayOfObjects = (objectsArray: any) => {
@@ -825,29 +854,32 @@ export class AppComponent implements OnInit {
   }
 
   republicaVirtualCepToSellerRepresentative = () => {
-    this.loading = true;
-
-    let cep = this.sellerSignupForm.get('representative.representative_postal_code').value;
-    this.outsidersService
-    .republicaVirtualCepSearch(cep)
-    .then(res => {
-      let string = JSON.stringify(res),
-      object = JSON.parse(string);
+    let that = this;
+    if(that.sellerSignupForm.get('representative.representative_postal_code').value) {
+      this.loading = true;
       
-      this.representativeAddressObject = JSON.parse(object._body);
-      
-      this.sellerSignupForm.get('representative.representative_address').patchValue(this.representativeAddressObject.logradouro);
-      this.sellerSignupForm.get('representative.representative_city').patchValue(this.representativeAddressObject.cidade);
-      this.sellerSignupForm.get('representative.representative_state').patchValue(this.representativeAddressObject.uf);
+      let cep = this.sellerSignupForm.get('representative.representative_postal_code').value.replace(/[-./]/gi, '');
+      this.outsidersService
+      .republicaVirtualCepSearch(cep)
+      .then(res => {
+        let string = JSON.stringify(res),
+        object = JSON.parse(string);
+        
+        this.representativeAddressObject = JSON.parse(object._body);
+        
+        this.sellerSignupForm.get('representative.representative_address').patchValue(this.representativeAddressObject.logradouro);
+        this.sellerSignupForm.get('representative.representative_city').patchValue(this.representativeAddressObject.cidade);
+        this.sellerSignupForm.get('representative.representative_state').patchValue(this.representativeAddressObject.uf);
 
-      this.loading = false;
-    });
+        this.loading = false;
+      });
+    }
   }
 
   republicaVirtualCepToBuyer = (event) => {
     this.loading = true;
 
-    let cep = event.target.value;
+    let cep = event.target.value.replace(/[-./]/gi, '');
     this.outsidersService
     .republicaVirtualCepSearch(cep)
     .then(res => {
@@ -954,20 +986,20 @@ export class AppComponent implements OnInit {
       let string = JSON.stringify(res),
       object = JSON.parse(string);
       
-      this.companyObject = JSON.parse(object._body);
+      this.participantObject = JSON.parse(object._body);
 
-      this.sellerSignupForm.get('company.business_name').patchValue(this.companyObject.nome);
-      this.sellerSignupForm.get('company.tranding_name').patchValue(this.companyObject.fantasia);
-      this.sellerSignupForm.get('company.foundation_year').patchValue(this.companyObject.abertura);
-      this.sellerSignupForm.get('contact.postal_code').patchValue(this.companyObject.cep);
-      this.sellerSignupForm.get('contact.address').patchValue(this.companyObject.logradouro);
-      this.sellerSignupForm.get('contact.number').patchValue(this.companyObject.numero);
-      this.sellerSignupForm.get('contact.district').patchValue(this.companyObject.bairro);
-      this.sellerSignupForm.get('contact.city').patchValue(this.companyObject.municipio);
-      this.sellerSignupForm.get('contact.state').patchValue(this.companyObject.uf);
+      this.sellerSignupForm.get('participant.business_name').patchValue(this.participantObject.nome);
+      this.sellerSignupForm.get('participant.tranding_name').patchValue(this.participantObject.fantasia);
+      this.sellerSignupForm.get('participant.foundation_year').patchValue(this.participantObject.abertura);
+      this.sellerSignupForm.get('contact.postal_code').patchValue(this.participantObject.cep);
+      this.sellerSignupForm.get('contact.address').patchValue(this.participantObject.logradouro);
+      this.sellerSignupForm.get('contact.number').patchValue(this.participantObject.numero);
+      this.sellerSignupForm.get('contact.district').patchValue(this.participantObject.bairro);
+      this.sellerSignupForm.get('contact.city').patchValue(this.participantObject.municipio);
+      this.sellerSignupForm.get('contact.state').patchValue(this.participantObject.uf);
 
-      if(this.companyObject.capital_social) {
-        let number = Number(this.companyObject.capital_social);
+      if(this.participantObject.capital_social) {
+        let number = Number(this.participantObject.capital_social);
         let size;
         if(number < 60000) {
           size = "mei";
@@ -977,7 +1009,7 @@ export class AppComponent implements OnInit {
           size = "pequena";
         }
 
-        this.sellerSignupForm.get('company.company_size').patchValue(size);
+        this.sellerSignupForm.get('participant.company_size').patchValue(size);
       }
 
       this.loading = false;
@@ -995,20 +1027,20 @@ export class AppComponent implements OnInit {
       let string = JSON.stringify(res),
       object = JSON.parse(string);
       
-      this.companyObject = JSON.parse(object._body);
+      this.participantObject = JSON.parse(object._body);
 
-      this.buyerSignupForm.get('company.business_name').patchValue(this.companyObject.nome);
-      this.buyerSignupForm.get('company.tranding_name').patchValue(this.companyObject.fantasia);
-      this.buyerSignupForm.get('company.foundation_year').patchValue(this.companyObject.abertura);
-      this.buyerSignupForm.get('contact.postal_code').patchValue(this.companyObject.cep);
-      this.buyerSignupForm.get('contact.address').patchValue(this.companyObject.logradouro);
-      this.buyerSignupForm.get('contact.number').patchValue(this.companyObject.numero);
-      this.buyerSignupForm.get('contact.district').patchValue(this.companyObject.bairro);
-      this.buyerSignupForm.get('contact.city').patchValue(this.companyObject.municipio);
-      this.buyerSignupForm.get('contact.state').patchValue(this.companyObject.uf);
+      this.buyerSignupForm.get('participant.business_name').patchValue(this.participantObject.nome);
+      this.buyerSignupForm.get('participant.tranding_name').patchValue(this.participantObject.fantasia);
+      this.buyerSignupForm.get('participant.foundation_year').patchValue(this.participantObject.abertura);
+      this.buyerSignupForm.get('contact.postal_code').patchValue(this.participantObject.cep);
+      this.buyerSignupForm.get('contact.address').patchValue(this.participantObject.logradouro);
+      this.buyerSignupForm.get('contact.number').patchValue(this.participantObject.numero);
+      this.buyerSignupForm.get('contact.district').patchValue(this.participantObject.bairro);
+      this.buyerSignupForm.get('contact.city').patchValue(this.participantObject.municipio);
+      this.buyerSignupForm.get('contact.state').patchValue(this.participantObject.uf);
 
-      if(this.companyObject.capital_social) {
-        let number = Number(this.companyObject.capital_social);
+      if(this.participantObject.capital_social) {
+        let number = Number(this.participantObject.capital_social);
         let size;
         if(number < 60000) {
           size = "mei";
@@ -1024,12 +1056,14 @@ export class AppComponent implements OnInit {
   }
   /*Share it?: end*/
   onBuyerSubmit = () => {
+    this.buyerSignupForm.get('profile').setValue('seller');
+
     let representativesObject = {
       representatives: this.representativeObject
     }
 
     let phonesObject = {
-      phones: this.companyPhoneObject
+      phones: this.participantPhoneObject
     }
 
     let revenuesObject = {
@@ -1037,7 +1071,7 @@ export class AppComponent implements OnInit {
     }
 
     let socialMediasObject = {
-      socialMedias: this.companySocialMediaObject
+      socialMedias: this.participantSocialMediaObject
     }
 
     this.createNewObjectFromArrayOfObjects([
@@ -1050,12 +1084,14 @@ export class AppComponent implements OnInit {
   }
 
   onSellerSubmit = () => {
+    this.sellerSignupForm.get('profile').setValue('seller');
+
     let representativesObject = {
       representatives: this.representativeObject
     }
 
     let phonesObject = {
-      phones: this.companyPhoneObject
+      phones: this.participantPhoneObject
     }
 
     let revenuesObject = {
@@ -1063,7 +1099,7 @@ export class AppComponent implements OnInit {
     }
 
     let socialMediasObject = {
-      socialMedias: this.companySocialMediaObject
+      socialMedias: this.participantSocialMediaObject
     }
 
     this.createNewObjectFromArrayOfObjects([
@@ -1076,11 +1112,11 @@ export class AppComponent implements OnInit {
   }
 
   /*objectCheckGenericValidator(control: FormControl): {[s: string]: boolean} {
-    if(this.companyBusiness == 2 && control.value != null) {
-      console.log(this.companyBusiness)
+    if(this.participantBusiness == 2 && control.value != null) {
+      console.log(this.participantBusiness)
       return { "validation": true };
     }
-    console.log(this.companyBusiness)
+    console.log(this.participantBusiness)
     return null;
   }*/
 }
