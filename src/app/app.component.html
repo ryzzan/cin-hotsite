@@ -24,9 +24,15 @@
 <md-card id="content" *ngIf="participantBusiness">
   <!--Seller: start-->
   <form (ngSubmit)="onSellerSubmit()" [formGroup]="sellerSignupForm" *ngIf="participantBusiness == 1">
-    <md-tab-group>
+    <md-tab-group [selectedIndex]="formPagination.index" (selectChange)="changedTabIndex($event)">
       <!--Vendedor: start-->
       <md-tab label="Empresa" formGroupName="participant">
+        <ng-template color="transparent" md-tab-label>
+          <md-icon *ngIf="sellerSignupForm.get('participant').valid" color="primary">thumb_up</md-icon>
+          <md-icon *ngIf="sellerSignupForm.get('participant').invalid" color="warn">thumb_down</md-icon>
+          EMPRESA
+        </ng-template>
+
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="8">
             <md-radio-group>
@@ -73,11 +79,8 @@
 
           <md-grid-tile [colspan]="2">
             <md-input-container>
-              <input mdInput formControlName="employees_quantity" type="number" min="0" max="1000" 
-              maxlength="3"
-              placeholder="Nº de Funcionários"
-              
-              pattern="[0-9]{3}">
+              <input mdInput formControlName="employees_quantity" type="number" min="0" 
+              placeholder="Nº de Funcionários">
             </md-input-container>
           </md-grid-tile>
 
@@ -105,6 +108,12 @@
       <md-tab label="Contatos da Empresa" 
       *ngIf="participantBusiness" 
       formGroupName="contact">
+        <ng-template color="transparent" md-tab-label>
+          <md-icon *ngIf="sellerSignupForm.get('contact').valid" color="primary">thumb_up</md-icon>
+          <md-icon *ngIf="sellerSignupForm.get('contact').invalid" color="warn">thumb_down</md-icon>
+          CONTATOS DA EMPRESA
+        </ng-template>
+        
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="2">
             <md-input-container>
@@ -287,6 +296,12 @@
       <md-tab label="Representantes" 
       *ngIf="participantBusiness"
       formGroupName="representative">
+        <ng-template color="transparent" md-tab-label>
+          <md-icon *ngIf="representativeObject.length > 0" color="primary">thumb_up</md-icon>
+          <md-icon *ngIf="representativeObject.length < 1" color="warn">thumb_down</md-icon>
+          RESPRESENTANTES
+        </ng-template>
+
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="1">
             <md-select placeholder="Título" formControlName="representative_treatment"
@@ -512,6 +527,12 @@
       </md-tab>
 
       <md-tab label="Atividade" *ngIf="participantBusiness" formGroupName="activity">
+        <ng-template color="transparent" md-tab-label>
+          <md-icon *ngIf="sellerSignupForm.get('activity').valid" color="primary">thumb_up</md-icon>
+          <md-icon *ngIf="sellerSignupForm.get('activity').invalid" color="warn">thumb_down</md-icon>
+          ATIVIDADE
+        </ng-template>
+
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="2">
             <md-select placeholder="Ramos de Atividade" formControlName="group_id"
@@ -556,6 +577,12 @@
       </md-tab>
 
       <md-tab label="Interesses" *ngIf="participantBusiness" formGroupName="interest">
+        <ng-template color="transparent" md-tab-label>
+          <md-icon *ngIf="sellerSignupForm.get('interest').valid" color="primary">thumb_up</md-icon>
+          <md-icon *ngIf="sellerSignupForm.get('interest').invalid" color="warn">thumb_down</md-icon>
+          INTERESSES
+        </ng-template>
+
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="4">
             <md-input-container>
@@ -678,16 +705,32 @@
     </md-tab-group>
 
     <md-card-actions>
-      <button type="submit" md-raised-button color="primary" [disabled]="sellerSignupForm.invalid || disabled">Cadastrar</button>
+      <div class="float-left w50p">
+        &nbsp;
+        <button type="submit" md-raised-button color="primary" *ngIf="sellerSignupForm.valid || !disabled">Cadastrar</button>
+      </div>
+
+      <div class="float-left  w50p">
+        <div class="float-right">
+          <button md-raised-button class="previus-btn md-icon-button" (click)="changedTabIndex({index: this.formPagination.index-1})" type="button" *ngIf="formPagination.index!=0" routerLink="." color="primary">Anterior</button>
+          <button md-raised-button class="md-icon-button" (click)="changedTabIndex({index: this.formPagination.index+1})" type="button"*ngIf="formPagination.index!=formPagination.maxIndex" routerLink="." color="primary">Próximo</button>
+        </div>
+      </div>
     </md-card-actions>
   </form>
   <!--Seler: end-->
 
   <!--Buyer: start-->
   <form (ngSubmit)="onBuyerSubmit()" [formGroup]="buyerSignupForm" *ngIf="participantBusiness == 2">
-    <md-tab-group>
+    <md-tab-group [selectedIndex]="formPagination.index" (selectChange)="changedTabIndex($event)">
       <!--Vendedor: start-->
       <md-tab label="Empresa" formGroupName="participant">
+        <ng-template color="transparent" md-tab-label>
+          <md-icon *ngIf="buyerSignupForm.get('participant').valid" color="primary">thumb_up</md-icon>
+          <md-icon *ngIf="buyerSignupForm.get('participant').invalid" color="warn">thumb_down</md-icon>
+          EMPRESA
+        </ng-template>
+
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="8">
             <md-radio-group>
@@ -734,7 +777,7 @@
 
           <md-grid-tile [colspan]="2">
             <md-input-container>
-              <input mdInput formControlName="employees_quantity" type="number" 
+              <input mdInput formControlName="employees_quantity" type="number" min="0"
               placeholder="Nº de Funcionários">
             </md-input-container>
           </md-grid-tile>
@@ -768,6 +811,11 @@
       <md-tab label="Contatos da Empresa" 
       *ngIf="participantBusiness" 
       formGroupName="contact">
+        <ng-template color="transparent" md-tab-label>
+          <md-icon *ngIf="buyerSignupForm.get('contact').valid" color="primary">thumb_up</md-icon>
+          <md-icon *ngIf="buyerSignupForm.get('contact').invalid" color="warn">thumb_down</md-icon>
+          CONTATOS DA EMPRESA
+        </ng-template>
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="1" *ngIf="participantBusiness == 2">
             <md-input-container>
@@ -963,6 +1011,13 @@
       <md-tab label="Representantes" 
       *ngIf="participantBusiness"
       formGroupName="representative">
+
+        <ng-template color="transparent" md-tab-label>
+          <md-icon *ngIf="representativeObject.length > 0" color="primary">thumb_up</md-icon>
+          <md-icon *ngIf="representativeObject.length < 1" color="warn">thumb_down</md-icon>
+          REPRESENTANTES
+        </ng-template>
+
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="1">
             <md-select placeholder="Título" formControlName="representative_treatment"
@@ -1123,6 +1178,12 @@
       </md-tab>
 
       <md-tab label="Atividade" *ngIf="participantBusiness" formGroupName="activity">
+        <ng-template color="transparent" md-tab-label>
+          <md-icon *ngIf="buyerSignupForm.get('activity').valid" color="primary">thumb_up</md-icon>
+          <md-icon *ngIf="buyerSignupForm.get('activity').invalid" color="warn">thumb_down</md-icon>
+          ATIVIDADE
+        </ng-template>
+
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="2">
             <md-select placeholder="Setor" formControlName="subgroup_id"
@@ -1151,6 +1212,12 @@
       </md-tab>
 
       <md-tab label="Interesses" *ngIf="participantBusiness" formGroupName="interest">
+        <ng-template color="transparent" md-tab-label>
+          <md-icon *ngIf="buyerSignupForm.get('interest').valid" color="primary">thumb_up</md-icon>
+          <md-icon *ngIf="buyerSignupForm.get('interest').invalid" color="warn">thumb_down</md-icon>
+          INTERESSES
+        </ng-template>
+
         <md-grid-list cols="8" rowHeight="100px">
           <md-grid-tile [colspan]="4">
             <md-input-container>
@@ -1262,7 +1329,17 @@
     </md-tab-group>
 
     <md-card-actions>
-      <button type="submit" md-raised-button color="primary" [disabled]="buyerSignupForm.invalid || disabled">Cadastrar</button>
+      <div class="float-left w50p">
+        &nbsp;
+        <button type="submit" md-raised-button color="primary" *ngIf="buyerSignupForm.valid || !disabled">Cadastrar</button>
+      </div>
+
+      <div class="float-left  w50p">
+        <div class="float-right">
+          <button md-raised-button class="previus-btn md-icon-button" (click)="changedTabIndex({index: this.formPagination.index-1})" type="button" *ngIf="formPagination.index!=0" routerLink="." color="primary">Anterior</button>
+          <button md-raised-button class="md-icon-button" (click)="changedTabIndex({index: this.formPagination.index+1})" type="button"*ngIf="formPagination.index!=formPagination.maxIndex" routerLink="." color="primary">Próximo</button>
+        </div>
+      </div>
     </md-card-actions>
   </form>
   <!--Buyer: end-->

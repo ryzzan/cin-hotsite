@@ -29,6 +29,7 @@ import 'rxjs/add/operator/map';
 export class AppComponent implements OnInit {
   @ViewChild('myForm') form: NgForm;
 
+  contactGroupColor = "red";
   countries: any = countries;
   disabled: boolean = true;
   sellerSignupForm: FormGroup;
@@ -37,6 +38,10 @@ export class AppComponent implements OnInit {
   objectToAPI: any;
   errors: any = [];
   errorsRevenues: any = [];
+  formPagination: any = {
+    maxIndex: 4,
+    index: 0
+  };
   loading: boolean = false;
 
   otherLanguage: boolean = false;
@@ -237,6 +242,8 @@ export class AppComponent implements OnInit {
     })
     
     this.filteredCountries =  this.countries;
+
+    console.log(this.sellerSignupForm.get('interest'))
   }
 
   ngOnInit() {
@@ -1067,6 +1074,10 @@ export class AppComponent implements OnInit {
 
       this.loading = false;
     });
+    
+    setTimeout(() => {
+		this.loading = false;
+    }, 5000);
   }
 
   receitaWsCnpjToBuyer = (event) => {
@@ -1106,6 +1117,10 @@ export class AppComponent implements OnInit {
 
       this.loading = false;
     });
+    
+    setTimeout(() => {
+		this.loading = false;
+    }, 5000);
   }
   /*Share it?: end*/
   onBuyerSubmit = () => {
@@ -1161,12 +1176,7 @@ export class AppComponent implements OnInit {
     ]);
   }
 
-  /*objectCheckGenericValidator(control: FormControl): {[s: string]: boolean} {
-    if(this.participantBusiness == 2 && control.value != null) {
-      console.log(this.participantBusiness)
-      return { "validation": true };
-    }
-    console.log(this.participantBusiness)
-    return null;
-  }*/
+  changedTabIndex(event){
+    this.formPagination.index = event.index;
+  }
 }
